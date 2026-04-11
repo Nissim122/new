@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Document body -->
+  <rect x="20" y="10" width="50" height="64" rx="3" fill="white"/>
+  <!-- Folded corner -->
+  <path d="M 56 10 L 70 24 L 56 24 Z" fill="#b2dfb2"/>
+  <!-- Header bar -->
+  <rect x="20" y="10" width="36" height="14" rx="3 0 0 0" fill="#34A853"/>
+  <!-- Grid lines horizontal -->
+  <line x1="20" y1="36" x2="70" y2="36" stroke="#e0e0e0" stroke-width="1.5"/>
+  <line x1="20" y1="48" x2="70" y2="48" stroke="#e0e0e0" stroke-width="1.5"/>
+  <line x1="20" y1="60" x2="70" y2="60" stroke="#e0e0e0" stroke-width="1.5"/>
+  <!-- Grid line vertical -->
+  <line x1="44" y1="24" x2="44" y2="74" stroke="#e0e0e0" stroke-width="1.5"/>
+  <!-- Bottom area -->
+  <rect x="20" y="78" width="50" height="12" rx="0 0 3 3" fill="white"/>
+</svg>

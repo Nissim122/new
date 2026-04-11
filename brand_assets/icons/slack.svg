@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Slack logo: 4 colored rounded rectangles in grid -->
+  <rect x="16" y="16" width="28" height="28" rx="7" fill="#ECB22E"/>
+  <rect x="56" y="16" width="28" height="28" rx="7" fill="#2EB67D"/>
+  <rect x="16" y="56" width="28" height="28" rx="7" fill="#E01E5A"/>
+  <rect x="56" y="56" width="28" height="28" rx="7" fill="#36C5F0"/>
+</svg>
