@@ -35,7 +35,7 @@
       padding: 0.75rem 1rem;
     }
     .nav-inner {
-      max-width: calc(75% - 2rem);
+      max-width: calc(80% - 2rem);
       margin: 0 auto;
       background: rgba(14, 16, 28, 0.55);
       backdrop-filter: blur(22px);
@@ -254,6 +254,29 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* ── Zigzag flowchart ── */
+    .zz-container { position: relative; width: 100%; max-width: 900px; margin: 0 auto; padding: 0 0 2rem; }
+    .zz-row { display: grid; grid-template-columns: 1fr 40px 1fr; align-items: center; min-height: 163px; position: relative; }
+    .zz-spine { position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 2px; height: 0; background: #f0c040; z-index: 1; }
+    .zz-dot { width: 12px; height: 12px; border-radius: 50%; background: #f0c040; border: 2px solid #0b1220; box-shadow: 0 0 0 3px rgba(240,192,64,0.25); position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(0); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); z-index: 2; }
+    .zz-dot.popped { transform: translate(-50%,-50%) scale(1); }
+    .zz-branch-left { display: block; height: 2px; background: #f0c040; width: 0; transition: width 0.35s cubic-bezier(0.4,0,0.2,1); transform-origin: right center; }
+    .zz-branch-right { display: block; height: 2px; background: #f0c040; width: 0; transition: width 0.35s cubic-bezier(0.4,0,0.2,1); transform-origin: left center; }
+    .zz-branch-left.grown, .zz-branch-right.grown { width: 100%; }
+    .zz-node { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 1.25rem 1.56rem; opacity: 0; transform: scale(0.88); transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1), border-color 0.25s; }
+    .zz-node.shown { opacity: 1; transform: scale(1); }
+    .zz-node:hover { border-color: rgba(240,192,64,0.35); background: rgba(240,192,64,0.04); }
+.zz-node-title { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.375rem; line-height: 1.4; }
+    .zz-node-body { font-size: 1rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+    @media (max-width: 640px) {
+      .zz-row { grid-template-columns: 24px 1fr; min-height: auto; padding: 0.75rem 0; }
+      .zz-cell-left { display: none; }
+      .zz-cell-right { grid-column: 2; }
+      .zz-branch-left, .zz-branch-right { display: none; }
+      .zz-spine { left: 12px; transform: none; }
+      .zz-dot { left: 12px; }
+    }
+
     /* Mobile menu */
     #mobile-menu { display: none; }
     #mobile-menu.open { display: flex; }
@@ -299,11 +322,6 @@
   ═══════════════════════════════════ -->
   <nav>
     <div class="nav-inner">
-
-      <!-- Logo (visual right) -->
-      <a href="#" style="display: flex; align-items: center; line-height: 0;">
-        <img src="brand_assets/logo-transparent.png" alt="CLIX Automations" style="height: 88px; width: auto; display: block;" />
-      </a>
 
       <!-- Links (center) -->
       <div style="display: flex; gap: 2.5rem;" class="hidden md:flex">
@@ -443,111 +461,130 @@
     </div>
   </section>
 
-  <div class="section-divider"></div>
+
 
 
   <!-- ═══════════════════════════════════
        PROCESS — "אז איך מתחילים?"
   ═══════════════════════════════════ -->
-  <section id="process" style="background: #0e1628; padding: 5rem 1.5rem;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+  <section id="process" dir="rtl" style="background: #0b1220; padding: 5rem 1.5rem;">
+    <div style="max-width: 1100px; margin: 0 auto; text-align: right;">
 
-      <!-- LEFT: Steps list -->
-      <div>
-        <div class="reveal">
-          <div class="tag-chip" style="margin-bottom: 1rem;">📋 התהליך שלנו</div>
-          <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
-            אז איך מתחילים ?
-          </h2>
-          <p style="color: rgba(255,255,255,0.5); font-size: 0.95rem; margin-bottom: 2.5rem;">
-            תהליך ברור, מהיר, ובלי סיבוכים — מפגישה ראשונה ועד לאוטומציה שרצה.
-          </p>
-        </div>
+      <h2 class="reveal" style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 3rem; letter-spacing: -0.02em; text-align: right;">
+        אז איך מתחילים ?
+      </h2>
 
-        <div>
-          <div class="process-row reveal" style="transition-delay: 0.05s;">
-            <div class="step-pill">1</div>
-            <div>
-              <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem;">פגישת גילוי</div>
-              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6;">מבינים את העסק, הכאבים, והיעדים שלך — לפני שמדברים על פתרון.</div>
-            </div>
+      <!-- Zigzag flowchart -->
+      <div class="zz-container" id="zz-flow">
+        <div class="zz-spine" id="zz-spine"></div>
+
+        <!-- Step 1 — RIGHT -->
+        <div class="zz-row">
+          <div class="zz-cell-left"></div>
+          <div style="position:relative;">
+            <div class="zz-dot" data-zz-dot="0"></div>
+            <div class="zz-branch-right" data-zz-branch="0"></div>
           </div>
-          <div class="process-row reveal" style="transition-delay: 0.1s;">
-            <div class="step-pill">2</div>
-            <div>
-              <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem;">מיפוי ותכנון</div>
-              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6;">בונים מפת אוטומציה מותאמת אישית עם ROI מדיד — לפני שורת קוד אחת.</div>
-            </div>
-          </div>
-          <div class="process-row reveal" style="transition-delay: 0.15s;">
-            <div class="step-pill">3</div>
-            <div>
-              <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem;">בנייה ובדיקות</div>
-              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6;">פיתוח האוטומציות, בדיקות מקיפות, ואיטרציות מהירות עם עדכונים שוטפים.</div>
-            </div>
-          </div>
-          <div class="process-row reveal" style="transition-delay: 0.2s;">
-            <div class="step-pill">4</div>
-            <div>
-              <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem;">השקה + ליווי</div>
-              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6;">פריסה חלקה, הדרכת הצוות, ותמיכה שוטפת לאחר ההשקה.</div>
-            </div>
-          </div>
-          <div class="process-row reveal" style="transition-delay: 0.25s;">
-            <div class="step-pill">5</div>
-            <div>
-              <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem;">אופטימיזציה מתמדת</div>
-              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6;">מנטרים, משפרים, ומרחיבים את המערכת בהתאם לצמיחת העסק.</div>
+          <div class="zz-cell-right" style="padding-right:1rem;">
+            <div class="zz-node" data-zz-node="0">
+              <div class="zz-node-title">עושים שיחת בירור צרכים</div>
+              <div class="zz-node-body">בשיחה נמפה את העסק שלך ונראה לאילו פעולות הזמן הולך במשך היום - ונקבע שיחת אפיון (ללא עלות)</div>
             </div>
           </div>
         </div>
 
-        <div class="reveal" style="margin-top: 2rem; transition-delay: 0.3s;">
-          <a href="#contact" class="btn-cta" style="font-size: 0.95rem;">
-            שיחה ראשונה <span class="btn-arrow">◄</span>
-          </a>
-          <p style="font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 0.6rem;">
-            ✓ ללא התחייבות &nbsp;·&nbsp; ✓ תשובה תוך 24 שעות
-          </p>
+        <!-- Step 2 — LEFT -->
+        <div class="zz-row">
+          <div class="zz-cell-left" style="padding-left:1rem;">
+            <div class="zz-node" data-zz-node="1">
+              <div class="zz-node-title">מתאים? אז יאללה לאפיון</div>
+              <div class="zz-node-body">סדרת פגישות בהן נבחן ונבין אילו אוטומציות מתאימות לעסק שלך, ונתכנן יחד את צורת הביצוע.<br>בסיום הפגישה נקבל מסמך אפיון מפורט ומסודר : שכולל בתוכו את הפיתרון לצורך שנמצא</div>
+            </div>
+          </div>
+          <div style="position:relative;">
+            <div class="zz-dot" data-zz-dot="1"></div>
+            <div class="zz-branch-left" data-zz-branch="1"></div>
+          </div>
+          <div class="zz-cell-right"></div>
         </div>
+
+        <!-- Step 3 — RIGHT -->
+        <div class="zz-row">
+          <div class="zz-cell-left"></div>
+          <div style="position:relative;">
+            <div class="zz-dot" data-zz-dot="2"></div>
+            <div class="zz-branch-right" data-zz-branch="2"></div>
+          </div>
+          <div class="zz-cell-right" style="padding-right:1rem;">
+            <div class="zz-node" data-zz-node="2">
+              <div class="zz-node-title">על בסיס האפיון תקבל הצעת מחיר לפרוייקט</div>
+              <div class="zz-node-body">את ההצעה תקבל עם סרטון הסבר בו נפרט לפרטים ע"פ שיחת האפיון, רק לאחר הסכמה על ההצעה - האפיון יעבור לביצוע</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 — LEFT -->
+        <div class="zz-row">
+          <div class="zz-cell-left" style="padding-left:1rem;">
+            <div class="zz-node" data-zz-node="3">
+              <div class="zz-node-title">האפיון עובר לביצוע !</div>
+              <div class="zz-node-body">אני מעביר את הפרוייקט לשרונים - ושנינו מחכים שהאוטומציה תקום לחיים :)</div>
+            </div>
+          </div>
+          <div style="position:relative;">
+            <div class="zz-dot" data-zz-dot="3"></div>
+            <div class="zz-branch-left" data-zz-branch="3"></div>
+          </div>
+          <div class="zz-cell-right"></div>
+        </div>
+
+        <!-- Step 5 — RIGHT -->
+        <div class="zz-row">
+          <div class="zz-cell-left"></div>
+          <div style="position:relative;">
+            <div class="zz-dot" data-zz-dot="4"></div>
+            <div class="zz-branch-right" data-zz-branch="4"></div>
+          </div>
+          <div class="zz-cell-right" style="padding-right:1rem;">
+            <div class="zz-node" data-zz-node="4">
+              <div class="zz-node-title">המערכת מוכנה, אבל זה לא הסוף : יש גם תקופת אחריות</div>
+              <div class="zz-node-body">אני מלווה לאורך כל תהלך ההטמעה, ליווי, הדרכה, וטיפול בתקלות - עד תקינות מלאה של המערכת.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 6 — LEFT -->
+        <div class="zz-row">
+          <div class="zz-cell-left" style="padding-left:1rem;">
+            <div class="zz-node" data-zz-node="5">
+              <div class="zz-node-title">כבר לא בעל עסק - בעל עסק</div>
+              <div class="zz-node-body">ישן ? בחופשה ? ... העסק ממשיך לעבוד 🙂</div>
+            </div>
+          </div>
+          <div style="position:relative;">
+            <div class="zz-dot" data-zz-dot="5"></div>
+            <div class="zz-branch-left" data-zz-branch="5"></div>
+          </div>
+          <div class="zz-cell-right"></div>
+        </div>
+
       </div>
 
-      <!-- RIGHT: Visual cards -->
-      <div class="reveal" style="transition-delay: 0.2s; display: flex; flex-direction: column; gap: 1rem;">
-        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem;">
-          <div style="font-size: 2rem;">⏱️</div>
-          <div>
-            <div style="font-weight: 800; font-size: 1.4rem; color: #2196b0;">-80%</div>
-            <div style="font-size: 0.82rem; color: rgba(255,255,255,0.5);">זמן שמושקע במשימות חוזרות</div>
-          </div>
-        </div>
-        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem;">
-          <div style="font-size: 2rem;">📈</div>
-          <div>
-            <div style="font-weight: 800; font-size: 1.4rem; color: #2196b0;">8×</div>
-            <div style="font-size: 0.82rem; color: rgba(255,255,255,0.5);">שיפור ממוצע ביעילות תפעולית</div>
-          </div>
-        </div>
-        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem;">
-          <div style="font-size: 2rem;">🌙</div>
-          <div>
-            <div style="font-weight: 800; font-size: 1.4rem; color: #2196b0;">24/7</div>
-            <div style="font-size: 0.82rem; color: rgba(255,255,255,0.5);">המערכות עובדות בשבילך בכל שעה</div>
-          </div>
-        </div>
-        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem;">
-          <div style="font-size: 2rem;">✅</div>
-          <div>
-            <div style="font-weight: 800; font-size: 1.4rem; color: #2196b0;">50+</div>
-            <div style="font-size: 0.82rem; color: rgba(255,255,255,0.5);">פרוייקטי אוטומציה שהושלמו</div>
-          </div>
+      <!-- CTA -->
+      <div class="reveal" style="margin-top: 3rem; transition-delay: 0.35s; text-align: right;">
+        <a href="#contact" style="display: inline-block; background: transparent; border: 1.5px solid rgba(255,255,255,0.35); color: #fff; font-size: 1rem; font-weight: 700; padding: 0.8rem 2.2rem; border-radius: 10px; text-decoration: none; cursor: pointer; transition: background 0.2s, border-color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(255,255,255,0.6)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,0.35)'">
+          יאללה, תקרא לשרונים !
+        </a>
+        <div style="margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: flex-end; gap: 0.4rem;">
+          <span>מעביר לסוף הדף להשארת פרטים</span>
+          <span style="font-size: 0.7rem;">▼</span>
         </div>
       </div>
 
     </div>
   </section>
 
-  <div class="section-divider"></div>
+
 
 
   <!-- ═══════════════════════════════════
@@ -626,7 +663,7 @@
     </div>
   </section>
 
-  <div class="section-divider"></div>
+
 
 
   <!-- ═══════════════════════════════════
@@ -699,7 +736,7 @@
     </div>
   </section>
 
-  <div class="section-divider"></div>
+
 
 
   <!-- ═══════════════════════════════════
@@ -723,7 +760,7 @@
     </div>
   </section>
 
-  <div class="section-divider"></div>
+
 
 
   <!-- ═══════════════════════════════════
@@ -779,7 +816,6 @@
   ═══════════════════════════════════ -->
   <footer style="background: #080e1a; border-top: 1px solid rgba(255,255,255,0.08); padding: 2rem 1.5rem;">
     <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem;">
-      <img src="brand_assets/logo-transparent.png" alt="CLIX Automations" style="height: 36px; width: auto; opacity: 0.75;" />
       <div style="display: flex; gap: 2rem;">
         <a href="#services" style="color: rgba(255,255,255,0.4); font-size: 0.85rem; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">שירותים</a>
         <a href="#process" style="color: rgba(255,255,255,0.4); font-size: 0.85rem; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">תהליך</a>
@@ -804,6 +840,41 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    /* ── Zigzag flowchart — scroll-driven ── */
+    (function() {
+      const container = document.getElementById('zz-flow');
+      const spine    = document.getElementById('zz-spine');
+      if (!container || !spine) return;
+      const STEPS = 6;
+
+      var rows = container.querySelectorAll('.zz-row');
+
+      function update() {
+        var vh      = window.innerHeight;
+        var TRIGGER = vh * 0.70; // row activates when its own center crosses 70% of viewport
+
+        // Spine: grows as we scroll through the container
+        var cRect     = container.getBoundingClientRect();
+        var spineFrac = cRect.height > 0
+          ? Math.max(0, Math.min(1, (TRIGGER - cRect.top) / cRect.height))
+          : 0;
+        spine.style.height = (spineFrac * 100) + '%';
+
+        // Each row activates independently based on its own position
+        for (var i = 0; i < STEPS; i++) {
+          var rowRect   = rows[i].getBoundingClientRect();
+          var rowCenter = rowRect.top + rowRect.height / 2;
+          var active    = rowCenter < TRIGGER;
+          container.querySelector('[data-zz-dot="'    + i + '"]').classList.toggle('popped', active);
+          container.querySelector('[data-zz-branch="' + i + '"]').classList.toggle('grown',  active);
+          container.querySelector('[data-zz-node="'   + i + '"]').classList.toggle('shown',  active);
+        }
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      update(); // set initial state on page load
+    })();
 
     /* Form */
     function handleSubmit(e) {
