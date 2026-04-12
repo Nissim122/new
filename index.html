@@ -1215,30 +1215,40 @@
     })();
 
     /* FAQ Accordion */
+    function setHeightPx(el, px) {
+      el.style.height = px + 'px';
+    }
+
+    function collapseItem(item) {
+      // First pin to current pixel height so transition fires correctly
+      const body = item.querySelector('.faq-body');
+      body.style.height = body.scrollHeight + 'px';
+      // Close any open sub-items silently (no animation needed since parent collapses)
+      item.querySelectorAll('.faq-sub-item.open').forEach(sub => {
+        sub.classList.remove('open');
+        sub.querySelector('.faq-sub-body').style.height = '0';
+      });
+      // Force reflow so transition triggers
+      body.getBoundingClientRect();
+      body.style.height = '0';
+      item.classList.remove('open');
+    }
+
     function toggleFaq(btn) {
       const item = btn.closest('.faq-item');
       const body = item.querySelector('.faq-body');
       const isOpen = item.classList.contains('open');
 
-      // Close all other open items (single-open behavior)
+      // Close all other open items
       document.querySelectorAll('.faq-item.open').forEach(openItem => {
-        if (openItem !== item) {
-          openItem.classList.remove('open');
-          const ob = openItem.querySelector('.faq-body');
-          ob.style.height = '0';
-          // Also close nested sub-items
-          openItem.querySelectorAll('.faq-sub-item.open').forEach(sub => {
-            sub.classList.remove('open');
-            sub.querySelector('.faq-sub-body').style.height = '0';
-          });
-        }
+        if (openItem !== item) collapseItem(openItem);
       });
 
       if (isOpen) {
-        item.classList.remove('open');
-        body.style.height = '0';
+        collapseItem(item);
       } else {
         item.classList.add('open');
+        // Measure with sub-bodies at current heights (all 0 since never opened)
         body.style.height = body.scrollHeight + 'px';
       }
     }
@@ -1247,22 +1257,21 @@
       const subItem = btn.closest('.faq-sub-item');
       const subBody = subItem.querySelector('.faq-sub-body');
       const parentBody = subItem.closest('.faq-body');
-      const parentItem = subItem.closest('.faq-item');
       const isOpen = subItem.classList.contains('open');
+      const subH = subBody.scrollHeight;
+      const parentH = parseInt(parentBody.style.height) || parentBody.scrollHeight;
 
       if (isOpen) {
         subItem.classList.remove('open');
+        // Pin first, then collapse
+        subBody.style.height = subH + 'px';
+        subBody.getBoundingClientRect();
         subBody.style.height = '0';
+        setHeightPx(parentBody, parentH - subH);
       } else {
         subItem.classList.add('open');
-        subBody.style.height = subBody.scrollHeight + 'px';
-      }
-
-      // Re-measure parent faq-body height so it expands to fit the sub-content
-      if (parentItem.classList.contains('open')) {
-        parentBody.style.height = 'auto';
-        const fullH = parentBody.scrollHeight;
-        parentBody.style.height = fullH + 'px';
+        subBody.style.height = subH + 'px';
+        setHeightPx(parentBody, parentH + subH);
       }
     }
   </script>
