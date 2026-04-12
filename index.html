@@ -425,13 +425,17 @@
       font-family: 'Heebo', sans-serif;
       font-size: 0.95rem;
       outline: none;
+      direction: rtl;
+      text-align: right;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .form-input:focus {
       border-color: rgba(33,150,176,0.6);
       box-shadow: 0 0 0 3px rgba(33,150,176,0.12);
     }
-    .form-input::placeholder { color: rgba(255,255,255,0.25); }
+    .form-input::placeholder { color: rgba(255,255,255,0.42); }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    @media (max-width: 560px) { .form-grid-2 { grid-template-columns: 1fr; } }
 
     /* Tag chip */
     .tag-chip {
@@ -743,7 +747,7 @@
 
         <input id="banner-phone" type="tel" placeholder="טלפון" class="cta-banner-input" style="flex: 1; min-width: 0; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(255,255,255,0.15); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(255,255,255,0.25)'" onblur="this.style.background='rgba(255,255,255,0.15)'" />
         <input id="banner-business" type="text" placeholder="תחום העסק" class="cta-banner-input" style="flex: 1; min-width: 0; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(255,255,255,0.15); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(255,255,255,0.25)'" onblur="this.style.background='rgba(255,255,255,0.15)'" />
-        <button class="btn-cta" onclick="handleBannerSubmit(event)" style="background: #fff; color: #2196b0; white-space: nowrap; padding: 0.65rem 1.5rem; font-size: 0.95rem; border-radius: 8px; font-weight: 800; flex-shrink: 0;">שליחה <span class="btn-arrow">◄</span></button>
+        <button id="banner-submit" class="btn-cta" onclick="handleBannerSubmit(event)" style="background: #fff; color: #2196b0; white-space: nowrap; padding: 0.65rem 1.5rem; font-size: 0.95rem; border-radius: 8px; font-weight: 800; flex-shrink: 0;">שליחה <span class="btn-arrow">◄</span></button>
 
       </div>
 
@@ -1022,37 +1026,36 @@
       </div>
 
       <form class="reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2rem; transition-delay: 0.15s;" onsubmit="handleSubmit(event)">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+        <div class="form-grid-2">
           <div>
             <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">שם מלא *</label>
             <input type="text" class="form-input" placeholder="ישראל ישראלי" required />
           </div>
           <div>
             <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">טלפון</label>
-            <input type="tel" class="form-input" placeholder="050-0000000" />
+            <input type="tel" class="form-input" placeholder="050-0000000" inputmode="numeric" minlength="9" maxlength="15" pattern="[0-9+\-\s]*" oninput="this.value=this.value.replace(/[^\d+\-\s]/g,'')" />
           </div>
         </div>
         <div style="margin-bottom: 1rem;">
           <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">אימייל *</label>
-          <input type="email" class="form-input" placeholder="you@company.com" required />
+          <input type="email" class="form-input" placeholder="you@company.com" required
+            oninput="this.style.direction='ltr'; this.style.textAlign='left';"
+            onblur="if(!this.value){this.style.direction='';this.style.textAlign='';}" />
         </div>
         <div style="margin-bottom: 1.5rem;">
           <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">ספר לנו על העסק שלך</label>
-          <textarea rows="4" class="form-input" placeholder="באיזה תחום אתה פועל? אילו תהליכים תרצה לייעל?" style="resize: vertical;"></textarea>
+          <textarea rows="4" class="form-input" placeholder="באיזה תחום אתה פועל? אילו תהליכים תרצה לייעל?" style="resize: vertical;" maxlength="1000"></textarea>
         </div>
         <div style="margin-bottom: 1.25rem;">
-          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.55); cursor: pointer; justify-content: flex-end;">
-            <a href="#" style="color: rgba(255,255,255,0.75); text-decoration: underline;">למדיניות הפרטיות</a>
-            אני מסכים למסור את פרטיי בהתאם
+          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.65); cursor: pointer; direction: rtl;">
             <input id="contact-privacy" type="checkbox" required />
+            אני מסכים למסור את פרטיי בהתאם
+            <a href="#" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.85); text-decoration: underline;">למדיניות הפרטיות</a>
           </label>
         </div>
-        <button type="submit" class="btn-cta" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.875rem;">
+        <button id="contact-submit" type="submit" class="btn-cta" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.875rem;">
           שליחת פנייה <span class="btn-arrow">◄</span>
         </button>
-        <p style="text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.25); margin-top: 0.75rem;">
-          ✓ ללא ספאם &nbsp;·&nbsp; ✓ תשובה תוך 24 שעות &nbsp;·&nbsp; ✓ ללא התחייבות
-        </p>
       </form>
 
     </div>
@@ -1064,11 +1067,6 @@
   ═══════════════════════════════════ -->
   <footer style="background: #080e1a; border-top: 1px solid rgba(255,255,255,0.08); padding: 2rem 1.5rem;">
     <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem;">
-      <div style="display: flex; gap: 2rem;">
-        <a href="#services" style="color: rgba(255,255,255,0.4); font-size: 0.85rem; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">שירותים</a>
-        <a href="#process" style="color: rgba(255,255,255,0.4); font-size: 0.85rem; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">תהליך</a>
-        <a href="#contact" style="color: rgba(255,255,255,0.4); font-size: 0.85rem; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">צור קשר</a>
-      </div>
       <p style="font-size: 0.75rem; color: rgba(255,255,255,0.2);">© 2025 CLIX Automations · כל הזכויות שמורות</p>
     </div>
   </footer>
@@ -1149,17 +1147,25 @@
     /* Banner form (blue section) */
     async function handleBannerSubmit(e) {
       e.preventDefault();
+      const btn = document.getElementById('banner-submit');
       const name     = document.getElementById('banner-name').value.trim();
       const phone    = toE164(document.getElementById('banner-phone').value.trim());
       const business = document.getElementById('banner-business').value.trim();
       const privacy  = document.getElementById('banner-privacy').checked;
       if (!name) { document.getElementById('banner-name').focus(); return; }
       if (!privacy) { document.getElementById('banner-privacy').reportValidity(); return; }
-      await sendData({ form: 'banner', name, phone, business });
-      document.getElementById('banner-name').value = '';
-      document.getElementById('banner-phone').value = '';
-      document.getElementById('banner-business').value = '';
-      showToast();
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      try {
+        await sendData({ form: 'banner', name, phone, business });
+        document.getElementById('banner-name').value = '';
+        document.getElementById('banner-phone').value = '';
+        document.getElementById('banner-business').value = '';
+        showToast();
+      } finally {
+        btn.disabled = false;
+        btn.style.opacity = '';
+      }
     }
 
     /* Convert Israeli phone to E.164: 05XXXXXXXX → +9725XXXXXXXX */
@@ -1174,14 +1180,24 @@
     /* Main contact form */
     async function handleSubmit(e) {
       e.preventDefault();
+      const btn = document.getElementById('contact-submit');
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      btn.style.cursor = 'not-allowed';
       const inputs   = e.target.querySelectorAll('input, textarea');
       const name     = inputs[0].value.trim();
       const phone    = toE164(inputs[1].value.trim());
       const email    = inputs[2].value.trim();
       const message  = inputs[3].value.trim();
-      await sendData({ form: 'contact', name, phone, email, message });
-      showToast();
-      e.target.reset();
+      try {
+        await sendData({ form: 'contact', name, phone, email, message });
+        showToast();
+        e.target.reset();
+      } finally {
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+      }
     }
 
     /* Shuffle testimonial cards — auto every 7s, pause 20s on touch */
