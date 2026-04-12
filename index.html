@@ -423,12 +423,23 @@
     .zz-node-title { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.375rem; line-height: 1.4; }
     .zz-node-body { font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7; }
     @media (max-width: 640px) {
-      .zz-row { grid-template-columns: 24px 1fr; min-height: auto; padding: 0.75rem 0; }
-      .zz-cell-left { display: none; }
-      .zz-cell-right { grid-column: 2; }
+      /* Linear vertical list — show ALL steps */
+      #zz-spine { display: none; } /* remove the blue bar */
+      .zz-row {
+        display: block;
+        min-height: auto;
+        padding: 0.5rem 0;
+      }
+      /* Hide empty structural cells and dot/branch columns */
+      .zz-cell-left { display: block !important; padding: 0 !important; }
+      .zz-cell-right { display: block !important; padding: 0 !important; }
+      /* Hide the center column (dot + branch) entirely */
+      .zz-row > div:not(.zz-cell-left):not(.zz-cell-right) { display: none; }
       .zz-branch-left, .zz-branch-right { display: none; }
-      .zz-spine { left: 12px; transform: none; }
-      .zz-dot { left: 12px; }
+      /* Empty cells take no space */
+      .zz-cell-left:empty, .zz-cell-right:empty { display: none !important; }
+      /* Show all nodes regardless of animation state */
+      .zz-node { opacity: 1 !important; transform: scale(1) !important; }
     }
 
     /* Mobile menu */
@@ -534,8 +545,40 @@
         min-height: auto !important;
       }
       .results-about { max-width: 100% !important; min-width: 0 !important; }
-      .testi-stack-wrap { width: 280px !important; margin: 0 auto; }
-      .shuffle-card { width: 280px !important; }
+
+      /* Mobile testimonial carousel — fade between cards */
+      .testi-stack-wrap {
+        width: 300px !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        height: 400px !important;
+      }
+      .shuffle-card {
+        position: absolute !important;
+        width: 100% !important;
+        height: 400px !important;
+        left: 0 !important; top: 0 !important;
+        opacity: 0 !important;
+        transform: none !important;
+        transition: opacity 0.5s ease !important;
+        z-index: 0 !important;
+      }
+      .shuffle-card.pos-front {
+        opacity: 1 !important;
+        transform: none !important;
+        z-index: 2 !important;
+      }
+      .shuffle-card.pos-middle,
+      .shuffle-card.pos-back {
+        opacity: 0 !important;
+        transform: none !important;
+        z-index: 0 !important;
+      }
+
+      /* Prevent horizontal scroll from decorative elements */
+      body, html { overflow-x: hidden !important; }
+      .hero-section { overflow: hidden !important; }
 
       /* General section padding */
       section { padding-left: 1rem !important; padding-right: 1rem !important; }
@@ -1447,7 +1490,14 @@
       }
 
       stack.addEventListener('mousedown', pauseFor20);
-      stack.addEventListener('touchstart', pauseFor20, { passive: true });
+      // On touch devices, touchstart fires during scroll and would pause the auto-rotate.
+      // Only pause on touch if the user actually taps (not scrolls).
+      var touchStartY = 0;
+      stack.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; }, { passive: true });
+      stack.addEventListener('touchend', function(e) {
+        var dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+        if (dy < 8) pauseFor20(); // tap (not scroll) → pause
+      }, { passive: true });
 
       setInterval(function() { if (!paused) shuffle(); }, 7000);
     })();
