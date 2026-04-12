@@ -4,6 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CLIX Automations — סיסטם שעובד גם כשאתה לא</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- SEO Core -->
+  <meta name="description" content="CLIX Automations — בונים לעסק שלך סיסטם אוטומציה שעובד גם כשאתה לא. חיבור בין כלים: Make, Monday, WhatsApp, CRM ועוד. השאר פרטים ותקבל ייעוץ חינם." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://clix-automations.com/" />
+
+  <!-- Open Graph (Facebook / LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://clix-automations.com/" />
+  <meta property="og:title" content="CLIX Automations — סיסטם שעובד גם כשאתה לא" />
+  <meta property="og:description" content="בונים לעסק שלך סיסטם אוטומציה שעובד גם כשאתה לא. חיבור בין כלים: Make, Monday, WhatsApp, CRM ועוד." />
+  <meta property="og:image" content="https://placehold.co/1200x630/0e1628/2196b0?text=CLIX+Automations" /><!-- TODO: החלף בתמונה אמיתית -->
+  <meta property="og:locale" content="he_IL" />
+  <meta property="og:site_name" content="CLIX Automations" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CLIX Automations — סיסטם שעובד גם כשאתה לא" />
+  <meta name="twitter:description" content="בונים לעסק שלך סיסטם אוטומציה שעובד גם כשאתה לא." />
+  <meta name="twitter:image" content="https://placehold.co/1200x630/0e1628/2196b0?text=CLIX+Automations" /><!-- TODO: החלף בתמונה אמיתית -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -467,7 +488,6 @@
       <div style="display: flex; gap: 2.5rem;" class="hidden md:flex">
         <a href="#" style="color: #e0176b; font-weight: 700;">דף הבית</a>
         <a href="#results">תוצאות</a>
-        <a href="#services">שירותים</a>
         <a href="#process">תהליך</a>
         <a href="#contact">צרו קשר</a>
       </div>
@@ -479,6 +499,8 @@
     </div>
   </nav>
 
+
+  <main>
 
   <!-- ═══════════════════════════════════
        HERO
@@ -1062,6 +1084,9 @@
   </section>
 
 
+  </main>
+
+
   <!-- ═══════════════════════════════════
        FOOTER
   ═══════════════════════════════════ -->
@@ -1077,6 +1102,106 @@
     ✓ הפנייה נשלחה! נחזור אליך בהקדם.
   </div>
 
+
+  <!-- ═══════════════════════════════════
+       STRUCTURED DATA (JSON-LD)
+  ═══════════════════════════════════ -->
+
+  <!-- 1. LocalBusiness + Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "ProfessionalService"],
+    "name": "CLIX Automations",
+    "description": "שירותי אוטומציה לעסקים — חיבור בין כלים, בניית תהליכים, וסיסטם שעובד גם כשאתה לא",
+    "url": "https://clix-automations.com",
+    "logo": "https://clix-automations.com/brand_assets/icons/%D7%A2%D7%99%D7%A6%D7%95%D7%91%20%D7%9C%D7%9C%D7%90%20%D7%A9%D7%9D%20(1).svg",
+    "image": "https://placehold.co/1200x630/0e1628/2196b0?text=CLIX+Automations",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "IL"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Israel"
+    },
+    "priceRange": "$$",
+    "inLanguage": "he",
+    "founder": {
+      "@type": "Person",
+      "name": "ניסים בנגייב",
+      "jobTitle": "מומחה אוטומציה"
+    },
+    "knowsAbout": ["אוטומציה עסקית", "Make", "Monday.com", "WhatsApp Business API", "CRM", "AI Automation"]
+  }
+  </script>
+
+  <!-- 2. FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "מה זה בכלל אוטומציה עסקית?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "אוטומציה עסקית היא שימוש בטכנולוגיה כדי לבצע משימות חוזרות ונשנות ללא התערבות ידנית — שליחת מיילים, עדכון גיליונות, תזמון תגובות ועוד. כל עסק שמשקיע זמן על משימות שחוזרות על עצמן יכול להרוויח מאוטומציה, בין אם זה עסק קטן עם צוות של 2 אנשים ובין אם חברה עם עשרות עובדים."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "כמה זמן לוקח לבנות אוטומציה?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "אוטומציה פשוטה יכולה להיות מוכנה תוך 3–5 ימי עבודה. פתרונות מורכבים יותר עם אינטגרציות מרובות לוקחים 2–4 שבועות. לאחר מכן עוברים שלב בדיקות משותף, ואז האוטומציה רצה בעצמה."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "האם צריך ידע טכני מצד הלקוח?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "לא. מספיק להבין אילו משימות אתה עושה שוב ושוב ורוצה לחסוך בהן זמן. אין צורך בשום ידע טכני — הכל מוסבר בעברית פשוטה. האוטומציות מתוכננות לרוץ ללא תחזוקה שוטפת."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "עם אילו כלים וערוצים אתם עובדים?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Make, Zapier, n8n, Google Sheets, Gmail, WhatsApp Business API, Notion, HubSpot, Airtable ועוד. כמו כן ניתן לשלב כלי AI כמו ChatGPT ו-Claude לסינון לידים, כתיבת תגובות, סיכום שיחות וניתוח נתונים — הכל אוטומטית."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- 3. Service -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "בניית סיסטם אוטומציה לעסקים",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "CLIX Automations"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Israel"
+    },
+    "description": "אוטומציה של תהליכים עסקיים באמצעות Make, Monday, WhatsApp, CRM ועוד. חיבור בין כלים, בניית תהליכים, ופגישת ייעוץ ראשונה ללא עלות.",
+    "serviceType": "Business Automation",
+    "inLanguage": "he",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "ILS",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
 
   <script>
     /* Scroll reveal */
