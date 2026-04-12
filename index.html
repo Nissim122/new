@@ -195,13 +195,99 @@
     }
     /* ─────────────────────────────────────────────────────────────────── */
 
-    /* Sparkles on testi-cards */
-    @keyframes sparkle-pop {
-      0%   { opacity: 0; transform: scale(0) rotate(75deg); }
-      45%  { opacity: 1; transform: scale(1) rotate(120deg); }
-      100% { opacity: 0; transform: scale(0) rotate(150deg); }
+    /* FAQ Accordion */
+    .faq-item {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      transition: border-color 0.2s;
     }
-    .testi-card { position: relative; overflow: visible !important; }
+    .faq-item:first-child { border-radius: 12px 12px 0 0; }
+    .faq-item:last-child  { border-radius: 0 0 12px 12px; }
+    .faq-item + .faq-item { margin-top: -1px; }
+    .faq-item.open        { border-color: rgba(33,150,176,0.3); }
+
+    .faq-trigger {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 1.25rem; background: none; border: none; cursor: pointer;
+      color: #fff; font-size: 1rem; font-weight: 700; text-align: right;
+      font-family: inherit; gap: 1rem;
+      transition: background 0.15s;
+    }
+    .faq-trigger:hover { background: rgba(255,255,255,0.04); }
+    .faq-trigger .faq-chevron {
+      flex-shrink: 0; opacity: 0.5;
+      transition: transform 0.25s ease, opacity 0.2s;
+    }
+    .faq-item.open .faq-trigger .faq-chevron { transform: rotate(180deg); opacity: 1; }
+
+    .faq-body {
+      height: 0; overflow: hidden;
+      transition: height 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* nested collapsibles */
+    .faq-sub {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      background: rgba(33,150,176,0.05);
+      padding: 0 1.25rem;
+    }
+    .faq-sub-trigger {
+      width: 100%; display: flex; align-items: flex-start; gap: 0.6rem;
+      padding: 0.85rem 0; background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,0.75); font-size: 0.9rem; font-weight: 600;
+      text-align: right; font-family: inherit; direction: rtl;
+      transition: color 0.15s;
+    }
+    .faq-sub-trigger:hover { color: #fff; }
+    .faq-sub-trigger .sub-chevron {
+      flex-shrink: 0; margin-top: 3px; opacity: 0.5;
+      transition: transform 0.2s ease, opacity 0.15s;
+    }
+    .faq-sub-item.open .faq-sub-trigger .sub-chevron { transform: rotate(180deg); opacity: 1; }
+    .faq-sub-item.open .faq-sub-trigger { color: #fff; }
+
+    .faq-sub-body {
+      height: 0; overflow: hidden;
+      transition: height 0.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .faq-sub-answer {
+      padding: 0 0 0.9rem 1.5rem;
+      color: rgba(255,255,255,0.45); font-size: 0.87rem; line-height: 1.7;
+    }
+
+    /* Shuffle testimonial cards */
+    .shuffle-card {
+      position: absolute;
+      left: 0; top: 0;
+      width: 320px; height: 400px;
+      border-radius: 24px;
+      border: 1px solid rgba(148,163,184,0.14);
+      background: rgba(15,23,42,0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.25), 0 32px 64px rgba(0,0,0,0.45);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      transition: transform 0.5s cubic-bezier(0.34,1.1,0.64,1), z-index 0s;
+      will-change: transform;
+    }
+    .shuffle-card.pos-front {
+      z-index: 2;
+      transform: rotate(-6deg) translateX(0%);
+    }
+    .shuffle-card.pos-middle {
+      z-index: 1;
+      transform: rotate(0deg) translateX(33%);
+    }
+    .shuffle-card.pos-back {
+      z-index: 0;
+      transform: rotate(6deg) translateX(66%);
+    }
 
     /* Circle service icons */
     .service-circle {
@@ -662,68 +748,104 @@
   <!-- ═══════════════════════════════════
        RESULTS — "עזרתי לעשרות עסקים"
   ═══════════════════════════════════ -->
-  <section id="results" style="background: #0e1628; padding: 5rem 1.5rem;">
+  <section id="results" style="background: #020617; padding: 5rem 1.5rem; overflow: hidden;">
     <div style="max-width: 1100px; margin: 0 auto;">
 
-      <div class="reveal" style="text-align: center; margin-bottom: 3.5rem;">
-        <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
-          עזרתי לעשרות עסקים<br />
-          <span style="color: rgba(255,255,255,0.6); font-size: 0.85em;">וזה מה שהם אומרים :</span>
+      <!-- Title — centered -->
+      <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+        <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; margin-bottom: 0.3rem; letter-spacing: -0.02em; color: #fff;">
+          עזרתי לעשרות עסקים
+        </h2>
+        <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; letter-spacing: -0.02em; color: rgba(255,255,255,0.4);">
+          וזה מה שהם אומרים
         </h2>
       </div>
 
-      <!-- Testimonials grid -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+      <!-- Two-column: cards left + about text right -->
+      <div class="reveal" style="direction: ltr; display: flex; justify-content: space-between; align-items: center; gap: 10rem; flex-wrap: wrap; min-height: 500px; transition-delay: 0.12s; padding-left: 0;">
+        <div id="testi-stack" style="position: relative; height: 400px; width: 320px; user-select: none; flex-shrink: 0;">
 
-        <div class="testi-card reveal">
-          <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem;">
-            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-          </div>
-          <p style="font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.75); margin-bottom: 1.25rem;">
-            "תוך שבועיים CLIX הכניסו לי אוטומציה שחסכה לי 3 שעות עבודה ביום. תשואה על ההשקעה הייתה מידית."
-          </p>
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #2196b0, #0d3a5c); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700;">ד.כ</div>
-            <div>
-              <div style="font-size: 0.85rem; font-weight: 700;">דוד כהן</div>
-              <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">מנכ"ל, חברת נדל"ן</div>
+          <!-- Card 0 -->
+          <div class="testi-card shuffle-card pos-front" data-idx="0">
+            <div style="display: flex; gap: 0.25rem; justify-content: center; color: #eab308;">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p style="font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.85); text-align: center;" dir="rtl">
+              "תוך שבועיים CLIX הכניסו לי אוטומציה שחסכה לי 3 שעות עבודה ביום. תשואה על ההשקעה הייתה מידית."
+            </p>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.6rem;">
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #2196b0, #0d3a5c); border: 2px solid #2196b0; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: #fff;">ד.כ</div>
+              <div style="text-align: center;">
+                <div style="font-size: 0.9rem; font-weight: 700; color: #fff;" dir="rtl">דוד כהן</div>
+                <div style="font-size: 0.78rem; color: rgba(255,255,255,0.4);" dir="rtl">מנכ"ל, חברת נדל"ן</div>
+              </div>
             </div>
           </div>
+
+          <!-- Card 1 -->
+          <div class="testi-card shuffle-card pos-middle" data-idx="1">
+            <div style="display: flex; gap: 0.25rem; justify-content: center; color: #eab308;">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p style="font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.85); text-align: center;" dir="rtl">
+              "המערכת שלהם מנהלת לי את כל הלידים אוטומטית — אפס עבודה ידנית. הצוות שלי עכשיו מתמקד רק במכירות."
+            </p>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.6rem;">
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #e0176b, #8b0038); border: 2px solid #e0176b; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: #fff;">ר.ל</div>
+              <div style="text-align: center;">
+                <div style="font-size: 0.9rem; font-weight: 700; color: #fff;" dir="rtl">רחל לוי</div>
+                <div style="font-size: 0.78rem; color: rgba(255,255,255,0.4);" dir="rtl">בעלת סטודיו לאימון</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="testi-card shuffle-card pos-back" data-idx="2">
+            <div style="display: flex; gap: 0.25rem; justify-content: center; color: #eab308;">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <p style="font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.85); text-align: center;" dir="rtl">
+              "ChatBot שבנו יחד עונה ל-80% מהשאלות של הלקוחות שלי — 24/7. שירות הלקוחות שלנו שופר לחלוטין."
+            </p>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.6rem;">
+              <div style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #2196b0, #0d3a5c); border: 2px solid #2196b0; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: #fff;">א.מ</div>
+              <div style="text-align: center;">
+                <div style="font-size: 0.9rem; font-weight: 700; color: #fff;" dir="rtl">אמיר מזרחי</div>
+                <div style="font-size: 0.78rem; color: rgba(255,255,255,0.4);" dir="rtl">מייסד, חברת SaaS</div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="testi-card reveal" style="transition-delay: 0.1s;">
-          <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem;">
-            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-          </div>
-          <p style="font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.75); margin-bottom: 1.25rem;">
-            "המערכת שלהם מנהלת לי את כל הלידים אוטומטית — אפס עבודה ידנית. הצוות שלי עכשיו מתמקד רק במכירות."
-          </p>
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #2196b0, #0d3a5c); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700;">ר.ל</div>
-            <div>
-              <div style="font-size: 0.85rem; font-weight: 700;">רחל לוי</div>
-              <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">בעלת סטודיו לאימון</div>
-            </div>
-          </div>
-        </div>
+        <!-- About me — right column -->
+        <div dir="rtl" style="flex: 1; min-width: 280px; max-width: 520px;">
+          <h2 style="font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 900; letter-spacing: -0.03em; color: #fff; margin: 0 0 1.5rem;">היי, אני ניסים</h2>
 
-        <div class="testi-card reveal" style="transition-delay: 0.2s;">
-          <div style="display: flex; gap: 0.3rem; margin-bottom: 1rem;">
-            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-          </div>
-          <p style="font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.75); margin-bottom: 1.25rem;">
-            "ChatBot שבנו יחד עונה ל-80% מהשאלות של הלקוחות שלי — 24/7. שירות הלקוחות שלנו שופר לחלוטין."
+          <p style="font-size: 1.15rem; line-height: 1.9; color: rgba(255,255,255,0.95); font-weight: 500; margin-bottom: 1.4rem;">
+            התחלתי את הדרך שלי כ<strong style="color:#fff; font-weight:800;">בודק תוכנה</strong>, ומשם נכנסתי <span style="white-space:nowrap;">לעולם <strong style="color:#fff; font-weight:800;">האוטומציות</strong></span> — עם מעל <strong style="color:#fff; font-weight:800;">שנתיים וחצי ניסיון</strong> במחלקת אוטומציות, והיום כבעל עסק עצמאי בתחום.
           </p>
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #2196b0, #0d3a5c); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700;">א.מ</div>
-            <div>
-              <div style="font-size: 0.85rem; font-weight: 700;">אמיר מזרחי</div>
-              <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4);">מייסד, חברת SaaS</div>
-            </div>
-          </div>
+          <p style="font-size: 1.15rem; line-height: 1.9; color: rgba(255,255,255,0.95); font-weight: 500; margin-bottom: 1.4rem;">
+            אני עובד על אוטומציות בשילוב <strong style="color:#2196b0; font-weight:800;">AI</strong> כדי להפוך תהליכים ידניים ל<strong style="color:#fff; font-weight:800;">מערכות חכמות שעובדות לבד</strong> — <span style="white-space:nowrap;">בצורה מדויקת, מהירה וללא טעויות.</span>
+          </p>
+          <p style="font-size: 1.15rem; line-height: 1.9; color: rgba(255,255,255,0.95); font-weight: 500; margin-bottom: 1.4rem;">
+            אני מתמקד בעסקים שכבר עובדים ומכניסים, אבל <strong style="color:#fff; font-weight:800;">נתקעים בגלל עומס ובלאגן תפעולי</strong>. לדוגמה — בפרויקט בתחום ביטוחי רכב בניתי מערכת שמנהלת תזכורות ושליחת מיילים אוטומטית, מה שחסך ללקוח <strong style="color:#fff; font-weight:800;">צורך בעובד נוסף</strong> והוריד משמעותית עלויות.
+          </p>
+          <p style="font-size: 1.15rem; line-height: 1.9; color: rgba(255,255,255,0.95); font-weight: 500; margin-bottom: 2rem;">
+            המטרה שלי פשוטה: לקחת את מה שמאט את העסק שלך — ולהפוך אותו ל<strong style="color:#2196b0; font-weight:800;">מערכת חכמה שעובדת בשבילך 24/7</strong>.
+          </p>
+
+          <a href="#contact" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #2196b0; color: #fff; font-size: 0.9rem; font-weight: 700; padding: 0.75rem 1.6rem; border-radius: 8px; text-decoration: none; letter-spacing: 0.02em; box-shadow: 0 4px 20px rgba(33,150,176,0.35); transition: background 0.2s, transform 0.2s, box-shadow 0.2s;"
+            onmouseover="this.style.background='#1a7a90';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(33,150,176,0.45)'"
+            onmouseout="this.style.background='#2196b0';this.style.transform='translateY(0)';this.style.boxShadow='0 4px 20px rgba(33,150,176,0.35)'"
+          >
+            בואו נדבר
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleX(-1);"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
 
       </div>
+
 
     </div>
   </section>
@@ -732,27 +854,150 @@
 
 
   <!-- ═══════════════════════════════════
-       CLIENTS LOGOS
+       FAQ ACCORDION
   ═══════════════════════════════════ -->
-  <section style="background: #0a1220; padding: 3.5rem 1.5rem;">
-    <div style="max-width: 1100px; margin: 0 auto;">
-      <div class="reveal" style="text-align: center; margin-bottom: 2rem;">
-        <p style="font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3);">
-          הסדרונים שלי כבר היו אצל
-        </p>
+  <section id="faq" style="background: #080f1e; padding: 3.5rem 1.5rem;">
+    <div style="max-width: 700px; margin: 0 auto;">
+
+      <div class="reveal" style="text-align: center; margin-bottom: 2.5rem;">
+<h2 style="font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900; letter-spacing: -0.02em; color: #fff; margin: 0;">
+          יש לך שאלות? <span style="color: rgba(255,255,255,0.4);">יש לנו תשובות.</span>
+        </h2>
       </div>
-      <div class="reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; transition-delay: 0.1s;">
-        <div class="client-logo">חברת נדל"ן</div>
-        <div class="client-logo">סטודיו כושר</div>
-        <div class="client-logo">מרפאה פרטית</div>
-        <div class="client-logo">חנות אונליין</div>
-        <div class="client-logo">סוכנות שיווק</div>
-        <div class="client-logo">יועץ עסקי</div>
+
+      <div class="reveal faq-accordion" style="transition-delay: 0.1s;">
+
+        <!-- Item 1 -->
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span>מה זה בכלל אוטומציה עסקית?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-body">
+            <div class="faq-sub-item">
+              <div class="faq-sub">
+                <button class="faq-sub-trigger" onclick="toggleSub(this)">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span>מה ההגדרה הפשוטה של אוטומציה?</span>
+                </button>
+                <div class="faq-sub-body">
+                  <div class="faq-sub-answer">אוטומציה עסקית היא שימוש בטכנולוגיה כדי לבצע משימות חוזרות ונשנות ללא התערבות ידנית — שליחת מיילים, עדכון גיליונות, תזמון תגובות ועוד.</div>
+                </div>
+              </div>
+            </div>
+            <div class="faq-sub-item">
+              <div class="faq-sub">
+                <button class="faq-sub-trigger" onclick="toggleSub(this)">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span>מי יכול להרוויח מאוטומציה?</span>
+                </button>
+                <div class="faq-sub-body">
+                  <div class="faq-sub-answer">כל עסק שמשקיע זמן על משימות שחוזרות על עצמן — בין אם זה עסק קטן עם צוות של 2 אנשים ובין אם חברה עם עשרות עובדים.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span>כמה זמן לוקח לבנות אוטומציה?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-body">
+            <div class="faq-sub-item">
+              <div class="faq-sub">
+                <button class="faq-sub-trigger" onclick="toggleSub(this)">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span>מה לוח הזמנים הממוצע?</span>
+                </button>
+                <div class="faq-sub-body">
+                  <div class="faq-sub-answer">אוטומציה פשוטה יכולה להיות מוכנה תוך 3–5 ימי עבודה. פתרונות מורכבים יותר עם אינטגרציות מרובות לוקחים 2–4 שבועות.</div>
+                </div>
+              </div>
+            </div>
+            <div class="faq-sub-item">
+              <div class="faq-sub">
+                <button class="faq-sub-trigger" onclick="toggleSub(this)">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span>מה קורה אחרי שהאוטומציה עולה לאוויר?</span>
+                </button>
+                <div class="faq-sub-body">
+                  <div class="faq-sub-answer">עוברים שלב בדיקות משותף, ואז האוטומציה רצה בעצמה. אני נשאר זמין לתמיכה ושינויים לפי הצורך.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span>האם צריך ידע טכני מצד הלקוח?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-body">
+            <div class="faq-sub-item">
+              <div class="faq-sub">
+                <button class="faq-sub-trigger" onclick="toggleSub(this)">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span>מה אני צריך להכין לפני הפגישה הראשונה?</span>
+                </button>
+                <div class="faq-sub-body">
+                  <div class="faq-sub-answer">בסך הכל — להבין אילו משימות אתה עושה שוב ושוב ורוצה לחסוך בהן זמן. לא צריך שום ידע טכני. אני מסביר הכל בעברית פשוטה.</div>
+                </div>
+              </div>
+            </div>
+            <div class="faq-sub-item">
+              <div class="faq-sub">
+                <button class="faq-sub-trigger" onclick="toggleSub(this)">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span>האם אני צריך לתחזק את האוטומציה לבד?</span>
+                </button>
+                <div class="faq-sub-body">
+                  <div class="faq-sub-answer">לא. האוטומציות שאני בונה מתוכננות לרוץ ללא תחזוקה שוטפת. אם משהו משתנה — אני כאן.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span>עם אילו כלים וערוצים אתה עובד?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="faq-body">
+            <div class="faq-sub-item">
+              <div class="faq-sub">
+                <button class="faq-sub-trigger" onclick="toggleSub(this)">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span>אילו פלטפורמות נתמכות?</span>
+                </button>
+                <div class="faq-sub-body">
+                  <div class="faq-sub-answer">Make, Zapier, n8n, Google Sheets, Gmail, WhatsApp Business API, Notion, HubSpot, Airtable ועוד. אם יש לך מערכת ספציפית — פשוט שאל.</div>
+                </div>
+              </div>
+            </div>
+            <div class="faq-sub-item">
+              <div class="faq-sub">
+                <button class="faq-sub-trigger" onclick="toggleSub(this)">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span>האם אפשר לשלב AI בתוך האוטומציה?</span>
+                </button>
+                <div class="faq-sub-body">
+                  <div class="faq-sub-answer">בהחלט. כלי AI כמו ChatGPT ו-Claude משולבים לסינון לידים, כתיבת תגובות, סיכום שיחות וניתוח נתונים — הכל אוטומטית.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
-
-
 
 
   <!-- ═══════════════════════════════════
@@ -901,7 +1146,7 @@
     async function handleBannerSubmit(e) {
       e.preventDefault();
       const name     = document.getElementById('banner-name').value.trim();
-      const phone    = document.getElementById('banner-phone').value.trim();
+      const phone    = toE164(document.getElementById('banner-phone').value.trim());
       const business = document.getElementById('banner-business').value.trim();
       const privacy  = document.getElementById('banner-privacy').checked;
       if (!name) { document.getElementById('banner-name').focus(); return; }
@@ -913,72 +1158,115 @@
       showToast();
     }
 
+    /* Convert Israeli phone to E.164: 05XXXXXXXX → +9725XXXXXXXX */
+    function toE164(raw) {
+      const digits = raw.replace(/\D/g, '');
+      if (digits.startsWith('0') && digits.length >= 9) {
+        return '+972' + digits.slice(1);
+      }
+      return raw; // already formatted or unrecognised — pass through
+    }
+
     /* Main contact form */
     async function handleSubmit(e) {
       e.preventDefault();
       const inputs   = e.target.querySelectorAll('input, textarea');
       const name     = inputs[0].value.trim();
-      const phone    = inputs[1].value.trim();
+      const phone    = toE164(inputs[1].value.trim());
       const email    = inputs[2].value.trim();
       const message  = inputs[3].value.trim();
       await sendData({ form: 'contact', name, phone, email, message });
       showToast();
       e.target.reset();
     }
-  </script>
 
-  <!-- Sparkles on testimonial cards -->
-  <script>
-    (function initSparkles() {
-      const STAR_PATH = 'M9.82531 0.843845C10.0553 0.215178 10.9446 0.215178 11.1746 0.843845L11.8618 2.72026C12.4006 4.19229 12.3916 6.39157 13.5 7.5C14.6084 8.60843 16.8077 8.59935 18.2797 9.13822L20.1561 9.82534C20.7858 10.0553 20.7858 10.9447 20.1561 11.1747L18.2797 11.8618C16.8077 12.4007 14.6084 12.3916 13.5 13.5C12.3916 14.6084 12.4006 16.8077 11.8618 18.2798L11.1746 20.1562C10.9446 20.7858 10.0553 20.7858 9.82531 20.1562L9.13819 18.2798C8.59932 16.8077 8.60843 14.6084 7.5 13.5C6.39157 12.3916 4.19225 12.4007 2.72023 11.8618L0.843814 11.1747C0.215148 10.9447 0.215148 10.0553 0.843814 9.82534L2.72023 9.13822C4.19225 8.59935 6.39157 8.60843 7.5 7.5C8.60843 6.39157 8.59932 4.19229 9.13819 2.72026L9.82531 0.843845Z';
-      const COLORS  = ['#2196b0', '#e0176b', 'rgba(255,255,255,0.85)'];
-      const COUNT   = 7;
-      const NS      = 'http://www.w3.org/2000/svg';
+    /* Shuffle testimonial cards — auto every 7s, pause 20s on touch */
+    (function initShuffle() {
+      const stack = document.getElementById('testi-stack');
+      if (!stack) return;
+      const cards = Array.from(stack.querySelectorAll('.shuffle-card'));
+      let positions = ['pos-front', 'pos-middle', 'pos-back'];
+      let paused = false;
+      let pauseTimer = null;
 
-      function makeStar(card) {
-        const color    = COLORS[Math.floor(Math.random() * COLORS.length)];
-        const x        = (Math.random() * 108 - 4).toFixed(1);   // -4% … 104%
-        const y        = (Math.random() * 108 - 4).toFixed(1);
-        const size     = 12 + Math.random() * 10;
-        const delay    = (Math.random() * 2.5).toFixed(2);
-        const duration = (0.7 + Math.random() * 0.9).toFixed(2);
-
-        const svg = document.createElementNS(NS, 'svg');
-        svg.setAttribute('width',   size);
-        svg.setAttribute('height',  size);
-        svg.setAttribute('viewBox', '0 0 21 21');
-        svg.setAttribute('fill',    'none');
-        svg.style.cssText = [
-          'position:absolute',
-          `left:${x}%`,
-          `top:${y}%`,
-          'pointer-events:none',
-          'z-index:20',
-          `animation:sparkle-pop ${duration}s ease-in-out ${delay}s infinite`,
-          'transform-origin:center',
-          'opacity:0',
-        ].join(';');
-
-        const path = document.createElementNS(NS, 'path');
-        path.setAttribute('d',    STAR_PATH);
-        path.setAttribute('fill', color);
-        svg.appendChild(path);
-        card.appendChild(svg);
-      }
-
-      function attachToCards() {
-        document.querySelectorAll('.testi-card').forEach(card => {
-          for (let i = 0; i < COUNT; i++) makeStar(card);
+      function applyPositions() {
+        cards.forEach(function(card, i) {
+          card.classList.remove('pos-front', 'pos-middle', 'pos-back');
+          card.classList.add(positions[i]);
         });
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', attachToCards);
-      } else {
-        attachToCards();
+      function shuffle() {
+        var last = positions.pop();
+        positions.unshift(last);
+        applyPositions();
       }
+
+      function pauseFor20() {
+        paused = true;
+        clearTimeout(pauseTimer);
+        pauseTimer = setTimeout(function() { paused = false; }, 20000);
+      }
+
+      stack.addEventListener('mousedown', pauseFor20);
+      stack.addEventListener('touchstart', pauseFor20, { passive: true });
+
+      setInterval(function() { if (!paused) shuffle(); }, 7000);
     })();
+
+    /* FAQ Accordion */
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const body = item.querySelector('.faq-body');
+      const isOpen = item.classList.contains('open');
+
+      // Close all other open items (single-open behavior)
+      document.querySelectorAll('.faq-item.open').forEach(openItem => {
+        if (openItem !== item) {
+          openItem.classList.remove('open');
+          const ob = openItem.querySelector('.faq-body');
+          ob.style.height = '0';
+          // Also close nested sub-items
+          openItem.querySelectorAll('.faq-sub-item.open').forEach(sub => {
+            sub.classList.remove('open');
+            sub.querySelector('.faq-sub-body').style.height = '0';
+          });
+        }
+      });
+
+      if (isOpen) {
+        item.classList.remove('open');
+        body.style.height = '0';
+      } else {
+        item.classList.add('open');
+        body.style.height = body.scrollHeight + 'px';
+      }
+    }
+
+    function toggleSub(btn) {
+      const subItem = btn.closest('.faq-sub-item');
+      const subBody = subItem.querySelector('.faq-sub-body');
+      const parentBody = subItem.closest('.faq-body');
+      const parentItem = subItem.closest('.faq-item');
+      const isOpen = subItem.classList.contains('open');
+
+      if (isOpen) {
+        subItem.classList.remove('open');
+        subBody.style.height = '0';
+      } else {
+        subItem.classList.add('open');
+        subBody.style.height = subBody.scrollHeight + 'px';
+      }
+
+      // Re-measure parent faq-body height so it expands to fit the sub-content
+      if (parentItem.classList.contains('open')) {
+        parentBody.style.height = 'auto';
+        const fullH = parentBody.scrollHeight;
+        parentBody.style.height = fullH + 'px';
+      }
+    }
   </script>
+
 
 </body>
 </html>
