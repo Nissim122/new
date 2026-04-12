@@ -470,6 +470,81 @@
       font-weight: 600;
       color: #5dc8e0;
     }
+
+    /* ── Hamburger button ── */
+    .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      flex-shrink: 0;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.85);
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.2s;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 767px) {
+      /* Nav */
+      .nav-inner { max-width: calc(100% - 2rem) !important; }
+      .hamburger-btn { display: flex; }
+      .nav-cta-desktop { display: none !important; }
+      .nav-links-desktop { display: none !important; }
+
+      /* Hero */
+      .hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+      }
+      .hero-text-col { text-align: center; }
+      .hero-text-col p { max-width: 100% !important; }
+      .hero-text-col > div { align-items: center !important; }
+      /* Hide entire image column (person + bubbles) on mobile */
+      .hero-image-col { display: none !important; }
+      .bubble-tag { display: none !important; }
+      /* Hero section height */
+      .hero-section { min-height: auto !important; padding-top: 3rem !important; padding-bottom: 3rem !important; }
+
+      /* CTA Banner */
+      .cta-banner-inner {
+        max-width: 95% !important;
+        flex-direction: column !important;
+        padding: 1.5rem 1.25rem !important;
+        gap: 1.25rem !important;
+      }
+      .cta-banner-headline { white-space: normal !important; font-size: 1rem !important; }
+      .cta-banner-form {
+        flex-direction: column !important;
+        gap: 0.6rem !important;
+      }
+
+      /* Results */
+      .results-flex {
+        flex-direction: column !important;
+        gap: 2.5rem !important;
+        align-items: center !important;
+        min-height: auto !important;
+      }
+      .results-about { max-width: 100% !important; min-width: 0 !important; }
+      .testi-stack-wrap { width: 280px !important; margin: 0 auto; }
+      .shuffle-card { width: 280px !important; }
+
+      /* General section padding */
+      section { padding-left: 1rem !important; padding-right: 1rem !important; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-image-col > div > img { width: 160px !important; }
+      nav { padding: 0.5rem 0.75rem !important; }
+    }
   </style>
 </head>
 
@@ -485,7 +560,7 @@
       <img src="brand_assets/icons/עיצוב ללא שם (1).svg" alt="לוגו" style="height: 114px; width: auto; display: block; flex-shrink: 0; filter: brightness(0) invert(1);" />
 
       <!-- Links (center) -->
-      <div style="display: flex; gap: 2.5rem;" class="hidden md:flex">
+      <div style="display: flex; gap: 2.5rem;" class="hidden md:flex nav-links-desktop">
         <a href="#" style="color: #e0176b; font-weight: 700;">דף הבית</a>
         <a href="#results">תוצאות</a>
         <a href="#process">תהליך</a>
@@ -493,11 +568,29 @@
       </div>
 
       <!-- CTA (visual left) -->
-      <a href="#contact" class="btn-cta" style="font-size: 0.85rem; padding: 0.5rem 1.25rem;">
+      <a href="#contact" class="btn-cta nav-cta-desktop" style="font-size: 0.85rem; padding: 0.5rem 1.25rem;">
         לפרטים נוספים <span class="btn-arrow">◄</span>
       </a>
+
+      <!-- Hamburger (mobile only) -->
+      <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="תפריט">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile Navigation Menu -->
+  <div id="mobile-menu" style="position: fixed; inset: 0; background: rgba(10,15,30,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;">
+    <a href="#" onclick="closeMobileMenu()" style="color: #e0176b; font-weight: 800; font-size: 1.5rem; text-decoration: none;">דף הבית</a>
+    <a href="#results" onclick="closeMobileMenu()" style="color: rgba(255,255,255,0.85); font-weight: 600; font-size: 1.5rem; text-decoration: none;">תוצאות</a>
+    <a href="#process" onclick="closeMobileMenu()" style="color: rgba(255,255,255,0.85); font-weight: 600; font-size: 1.5rem; text-decoration: none;">תהליך</a>
+    <a href="#contact" onclick="closeMobileMenu()" style="color: rgba(255,255,255,0.85); font-weight: 600; font-size: 1.5rem; text-decoration: none;">צרו קשר</a>
+    <a href="#contact" onclick="closeMobileMenu()" class="btn-cta" style="font-size: 1rem; padding: 0.75rem 2rem; margin-top: 0.5rem;">
+      לתיאום פגישה <span class="btn-arrow">◄</span>
+    </a>
+  </div>
 
 
   <main>
@@ -505,15 +598,15 @@
   <!-- ═══════════════════════════════════
        HERO
   ═══════════════════════════════════ -->
-  <section style="background: #0e1628; padding: 4rem 1.5rem 0; min-height: 92vh; display: flex; align-items: center; position: relative; overflow: hidden;">
+  <section class="hero-section" style="background: #0e1628; padding: 4rem 1.5rem 0; min-height: 92vh; display: flex; align-items: center; position: relative; overflow: hidden;">
 
     <!-- Background subtle glow -->
     <div style="position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(33,150,176,0.12) 0%, transparent 65%); pointer-events: none;"></div>
 
-    <div style="max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 1;">
+    <div class="hero-grid" style="max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 1;">
 
       <!-- RIGHT: Text content -->
-      <div class="reveal">
+      <div class="reveal hero-text-col">
 
 
         <h1 style="font-size: clamp(2.8rem, 6vw, 4.4rem); font-weight: 900; line-height: 1.15; margin-bottom: 1.25rem; letter-spacing: -0.02em;">
@@ -553,7 +646,7 @@
       </div>
 
       <!-- LEFT: Person image + bubbles -->
-      <div class="reveal" style="position: relative; display: flex; justify-content: center; align-items: flex-end; min-height: 570px; transition-delay: 0.15s;">
+      <div class="reveal hero-image-col" style="position: relative; display: flex; justify-content: center; align-items: flex-end; min-height: 570px; transition-delay: 0.15s;">
 
         <!-- Person placeholder -->
         <div style="position: relative; z-index: 2;">
@@ -747,15 +840,15 @@
     .cta-banner-input { direction: rtl; text-align: right; }
   </style>
   <section dir="rtl" style="background: #0b1220; padding: 2.5rem 1.5rem;">
-    <div style="max-width: 72%; margin: 0 auto; background: #2196b0; border-radius: 16px; padding: 2rem 2.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem;">
+    <div class="cta-banner-inner" style="max-width: 72%; margin: 0 auto; background: #2196b0; border-radius: 16px; padding: 2rem 2.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem;">
 
       <!-- Right: headline -->
-      <p style="font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 700; color: #fff; line-height: 1.5; white-space: nowrap; text-align: right;">
+      <p class="cta-banner-headline" style="font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 700; color: #fff; line-height: 1.5; white-space: nowrap; text-align: right;">
         נשמע מעניין?<br>בואו לשמוע איך אנחנו יכולים לייעל את העסק שלך:
       </p>
 
       <!-- Left: form -->
-      <div style="display: flex; gap: 0.75rem; align-items: flex-start; flex: 2; min-width: 0;">
+      <div class="cta-banner-form" style="display: flex; gap: 0.75rem; align-items: flex-start; flex: 2; min-width: 0;">
 
         <!-- שם + צ'קבוקס תחתיו -->
         <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 0;">
@@ -793,8 +886,8 @@
       </div>
 
       <!-- Two-column: cards left + about text right -->
-      <div class="reveal" style="direction: ltr; display: flex; justify-content: space-between; align-items: center; gap: 10rem; flex-wrap: wrap; min-height: 500px; transition-delay: 0.12s; padding-left: 0;">
-        <div id="testi-stack" style="position: relative; height: 400px; width: 320px; user-select: none; flex-shrink: 0;">
+      <div class="reveal results-flex" style="direction: ltr; display: flex; justify-content: space-between; align-items: center; gap: 10rem; flex-wrap: wrap; min-height: 500px; transition-delay: 0.12s; padding-left: 0;">
+        <div id="testi-stack" class="testi-stack-wrap" style="position: relative; height: 400px; width: 320px; user-select: none; flex-shrink: 0;">
 
           <!-- Card 0 -->
           <div class="testi-card shuffle-card pos-front" data-idx="0">
@@ -850,7 +943,7 @@
         </div>
 
         <!-- About me — right column -->
-        <div dir="rtl" style="flex: 1; min-width: 280px; max-width: 520px;">
+        <div dir="rtl" class="results-about" style="flex: 1; min-width: 280px; max-width: 520px;">
           <h2 style="font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 900; letter-spacing: -0.03em; color: #fff; margin: 0 0 1.5rem;">היי, אני ניסים</h2>
 
           <p style="font-size: 1.15rem; line-height: 1.9; color: rgba(255,255,255,0.95); font-weight: 500; margin-bottom: 1.4rem;">
@@ -1396,6 +1489,18 @@
         // Measure with sub-bodies at current heights (all 0 since never opened)
         body.style.height = body.scrollHeight + 'px';
       }
+    }
+
+    /* Mobile menu toggle */
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const isOpen = menu.classList.contains('open');
+      menu.classList.toggle('open', !isOpen);
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.body.style.overflow = '';
     }
 
     function toggleSub(btn) {
