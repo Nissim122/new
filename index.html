@@ -158,6 +158,51 @@
       100% { transform: translateY(0px); }
     }
 
+    /* ─── Global custom checkbox ──────────────────────────────────────── */
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border-radius: 5px;
+      border: 1.5px solid rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.07);
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      vertical-align: middle;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    input[type="checkbox"]:hover {
+      border-color: rgba(33,150,176,0.65);
+    }
+    input[type="checkbox"]:checked {
+      background: #2196b0;
+      border-color: #2196b0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 18l-5-5'/%3E%3C/svg%3E");
+      background-size: 11px 11px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    input[type="checkbox"]:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px #0e1628, 0 0 0 4px rgba(33,150,176,0.55);
+    }
+    input[type="checkbox"]:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    /* ─────────────────────────────────────────────────────────────────── */
+
+    /* Sparkles on testi-cards */
+    @keyframes sparkle-pop {
+      0%   { opacity: 0; transform: scale(0) rotate(75deg); }
+      45%  { opacity: 1; transform: scale(1) rotate(120deg); }
+      100% { opacity: 0; transform: scale(0) rotate(150deg); }
+    }
+    .testi-card { position: relative; overflow: visible !important; }
+
     /* Circle service icons */
     .service-circle {
       display: flex;
@@ -578,83 +623,41 @@
 
 
   <!-- ═══════════════════════════════════
-       SERVICES — "אילו אוטומציות קיימות?"
+       MINI CONTACT CTA BANNER
   ═══════════════════════════════════ -->
-  <section id="services" style="background: #0a1220; padding: 5rem 1.5rem;">
-    <div style="max-width: 1100px; margin: 0 auto;">
+  <style>
+    .cta-banner-input::placeholder { color: rgba(255,255,255,0.85); }
+    .cta-banner-input { direction: rtl; text-align: right; }
+  </style>
+  <section dir="rtl" style="background: #0b1220; padding: 2.5rem 1.5rem;">
+    <div style="max-width: 72%; margin: 0 auto; background: #2196b0; border-radius: 16px; padding: 2rem 2.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem;">
 
-      <div class="reveal" style="text-align: center; margin-bottom: 3.5rem;">
-        <div class="tag-chip" style="margin-bottom: 1rem; display: inline-flex;">🔧 שירותים</div>
-        <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
-          אילו אוטומציות קיימות ?
-        </h2>
-        <p style="color: rgba(255,255,255,0.5); font-size: 0.95rem; max-width: 480px; margin: 0 auto;">
-          כל הכלים, כל הפלטפורמות, כל התהליכים — אנחנו מחברים ביניהם.
-        </p>
-      </div>
+      <!-- Right: headline -->
+      <p style="font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 700; color: #fff; line-height: 1.5; white-space: nowrap; text-align: right;">
+        נשמע מעניין?<br>בואו לשמוע איך אנחנו יכולים לייעל את העסק שלך:
+      </p>
 
-      <!-- Circle icons grid -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 2rem 1.5rem; justify-items: center; margin-bottom: 3rem;">
+      <!-- Left: form -->
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start; flex: 2; min-width: 0;">
 
-        <div class="service-circle reveal" style="transition-delay: 0.05s;">
-          <div class="circle">🤖</div>
-          <div class="label">סוכני AI חכמים</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.1s;">
-          <div class="circle">⚡</div>
-          <div class="label">Make / Zapier</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.15s;">
-          <div class="circle">💬</div>
-          <div class="label">צ׳אטבוטים</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.2s;">
-          <div class="circle">📧</div>
-          <div class="label">אוטומציית מייל</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.25s;">
-          <div class="circle">📱</div>
-          <div class="label">WhatsApp Bot</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.3s;">
-          <div class="circle">🛒</div>
-          <div class="label">אוטומציית מכירות</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.35s;">
-          <div class="circle">📊</div>
-          <div class="label">דשבורדים & BI</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.4s;">
-          <div class="circle">🔗</div>
-          <div class="label">CRM חכם</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.45s;">
-          <div class="circle">📋</div>
-          <div class="label">ניהול לידים</div>
-        </div>
-        <div class="service-circle reveal" style="transition-delay: 0.5s;">
-          <div class="circle">🧾</div>
-          <div class="label">חשבוניות אוטו׳</div>
+        <!-- שם + צ'קבוקס תחתיו -->
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 0;">
+          <input id="banner-name" type="text" placeholder="שם" class="cta-banner-input" style="width: 100%; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(255,255,255,0.15); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(255,255,255,0.25)'" onblur="this.style.background='rgba(255,255,255,0.15)'" />
+          <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: rgba(255,255,255,0.8); cursor: pointer; white-space: nowrap;">
+            <input id="banner-privacy" type="checkbox" required />
+            אני מסכים למסור את פרטיי בהתאם
+            <a href="#" style="color: rgba(255,255,255,0.95); text-decoration: underline;">למדיניות הפרטיות</a>
+          </label>
         </div>
 
-      </div>
+        <input id="banner-phone" type="tel" placeholder="טלפון" class="cta-banner-input" style="flex: 1; min-width: 0; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(255,255,255,0.15); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(255,255,255,0.25)'" onblur="this.style.background='rgba(255,255,255,0.15)'" />
+        <input id="banner-business" type="text" placeholder="תחום העסק" class="cta-banner-input" style="flex: 1; min-width: 0; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(255,255,255,0.15); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(255,255,255,0.25)'" onblur="this.style.background='rgba(255,255,255,0.15)'" />
+        <button class="btn-cta" onclick="handleBannerSubmit(event)" style="background: #fff; color: #2196b0; white-space: nowrap; padding: 0.65rem 1.5rem; font-size: 0.95rem; border-radius: 8px; font-weight: 800; flex-shrink: 0;">שליחה <span class="btn-arrow">◄</span></button>
 
-      <!-- Bottom CTA -->
-      <div class="reveal" style="text-align: center; transition-delay: 0.3s;">
-        <p style="font-size: 0.9rem; color: rgba(255,255,255,0.45); margin-bottom: 1.25rem;">
-          לא רואה את מה שאתה צריך? בוא נדבר — בדרך כלל יש פתרון.
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-          <a href="#contact" class="btn-cta">לקבלת פתרון מותאם <span class="btn-arrow">◄</span></a>
-          <a href="#process" class="btn-outline">סיפורי הצלחה</a>
-        </div>
       </div>
 
     </div>
   </section>
-
-
-
 
   <!-- ═══════════════════════════════════
        RESULTS — "עזרתי לעשרות עסקים"
@@ -663,7 +666,6 @@
     <div style="max-width: 1100px; margin: 0 auto;">
 
       <div class="reveal" style="text-align: center; margin-bottom: 3.5rem;">
-        <div class="tag-chip" style="margin-bottom: 1rem; display: inline-flex;">⭐ תוצאות</div>
         <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
           עזרתי לעשרות עסקים<br />
           <span style="color: rgba(255,255,255,0.6); font-size: 0.85em;">וזה מה שהם אומרים :</span>
@@ -789,6 +791,13 @@
           <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">ספר לנו על העסק שלך</label>
           <textarea rows="4" class="form-input" placeholder="באיזה תחום אתה פועל? אילו תהליכים תרצה לייעל?" style="resize: vertical;"></textarea>
         </div>
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.55); cursor: pointer; justify-content: flex-end;">
+            <a href="#" style="color: rgba(255,255,255,0.75); text-decoration: underline;">למדיניות הפרטיות</a>
+            אני מסכים למסור את פרטיי בהתאם
+            <input id="contact-privacy" type="checkbox" required />
+          </label>
+        </div>
         <button type="submit" class="btn-cta" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.875rem;">
           שליחת פנייה <span class="btn-arrow">◄</span>
         </button>
@@ -866,14 +875,109 @@
       update(); // set initial state on page load
     })();
 
-    /* Form */
-    function handleSubmit(e) {
-      e.preventDefault();
+    /* ── Shared submission logic ── */
+    const WEBHOOK = 'https://hook.eu2.make.com/cpxny5k9mmwahg9dp7pz7e9oimwqo6ug';
+    const NOTIFY_EMAIL = 'nisimelec77@gmail.com';
+
+    function showToast() {
       const t = document.getElementById('toast');
       t.style.display = 'block';
       setTimeout(() => { t.style.display = 'none'; }, 4000);
+    }
+
+    async function sendData(payload) {
+      try {
+        await fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...payload, to_email: NOTIFY_EMAIL, source: 'CLIX Automations Website' })
+        });
+      } catch (err) {
+        console.error('Webhook error:', err);
+      }
+    }
+
+    /* Banner form (blue section) */
+    async function handleBannerSubmit(e) {
+      e.preventDefault();
+      const name     = document.getElementById('banner-name').value.trim();
+      const phone    = document.getElementById('banner-phone').value.trim();
+      const business = document.getElementById('banner-business').value.trim();
+      const privacy  = document.getElementById('banner-privacy').checked;
+      if (!name) { document.getElementById('banner-name').focus(); return; }
+      if (!privacy) { document.getElementById('banner-privacy').reportValidity(); return; }
+      await sendData({ form: 'banner', name, phone, business });
+      document.getElementById('banner-name').value = '';
+      document.getElementById('banner-phone').value = '';
+      document.getElementById('banner-business').value = '';
+      showToast();
+    }
+
+    /* Main contact form */
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const inputs   = e.target.querySelectorAll('input, textarea');
+      const name     = inputs[0].value.trim();
+      const phone    = inputs[1].value.trim();
+      const email    = inputs[2].value.trim();
+      const message  = inputs[3].value.trim();
+      await sendData({ form: 'contact', name, phone, email, message });
+      showToast();
       e.target.reset();
     }
+  </script>
+
+  <!-- Sparkles on testimonial cards -->
+  <script>
+    (function initSparkles() {
+      const STAR_PATH = 'M9.82531 0.843845C10.0553 0.215178 10.9446 0.215178 11.1746 0.843845L11.8618 2.72026C12.4006 4.19229 12.3916 6.39157 13.5 7.5C14.6084 8.60843 16.8077 8.59935 18.2797 9.13822L20.1561 9.82534C20.7858 10.0553 20.7858 10.9447 20.1561 11.1747L18.2797 11.8618C16.8077 12.4007 14.6084 12.3916 13.5 13.5C12.3916 14.6084 12.4006 16.8077 11.8618 18.2798L11.1746 20.1562C10.9446 20.7858 10.0553 20.7858 9.82531 20.1562L9.13819 18.2798C8.59932 16.8077 8.60843 14.6084 7.5 13.5C6.39157 12.3916 4.19225 12.4007 2.72023 11.8618L0.843814 11.1747C0.215148 10.9447 0.215148 10.0553 0.843814 9.82534L2.72023 9.13822C4.19225 8.59935 6.39157 8.60843 7.5 7.5C8.60843 6.39157 8.59932 4.19229 9.13819 2.72026L9.82531 0.843845Z';
+      const COLORS  = ['#2196b0', '#e0176b', 'rgba(255,255,255,0.85)'];
+      const COUNT   = 7;
+      const NS      = 'http://www.w3.org/2000/svg';
+
+      function makeStar(card) {
+        const color    = COLORS[Math.floor(Math.random() * COLORS.length)];
+        const x        = (Math.random() * 108 - 4).toFixed(1);   // -4% … 104%
+        const y        = (Math.random() * 108 - 4).toFixed(1);
+        const size     = 12 + Math.random() * 10;
+        const delay    = (Math.random() * 2.5).toFixed(2);
+        const duration = (0.7 + Math.random() * 0.9).toFixed(2);
+
+        const svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('width',   size);
+        svg.setAttribute('height',  size);
+        svg.setAttribute('viewBox', '0 0 21 21');
+        svg.setAttribute('fill',    'none');
+        svg.style.cssText = [
+          'position:absolute',
+          `left:${x}%`,
+          `top:${y}%`,
+          'pointer-events:none',
+          'z-index:20',
+          `animation:sparkle-pop ${duration}s ease-in-out ${delay}s infinite`,
+          'transform-origin:center',
+          'opacity:0',
+        ].join(';');
+
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('d',    STAR_PATH);
+        path.setAttribute('fill', color);
+        svg.appendChild(path);
+        card.appendChild(svg);
+      }
+
+      function attachToCards() {
+        document.querySelectorAll('.testi-card').forEach(card => {
+          for (let i = 0; i < COUNT; i++) makeStar(card);
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', attachToCards);
+      } else {
+        attachToCards();
+      }
+    })();
   </script>
 
 </body>
