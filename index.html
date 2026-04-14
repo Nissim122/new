@@ -1180,10 +1180,10 @@
        CONTACT FORM
   ═══════════════════════════════════ -->
   <section id="contact" style="background: #0e1628; padding: 5rem 1.5rem;">
-    <div style="max-width: 680px; margin: 0 auto;">
+    <div style="max-width: 1100px; margin: 0 auto;">
 
       <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
-<h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
+        <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; margin-bottom: 0.75rem; letter-spacing: -0.02em;">
           מוכן לקחת את העסק<br />
           <span style="color: #2196b0;">לשלב הבא?</span>
         </h2>
@@ -1192,41 +1192,114 @@
         </p>
       </div>
 
-      <form class="reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2rem; transition-delay: 0.15s;" onsubmit="handleSubmit(event)">
-        <div class="form-grid-2">
-          <div>
-            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">שם מלא *</label>
-            <input type="text" class="form-input" placeholder="ישראל ישראלי" required />
+      <!-- Grid: [spacer] [form] [icons] — RTL: spacer=right, icons=left -->
+      <div class="contact-grid" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 2rem; max-width: 1100px; margin: 0 auto;">
+      <!-- spacer right column (RTL: visually right) -->
+      <div></div>
+
+        <!-- Form (centered) -->
+        <form class="reveal" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2rem; transition-delay: 0.15s;" onsubmit="handleSubmit(event)">
+          <div class="form-grid-2">
+            <div>
+              <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">שם מלא *</label>
+              <input type="text" class="form-input" placeholder="ישראל ישראלי" required />
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">טלפון</label>
+              <input type="tel" class="form-input" placeholder="050-0000000" inputmode="numeric" minlength="9" maxlength="15" pattern="[0-9+\-\s]*" oninput="this.value=this.value.replace(/[^\d+\-\s]/g,'')" />
+            </div>
           </div>
-          <div>
-            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">טלפון</label>
-            <input type="tel" class="form-input" placeholder="050-0000000" inputmode="numeric" minlength="9" maxlength="15" pattern="[0-9+\-\s]*" oninput="this.value=this.value.replace(/[^\d+\-\s]/g,'')" />
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">אימייל *</label>
+            <input type="email" class="form-input" placeholder="you@company.com" required
+              oninput="this.style.direction='ltr'; this.style.textAlign='left';"
+              onblur="if(!this.value){this.style.direction='';this.style.textAlign='';}" />
           </div>
+          <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">ספר לנו על העסק שלך</label>
+            <textarea rows="4" class="form-input" placeholder="באיזה תחום אתה פועל? אילו תהליכים תרצה לייעל?" style="resize: vertical;" maxlength="1000"></textarea>
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.65); cursor: pointer; direction: rtl;">
+              <input id="contact-privacy" type="checkbox" required />
+              אני מסכים למסור את פרטיי בהתאם
+              <a href="privacy.html" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.85); text-decoration: underline;">למדיניות הפרטיות</a>
+            </label>
+          </div>
+          <button id="contact-submit" type="submit" class="btn-cta" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.875rem;">
+            שליחת פנייה <span class="btn-arrow">◄</span>
+          </button>
+        </form>
+
+        <!-- Contact icons — left column of the grid -->
+        <div class="reveal contact-side-icons" style="display: flex; flex-direction: column; gap: 1.25rem; transition-delay: 0.25s; padding-top: 0.5rem; align-self: center;">
+
+          <p style="font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.1rem;">צור קשר</p>
+
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener"
+             style="display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s, transform 0.2s;"
+             onmouseover="this.style.color='#2196b0';this.style.transform='translateX(-3px)'"
+             onmouseout="this.style.color='rgba(255,255,255,0.6)';this.style.transform='translateX(0)'">
+            <span style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;background:rgba(33,150,176,0.12);border:1px solid rgba(33,150,176,0.25);flex-shrink:0;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+            <span style="font-size: 0.88rem; font-weight: 600;">Instagram</span>
+          </a>
+
+          <!-- WhatsApp -->
+          <a href="https://wa.me/972532407762" target="_blank" rel="noopener"
+             style="display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s, transform 0.2s;"
+             onmouseover="this.style.color='#2196b0';this.style.transform='translateX(-3px)'"
+             onmouseout="this.style.color='rgba(255,255,255,0.6)';this.style.transform='translateX(0)'">
+            <span style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;background:rgba(33,150,176,0.12);border:1px solid rgba(33,150,176,0.25);flex-shrink:0;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </span>
+            <span style="font-size: 0.88rem; font-weight: 600; direction: ltr;">+972 53-240-7762</span>
+          </a>
+
+          <!-- Email -->
+          <a href="mailto:nisimelec77@gmail.com"
+             style="display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s, transform 0.2s;"
+             onmouseover="this.style.color='#2196b0';this.style.transform='translateX(-3px)'"
+             onmouseout="this.style.color='rgba(255,255,255,0.6)';this.style.transform='translateX(0)'">
+            <span style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:11px;background:rgba(33,150,176,0.12);border:1px solid rgba(33,150,176,0.25);flex-shrink:0;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <polyline points="2,4 12,13 22,4"/>
+              </svg>
+            </span>
+            <span style="font-size: 0.82rem; font-weight: 600; direction: ltr;">nisimelec77@gmail.com</span>
+          </a>
+
         </div>
-        <div style="margin-bottom: 1rem;">
-          <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">אימייל *</label>
-          <input type="email" class="form-input" placeholder="you@company.com" required
-            oninput="this.style.direction='ltr'; this.style.textAlign='left';"
-            onblur="if(!this.value){this.style.direction='';this.style.textAlign='';}" />
-        </div>
-        <div style="margin-bottom: 1.5rem;">
-          <label style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">ספר לנו על העסק שלך</label>
-          <textarea rows="4" class="form-input" placeholder="באיזה תחום אתה פועל? אילו תהליכים תרצה לייעל?" style="resize: vertical;" maxlength="1000"></textarea>
-        </div>
-        <div style="margin-bottom: 1.25rem;">
-          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.65); cursor: pointer; direction: rtl;">
-            <input id="contact-privacy" type="checkbox" required />
-            אני מסכים למסור את פרטיי בהתאם
-            <a href="privacy.html" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.85); text-decoration: underline;">למדיניות הפרטיות</a>
-          </label>
-        </div>
-        <button id="contact-submit" type="submit" class="btn-cta" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.875rem;">
-          שליחת פנייה <span class="btn-arrow">◄</span>
-        </button>
-      </form>
+
+      </div><!-- /grid wrapper -->
 
     </div>
   </section>
+
+  <style>
+    /* On small screens, collapse to single column — icons below form */
+    @media (max-width: 860px) {
+      #contact .contact-grid {
+        grid-template-columns: 1fr !important;
+      }
+      #contact .contact-grid > div:first-child { display: none; } /* hide spacer */
+      .contact-side-icons {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem !important;
+      }
+    }
+  </style>
 
 
   </main>
@@ -1236,8 +1309,8 @@
        FOOTER
   ═══════════════════════════════════ -->
   <footer style="background: #080e1a; border-top: 1px solid rgba(255,255,255,0.08); padding: 2rem 1.5rem;">
-    <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem;">
-      <p style="font-size: 0.75rem; color: rgba(255,255,255,0.2);">© 2025 CLIX Automations · כל הזכויות שמורות · <a href="privacy.html" style="color: rgba(255,255,255,0.35); text-decoration: none;">מדיניות פרטיות</a></p>
+    <div style="max-width: 1100px; margin: 0 auto; text-align: center;">
+      <p style="font-size: 0.75rem; color: rgba(255,255,255,0.2);">© 2026 CLIX Automations · כל הזכויות שמורות · <a href="privacy.html" style="color: rgba(255,255,255,0.35); text-decoration: none;">מדיניות פרטיות</a></p>
     </div>
   </footer>
 
@@ -1563,11 +1636,11 @@
     }
 
     /* Cookie consent */
-    (function() {
+    document.addEventListener('DOMContentLoaded', function() {
       if (!localStorage.getItem('cookie-consent')) {
         document.getElementById('cookie-banner').style.display = 'flex';
       }
-    })();
+    });
     function cookieAccept() {
       localStorage.setItem('cookie-consent', 'accepted');
       const b = document.getElementById('cookie-banner');
@@ -1627,7 +1700,7 @@
     <div style="max-width: 860px; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
       <p style="font-family: 'Heebo', sans-serif; font-size: 0.88rem; color: rgba(255,255,255,0.68); line-height: 1.65; flex: 1; min-width: 200px;">
         🍪 אנו משתמשים בעוגיות לניתוח תנועה ושיפור חוויית הגלישה.
-        <a href="privacy.html#cookies" style="color: #2196b0; text-decoration: none; font-weight: 600; white-space: nowrap;">מדיניות פרטיות ועוגיות ◄</a>
+        <a href="privacy.html" style="color: #2196b0; text-decoration: none; font-weight: 600; white-space: nowrap;">מדיניות פרטיות ועוגיות ◄</a>
       </p>
       <div style="display: flex; gap: 0.65rem; flex-shrink: 0;">
         <button
