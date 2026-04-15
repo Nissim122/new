@@ -744,6 +744,24 @@
       #process  { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
     }
 
+    /* ── CTA Banner inputs ── */
+    .cta-banner-input::placeholder { color: rgba(255,255,255,0.85); }
+    .cta-banner-input { direction: rtl; text-align: right; }
+
+    /* ── Contact grid responsive ── */
+    @media (max-width: 860px) {
+      #contact .contact-grid {
+        grid-template-columns: 1fr !important;
+      }
+      #contact .contact-grid > div:first-child { display: none; }
+      .contact-side-icons {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -759,7 +777,9 @@
     <div class="nav-inner">
 
       <!-- Logo (right) -->
-      <img src="brand_assets/icons/עיצוב ללא שם (1).svg" alt="לוגו" style="height: 44px; width: auto; display: block; flex-shrink: 0; filter: brightness(0) invert(1);" />
+      <a href="#" aria-label="CLIX Automations — דף הבית" style="text-decoration: none; display: flex; align-items: baseline; gap: 0.15rem; flex-shrink: 0; direction: ltr;">
+        <span style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.75rem; letter-spacing: -0.04em; color: #ffffff;">CLIX</span><span style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1.35rem; letter-spacing: -0.02em; color: #e0176b;">Automations</span>
+      </a>
 
       <!-- Links (center) -->
       <div style="display: flex; gap: 2.5rem;" class="hidden md:flex nav-links-desktop">
@@ -784,7 +804,7 @@
   </nav>
 
   <!-- Mobile Navigation Menu -->
-  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="תפריט ניווט" style="position: fixed; inset: 0; background: rgba(10,15,30,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;">
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="תפריט ניווט" style="position: fixed; inset: 0; background: rgba(10,15,30,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;">
     <a href="#" onclick="closeMobileMenu()" style="color: #e0176b; font-weight: 800; font-size: 1.5rem; text-decoration: none;">דף הבית</a>
     <a href="#results" onclick="closeMobileMenu()" style="color: rgba(255,255,255,0.85); font-weight: 600; font-size: 1.5rem; text-decoration: none;">תוצאות</a>
     <a href="#process" onclick="closeMobileMenu()" style="color: rgba(255,255,255,0.85); font-weight: 600; font-size: 1.5rem; text-decoration: none;">תהליך</a>
@@ -851,20 +871,22 @@
       <div class="reveal hero-image-col" style="position: relative; display: flex; justify-content: center; align-items: flex-end; min-height: 570px; transition-delay: 0.15s;">
 
         <!-- Person placeholder -->
-        <div style="position: relative; z-index: 2;">
+        <div style="position: relative; z-index: 2; transform: translateX(20%);">
           <img src="brand_assets/profile_pic_2_nobg.png"
                alt="מומחה אוטומציה"
                style="width: 420px; height: 560px; object-fit: contain; object-position: center bottom; display: block;" />
         </div>
 
-        <!-- Floating bubbles — local SVG icons -->
+        <!-- Floating bubbles — shifted 15% right -->
+        <div style="position: absolute; inset: 0; transform: translateX(15%); pointer-events: none;">
+
         <!-- ימין: WhatsApp, Instagram, Facebook, Excel, Fillout + ClickUp left of Instagram, Zoom -->
         <!-- ClickUp | left of Instagram -->
         <div class="bubble-tag" style="top: 175px; right: 55px; --delay: 0.5s; --bx: -125px; --by: 60px; background: transparent; width: 74px; height: 74px;">
           <img src="brand_assets/icons/S.png" alt="ClickUp" style="width: 74px; height: 74px;" />
         </div>
         <!-- Zoom outer ring right -->
-        <div class="bubble-tag" style="top: 308px; right: -128px; --delay: 1.1s; --bx: -260px; --by: -38px; background: transparent; width: 74px; height: 74px;">
+        <div class="bubble-tag" style="top: 250px; right: -128px; --delay: 1.1s; --bx: -260px; --by: -38px; background: transparent; width: 74px; height: 74px;">
           <img src="brand_assets/icons/zoom.png" alt="Zoom" style="width: 74px; height: 74px;" />
         </div>
         <!-- WhatsApp r=60 | cy=70 cx=50 -->
@@ -913,6 +935,8 @@
         <div class="bubble-tag" style="top: 455px; left: -5px; --delay: 1.4s; --bx: 215px; --by: -225px; background: #10a37f; width: 100px; height: 100px;">
           <img src="brand_assets/icons/openai.svg" alt="ChatGPT" style="width: 60px; height: 60px;" />
         </div>
+
+        </div><!-- end bubbles wrapper -->
       </div>
 
     </div>
@@ -1037,10 +1061,6 @@
   <!-- ═══════════════════════════════════
        MINI CONTACT CTA BANNER
   ═══════════════════════════════════ -->
-  <style>
-    .cta-banner-input::placeholder { color: rgba(255,255,255,0.85); }
-    .cta-banner-input { direction: rtl; text-align: right; }
-  </style>
   <section dir="rtl" style="background: #0b1220; padding: 2.5rem 1.5rem;">
     <div class="cta-banner-inner" style="max-width: 72%; margin: 0 auto; background: #2196b0; border-radius: 16px; padding: 2rem 2.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem;">
 
@@ -1205,8 +1225,8 @@
           <div class="faq-body" id="faq-body-1" role="region" aria-label="תשובה: מה זה בכלל אוטומציה עסקית?">
             <div class="faq-sub-item">
               <div class="faq-sub">
-                <button class="faq-sub-trigger" onclick="toggleSub(this)">
-                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <button class="faq-sub-trigger" onclick="toggleSub(this)" aria-expanded="false">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   <span>מה ההגדרה הפשוטה של אוטומציה?</span>
                 </button>
                 <div class="faq-sub-body">
@@ -1216,8 +1236,8 @@
             </div>
             <div class="faq-sub-item">
               <div class="faq-sub">
-                <button class="faq-sub-trigger" onclick="toggleSub(this)">
-                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <button class="faq-sub-trigger" onclick="toggleSub(this)" aria-expanded="false">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   <span>מי יכול להרוויח מאוטומציה?</span>
                 </button>
                 <div class="faq-sub-body">
@@ -1237,8 +1257,8 @@
           <div class="faq-body" id="faq-body-2" role="region" aria-label="תשובה: כמה זמן לוקח לבנות אוטומציה?">
             <div class="faq-sub-item">
               <div class="faq-sub">
-                <button class="faq-sub-trigger" onclick="toggleSub(this)">
-                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <button class="faq-sub-trigger" onclick="toggleSub(this)" aria-expanded="false">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   <span>מה לוח הזמנים הממוצע?</span>
                 </button>
                 <div class="faq-sub-body">
@@ -1248,8 +1268,8 @@
             </div>
             <div class="faq-sub-item">
               <div class="faq-sub">
-                <button class="faq-sub-trigger" onclick="toggleSub(this)">
-                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <button class="faq-sub-trigger" onclick="toggleSub(this)" aria-expanded="false">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   <span>מה קורה אחרי שהאוטומציה עולה לאוויר?</span>
                 </button>
                 <div class="faq-sub-body">
@@ -1269,8 +1289,8 @@
           <div class="faq-body" id="faq-body-3" role="region" aria-label="תשובה: האם צריך ידע טכני מצד הלקוח?">
             <div class="faq-sub-item">
               <div class="faq-sub">
-                <button class="faq-sub-trigger" onclick="toggleSub(this)">
-                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <button class="faq-sub-trigger" onclick="toggleSub(this)" aria-expanded="false">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   <span>מה אני צריך להכין לפני הפגישה הראשונה?</span>
                 </button>
                 <div class="faq-sub-body">
@@ -1280,8 +1300,8 @@
             </div>
             <div class="faq-sub-item">
               <div class="faq-sub">
-                <button class="faq-sub-trigger" onclick="toggleSub(this)">
-                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <button class="faq-sub-trigger" onclick="toggleSub(this)" aria-expanded="false">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   <span>האם אני צריך לתחזק את האוטומציה לבד?</span>
                 </button>
                 <div class="faq-sub-body">
@@ -1301,8 +1321,8 @@
           <div class="faq-body" id="faq-body-4" role="region" aria-label="תשובה: עם אילו כלים וערוצים אתה עובד?">
             <div class="faq-sub-item">
               <div class="faq-sub">
-                <button class="faq-sub-trigger" onclick="toggleSub(this)">
-                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <button class="faq-sub-trigger" onclick="toggleSub(this)" aria-expanded="false">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   <span>אילו פלטפורמות נתמכות?</span>
                 </button>
                 <div class="faq-sub-body">
@@ -1312,8 +1332,8 @@
             </div>
             <div class="faq-sub-item">
               <div class="faq-sub">
-                <button class="faq-sub-trigger" onclick="toggleSub(this)">
-                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <button class="faq-sub-trigger" onclick="toggleSub(this)" aria-expanded="false">
+                  <svg class="sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                   <span>האם אפשר לשלב AI בתוך האוטומציה?</span>
                 </button>
                 <div class="faq-sub-body">
@@ -1358,8 +1378,8 @@
               <input id="contact-name" type="text" class="form-input" placeholder="ישראל ישראלי" required autocomplete="name" />
             </div>
             <div>
-              <label for="contact-phone" style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">טלפון</label>
-              <input id="contact-phone" type="tel" class="form-input" placeholder="050-0000000" inputmode="numeric" minlength="9" maxlength="15" pattern="[0-9+\-\s]*" autocomplete="tel" oninput="this.value=this.value.replace(/[^\d+\-\s]/g,'')" />
+              <label for="contact-phone" style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">טלפון *</label>
+              <input id="contact-phone" type="tel" class="form-input" placeholder="050-0000000" inputmode="numeric" minlength="9" maxlength="15" pattern="[0-9+\-\s]*" autocomplete="tel" required oninput="this.value=this.value.replace(/[^\d+\-\s]/g,'')" />
             </div>
           </div>
           <div style="margin-bottom: 1rem;">
@@ -1438,21 +1458,6 @@
     </div>
   </section>
 
-  <style>
-    /* On small screens, collapse to single column — icons below form */
-    @media (max-width: 860px) {
-      #contact .contact-grid {
-        grid-template-columns: 1fr !important;
-      }
-      #contact .contact-grid > div:first-child { display: none; } /* hide spacer */
-      .contact-side-icons {
-        flex-direction: row !important;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem !important;
-      }
-    }
-  </style>
 
 
   </main>
@@ -1619,7 +1624,7 @@
     })();
 
     /* ── Shared submission logic ── */
-    const WEBHOOK = 'https://hook.eu2.make.com/cpxny5k9mmwahg9dp7pz7e9oimwqo6ug';
+    const WEBHOOK = 'https://hook.eu2.make.com/t78mm1bpxu3u881q4x1fgv40rlhgkl3g';
     const NOTIFY_EMAIL = 'nisimelec77@gmail.com';
 
     function showToast() {
@@ -1855,6 +1860,7 @@
 
       if (isOpen) {
         subItem.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
         // Pin first, then collapse
         subBody.style.height = subH + 'px';
         subBody.getBoundingClientRect();
@@ -1862,6 +1868,7 @@
         setHeightPx(parentBody, parentH - subH);
       } else {
         subItem.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
         subBody.style.height = subH + 'px';
         setHeightPx(parentBody, parentH + subH);
       }
