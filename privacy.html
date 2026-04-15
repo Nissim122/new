@@ -257,13 +257,13 @@
   <nav aria-label="ניווט ראשי">
     <div class="nav-inner">
 
-      <!-- Logo (right) -->
-      <img src="brand_assets/icons/עיצוב ללא שם (1).svg" alt="לוגו" style="height: 114px; width: auto; display: block; flex-shrink: 0; filter: brightness(0) invert(1);" />
-
-      <!-- CTA (visual left) -->
-      <a href="index.html#contact" class="btn-cta nav-cta-desktop" style="font-size: 0.85rem; padding: 0.5rem 1.25rem;">
-        לפרטים נוספים <span class="btn-arrow">◄</span>
+      <!-- Logo (right) — מקשר לדף הבית -->
+      <a href="index.html" aria-label="חזרה לדף הבית של CLIX Automations">
+        <img src="brand_assets/icons/עיצוב ללא שם (1).svg" alt="לוגו CLIX Automations" style="height: 114px; width: auto; display: block; flex-shrink: 0; filter: brightness(0) invert(1);" />
       </a>
+
+      <!-- חזרה לדף הבית (desktop) -->
+      <a href="index.html" class="nav-cta-desktop" style="font-size: 0.9rem; color: rgba(255,255,255,0.6); text-decoration: none;">← חזרה לדף הבית</a>
 
       <!-- Hamburger (mobile only) -->
       <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="פתח תפריט ניווט" aria-expanded="false" aria-controls="mobile-menu">
