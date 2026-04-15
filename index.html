@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CLIX Automations — סיסטם שעובד גם כשאתה לא</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 
@@ -1893,6 +1894,273 @@
     }
   </script>
 
+
+  <!-- ═══ Timed Offer Popup ═══ -->
+  <div id="offer-overlay" aria-hidden="true" style="
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    background: rgba(6, 10, 22, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  "></div>
+
+  <div
+    id="offer-popup"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="offer-title"
+    style="
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9991;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    "
+  >
+    <div style="
+      position: relative;
+      max-width: 440px;
+      width: 100%;
+      background: linear-gradient(145deg, rgba(20,26,46,0.97) 0%, rgba(14,22,40,0.99) 100%);
+      border: 1.5px solid rgba(255,255,255,0.10);
+      border-radius: 20px;
+      padding: 2.2rem 2rem 1.8rem;
+      box-shadow:
+        0 0 0 1px rgba(33,150,176,0.08),
+        0 24px 60px rgba(0,0,0,0.65),
+        0 4px 20px rgba(224,23,107,0.08);
+      text-align: center;
+      direction: rtl;
+      opacity: 0;
+      transform: translateY(28px) scale(0.96);
+      transition: opacity 0.4s cubic-bezier(0.34,1.4,0.64,1), transform 0.4s cubic-bezier(0.34,1.4,0.64,1);
+    " id="offer-card">
+
+      <!-- Close button -->
+      <button
+        onclick="closeOfferPopup()"
+        aria-label="סגור"
+        style="
+          position: absolute;
+          top: 0.85rem;
+          left: 0.85rem;
+          width: 32px; height: 32px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.13);
+          background: rgba(255,255,255,0.06);
+          color: rgba(255,255,255,0.5);
+          font-size: 1.1rem;
+          line-height: 1;
+          cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          transition: background 0.2s, color 0.2s;
+        "
+        onmouseover="this.style.background='rgba(255,255,255,0.12)'; this.style.color='#fff'"
+        onmouseout="this.style.background='rgba(255,255,255,0.06)'; this.style.color='rgba(255,255,255,0.5)'"
+      >✕</button>
+
+      <!-- Badge -->
+      <div style="
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: rgba(224,23,107,0.12);
+        border: 1px solid rgba(224,23,107,0.28);
+        border-radius: 100px;
+        padding: 0.3rem 0.9rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #f05090;
+        letter-spacing: 0.03em;
+        margin-bottom: 1.1rem;
+      ">
+        <span style="
+          width: 7px; height: 7px;
+          border-radius: 50%;
+          background: #e0176b;
+          box-shadow: 0 0 6px #e0176b;
+          display: inline-block;
+          animation: pulseDot 1.4s ease-in-out infinite;
+        "></span>
+        הצעה מוגבלת בזמן
+      </div>
+
+      <!-- Headline -->
+      <h2 id="offer-title" style="
+        font-family: 'Heebo', sans-serif;
+        font-size: 1.55rem;
+        font-weight: 900;
+        color: #fff;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.6rem;
+      ">ייעוץ אוטומציה ראשון — <span style="color: #e0176b;">בחינם</span></h2>
+
+      <!-- Sub -->
+      <p style="
+        font-size: 0.93rem;
+        color: rgba(255,255,255,0.60);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      ">נבדוק יחד איפה העסק שלך מבזבז זמן — ונציע פתרון קונקרטי. ללא התחייבות.</p>
+
+      <!-- Countdown -->
+      <div style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.82rem;
+        color: rgba(255,255,255,0.45);
+        font-weight: 600;
+      ">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        ההצעה תפוג בעוד
+        <span id="offer-countdown" style="
+          font-family: 'Inter', monospace;
+          font-size: 0.88rem;
+          color: #f05090;
+          font-weight: 700;
+          background: rgba(224,23,107,0.10);
+          padding: 0.1rem 0.5rem;
+          border-radius: 6px;
+        ">09:47</span>
+      </div>
+
+      <!-- CTA -->
+      <a
+        href="#contact"
+        onclick="closeOfferPopup()"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          width: 100%;
+          padding: 0.85rem 1.5rem;
+          background: linear-gradient(135deg, #e0176b 0%, #b8124f 100%);
+          color: #fff;
+          font-family: 'Heebo', sans-serif;
+          font-weight: 800;
+          font-size: 1.02rem;
+          border-radius: 12px;
+          border: none;
+          cursor: pointer;
+          text-decoration: none;
+          box-shadow: 0 4px 22px rgba(224,23,107,0.35);
+          transition: box-shadow 0.25s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+        "
+        onmouseover="this.style.boxShadow='0 8px 32px rgba(224,23,107,0.55)'; this.style.transform='translateY(-2px)'"
+        onmouseout="this.style.boxShadow='0 4px 22px rgba(224,23,107,0.35)'; this.style.transform='translateY(0)'"
+      >
+        קבל ייעוץ חינם עכשיו
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- Dismiss -->
+      <button
+        onclick="closeOfferPopup()"
+        style="
+          margin-top: 0.9rem;
+          background: none;
+          border: none;
+          color: rgba(255,255,255,0.32);
+          font-family: 'Heebo', sans-serif;
+          font-size: 0.8rem;
+          cursor: pointer;
+          transition: color 0.2s;
+        "
+        onmouseover="this.style.color='rgba(255,255,255,0.6)'"
+        onmouseout="this.style.color='rgba(255,255,255,0.32)'"
+      >לא תודה, אמשיך לגלוש</button>
+    </div>
+  </div>
+
+  <style>
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.75); }
+    }
+  </style>
+
+  <script>
+    (function () {
+      var OFFER_KEY = 'clix_offer_seen';
+
+      // Don't show again if already dismissed/accepted in this session
+      if (sessionStorage.getItem(OFFER_KEY)) return;
+
+      var countdownEnd = Date.now() + 10 * 60 * 1000; // 10-minute countdown on the offer itself
+
+      function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+      function updateCountdown() {
+        var rem = Math.max(0, countdownEnd - Date.now());
+        var m = Math.floor(rem / 60000);
+        var s = Math.floor((rem % 60000) / 1000);
+        var el = document.getElementById('offer-countdown');
+        if (el) el.textContent = pad(m) + ':' + pad(s);
+        if (rem === 0) {
+          closeOfferPopup();
+        }
+      }
+
+      function openOfferPopup() {
+        var overlay = document.getElementById('offer-overlay');
+        var popup   = document.getElementById('offer-popup');
+        var card    = document.getElementById('offer-card');
+        if (!overlay || !popup) return;
+
+        overlay.style.display = 'block';
+        popup.style.display   = 'flex';
+
+        // Force reflow before animating
+        overlay.offsetHeight;
+        card.offsetHeight;
+
+        requestAnimationFrame(function () {
+          overlay.style.opacity = '1';
+          card.style.opacity    = '1';
+          card.style.transform  = 'translateY(0) scale(1)';
+        });
+
+        updateCountdown();
+        window._offerInterval = setInterval(updateCountdown, 1000);
+
+        // Close on overlay click
+        overlay.addEventListener('click', closeOfferPopup);
+      }
+
+      window.closeOfferPopup = function () {
+        sessionStorage.setItem(OFFER_KEY, '1');
+        clearInterval(window._offerInterval);
+
+        var overlay = document.getElementById('offer-overlay');
+        var popup   = document.getElementById('offer-popup');
+        var card    = document.getElementById('offer-card');
+        if (!overlay || !popup) return;
+
+        overlay.style.opacity = '0';
+        card.style.opacity    = '0';
+        card.style.transform  = 'translateY(20px) scale(0.96)';
+
+        setTimeout(function () {
+          overlay.style.display = 'none';
+          popup.style.display   = 'none';
+        }, 380);
+      };
+
+      // Show popup after 10 seconds
+      setTimeout(openOfferPopup, 10000);
+    })();
+  </script>
 
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" role="region" aria-label="הסכמה לשימוש בעוגיות" style="

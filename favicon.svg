@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Rounded-square background -->
+  <rect width="32" height="32" rx="7" fill="#ffffff"/>
+  <!-- C letter -->
+  <text
+    x="17"
+    y="24"
+    font-family="Inter, Arial Black, sans-serif"
+    font-weight="700"
+    font-size="23"
+    fill="#e0176b"
+    text-anchor="middle"
+    dominant-baseline="auto"
+    letter-spacing="-1"
+  >C</text>
+</svg>
