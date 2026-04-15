@@ -598,6 +598,48 @@
       nav { padding: 0.5rem 0.75rem !important; }
     }
 
+    /* ── Tablet breakpoint (768–1024px) ── */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      /* Nav: widen the floating pill so content doesn't crowd */
+      .nav-inner { max-width: calc(96% - 2rem) !important; }
+
+      /* CTA Banner: collapse to column so inputs don't get crushed */
+      .cta-banner-inner {
+        max-width: 90% !important;
+        flex-direction: column !important;
+        padding: 1.5rem 1.5rem !important;
+        gap: 1.25rem !important;
+      }
+      .cta-banner-headline { white-space: normal !important; font-size: 1.05rem !important; }
+      .cta-banner-form {
+        flex-direction: column !important;
+        gap: 0.6rem !important;
+        width: 100% !important;
+      }
+
+      /* Results: reduce the excessive 10rem gap when flex items wrap */
+      .results-flex { gap: 3rem !important; }
+
+      /* Contact icons: row instead of column at this size */
+      .contact-side-icons {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem !important;
+      }
+    }
+
+    /* ── Results gap fix for wrap scenario at mid-sizes (769–960px) ── */
+    @media (min-width: 768px) and (max-width: 960px) {
+      .results-flex {
+        flex-direction: column !important;
+        gap: 2.5rem !important;
+        align-items: center !important;
+        min-height: auto !important;
+      }
+      .results-about { max-width: 100% !important; min-width: 0 !important; }
+    }
+
     /* ── Screen-reader only (מוסתר ויזואלית, נגיש לקוראי מסך) ── */
     .sr-only {
       position: absolute;
@@ -657,6 +699,51 @@
       box-shadow: 0 0 0 3px rgba(33,150,176,0.18);
     }
 
+
+    /* ── Mobile: כוכבי Hero קטנים יותר ── */
+    @media (max-width: 767px) {
+      .star-hero { font-size: 2rem !important; }
+    }
+
+    /* ── Mobile: zigzag — מרווח בין שלבים ── */
+    @media (max-width: 640px) {
+      .zz-node { margin-bottom: 0.75rem; }
+      .zz-node-title { font-size: 1rem !important; }
+      .zz-node-body  { font-size: 0.88rem !important; }
+      .zz-container  { padding: 0 0 1rem !important; }
+    }
+
+    /* ── Wide screens (1440px+) — הרחבת כל הקונטיינרים ── */
+    @media (min-width: 1440px) {
+      [style*="max-width: 1100px"] { max-width: 1360px !important; }
+      .hero-grid                   { max-width: 1360px !important; }
+      .zz-container                { max-width: 1080px !important; }
+      .nav-inner                   { max-width: calc(82% - 2rem) !important; }
+      .cta-banner-inner            { max-width: 1080px !important; }
+    }
+
+    /* ── Extra wide (1680px+) — מסכים גדולים מאוד ── */
+    @media (min-width: 1680px) {
+      [style*="max-width: 1100px"] { max-width: 1540px !important; }
+      .hero-grid                   { max-width: 1540px !important; }
+      .zz-container                { max-width: 1160px !important; }
+      .nav-inner                   { max-width: calc(78% - 2rem) !important; }
+      .cta-banner-inner            { max-width: 1200px !important; }
+    }
+
+    /* ── Tablet 768–1024: hero image col — don't shrink below 280px ── */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .hero-image-col { min-width: 260px; min-height: 440px !important; }
+      .hero-image-col img { width: clamp(220px, 38vw, 360px) !important; height: auto !important; }
+      .hero-grid { gap: 2rem !important; }
+    }
+
+    /* ── Mobile 375: prevent tiny horizontal overflow in process section ── */
+    @media (max-width: 400px) {
+      .zz-node { padding: 1rem 1rem !important; }
+      #process  { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+    }
+
   </style>
 </head>
 
@@ -672,7 +759,7 @@
     <div class="nav-inner">
 
       <!-- Logo (right) -->
-      <img src="brand_assets/icons/עיצוב ללא שם (1).svg" alt="לוגו" style="height: 114px; width: auto; display: block; flex-shrink: 0; filter: brightness(0) invert(1);" />
+      <img src="brand_assets/icons/עיצוב ללא שם (1).svg" alt="לוגו" style="height: 44px; width: auto; display: block; flex-shrink: 0; filter: brightness(0) invert(1);" />
 
       <!-- Links (center) -->
       <div style="display: flex; gap: 2.5rem;" class="hidden md:flex nav-links-desktop">
@@ -716,7 +803,7 @@
   <section class="hero-section" style="background: #0e1628; padding: 4rem 1.5rem 0; min-height: 92vh; display: flex; align-items: center; position: relative; overflow: hidden;">
 
     <!-- Background subtle glow -->
-    <div style="position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(33,150,176,0.12) 0%, transparent 65%); pointer-events: none;"></div>
+    <div style="position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: min(1200px, 100vw); height: 700px; background: radial-gradient(ellipse, rgba(33,150,176,0.12) 0%, transparent 65%); pointer-events: none;"></div>
 
     <div class="hero-grid" style="max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 1;">
 
