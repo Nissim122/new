@@ -1650,7 +1650,8 @@
     })();
 
     /* ── Shared submission logic ── */
-    const WEBHOOK = 'https://hook.eu2.make.com/t78mm1bpxu3u881q4x1fgv40rlhgkl3g';
+    const WEBHOOK  = 'https://hook.eu2.make.com/t78mm1bpxu3u881q4x1fgv40rlhgkl3g';
+    const WEBHOOK2 = 'https://hook.eu2.make.com/lciwv5l6jcxq81413xwxw2fqqh6yux8p';
     const NOTIFY_EMAIL = 'nisimelec77@gmail.com';
 
     function showToast() {
@@ -1660,14 +1661,15 @@
     }
 
     async function sendData(payload) {
+      const body = JSON.stringify({ ...payload, to_email: NOTIFY_EMAIL, source: 'CLIX Automations Website' });
+      const opts = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body };
       try {
-        await fetch(WEBHOOK, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...payload, to_email: NOTIFY_EMAIL, source: 'CLIX Automations Website' })
-        });
+        await Promise.all([
+          fetch(WEBHOOK,  opts).catch(err => console.error('Webhook error:', err)),
+          fetch(WEBHOOK2, opts).catch(err => console.error('Webhook2 error:', err))
+        ]);
       } catch (err) {
-        console.error('Webhook error:', err);
+        console.error('sendData error:', err);
       }
     }
 
@@ -2193,19 +2195,22 @@
         var btn = document.getElementById('offer-submit-btn');
         if (!form || !success) return;
 
-        // Disable button while "submitting"
+        var name  = (form.querySelector('[name="name"]')  || {}).value || '';
+        var email = (form.querySelector('[name="email"]') || {}).value || '';
+        var phone = (form.querySelector('[name="phone"]') || {}).value || '';
+
         btn.disabled = true;
         btn.style.opacity = '0.65';
         btn.textContent = 'שולח...';
 
-        // Simulate submit (replace with real API call)
-        setTimeout(function () {
-          form.style.display = 'none';
-          success.style.display = 'block';
-          sessionStorage.setItem(OFFER_KEY, '1');
-          clearInterval(window._offerInterval);
-          setTimeout(closeOfferPopup, 4000);
-        }, 900);
+        sendData({ form: 'offer', name: name.trim(), email: email.trim(), phone: toE164(phone.trim()) })
+          .finally(function () {
+            form.style.display = 'none';
+            success.style.display = 'block';
+            sessionStorage.setItem(OFFER_KEY, '1');
+            clearInterval(window._offerInterval);
+            setTimeout(closeOfferPopup, 4000);
+          });
       };
 
       // Show popup after 10 seconds
