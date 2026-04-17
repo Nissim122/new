@@ -570,7 +570,8 @@
         box-sizing: border-box !important;
       }
       .cta-banner-form #banner-privacy-label { order: 4 !important; width: 100% !important; }
-      .cta-banner-form #banner-submit { order: 5 !important; }
+      .cta-banner-form #banner-newsletter-label { order: 5 !important; width: 100% !important; }
+      .cta-banner-form #banner-submit { order: 6 !important; }
 
       /* Results */
       .results-flex {
@@ -1101,17 +1102,28 @@
       </p>
 
       <!-- Left: form -->
-      <div class="cta-banner-form" style="display: flex; gap: 0.75rem; align-items: flex-start; flex: 2; min-width: 0;">
+      <div class="cta-banner-form" style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start; flex: 2; min-width: 0;">
 
         <input id="banner-name" type="text" placeholder="שם" aria-label="שם" class="cta-banner-input" style="flex: 1; min-width: 0; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(0,0,0,0.25); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(0,0,0,0.18)'" onblur="this.style.background='rgba(0,0,0,0.25)'" />
         <input id="banner-phone" type="tel" placeholder="טלפון" aria-label="טלפון" class="cta-banner-input" style="flex: 1; min-width: 0; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(0,0,0,0.25); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(0,0,0,0.18)'" onblur="this.style.background='rgba(0,0,0,0.25)'" />
         <input id="banner-business" type="text" placeholder="תחום העסק" aria-label="תחום העסק" class="cta-banner-input" style="flex: 1; min-width: 0; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(0,0,0,0.25); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(0,0,0,0.18)'" onblur="this.style.background='rgba(0,0,0,0.25)'" />
 
         <!-- צ'קבוקס פרטיות — order-4 על דסקטופ (שורה 2), order-4 על מובייל (לפני כפתור) -->
-        <label id="banner-privacy-label" for="banner-privacy" style="display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.75rem; color: #0e1628; cursor: pointer; order: 4; flex-wrap: wrap;">
+        <label id="banner-privacy-label" for="banner-privacy" style="display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.75rem; color: #0e1628; cursor: pointer; order: 4; flex-basis: 100%; flex-wrap: wrap;">
           <input id="banner-privacy" type="checkbox" required style="flex-shrink:0; margin-top:2px;" />
           <span>אני מסכים למסור את פרטיי בהתאם <a href="privacy.html" target="_blank" rel="noopener" style="color: #0e1628; text-decoration: underline;">למדיניות הפרטיות</a></span>
         </label>
+
+        <!-- צ'קבוקס דיוור — אופציונלי -->
+        <label id="banner-newsletter-label" for="banner-newsletter" style="display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.75rem; color: #0e1628; cursor: pointer; order: 5; flex-basis: 100%; flex-wrap: wrap;">
+          <input id="banner-newsletter" type="checkbox" onchange="toggleBannerEmail(this)" style="flex-shrink:0; margin-top:2px;" />
+          <span>אני מאשר/ת קבלת עדכונים ותוכן שיווקי</span>
+        </label>
+
+        <!-- שדה מייל — מופיע כשדיוור מסומן -->
+        <div id="banner-email-wrap" style="display: none; flex-basis: 100%; order: 6;">
+          <input id="banner-email" type="email" placeholder="כתובת מייל" class="cta-banner-input" style="width: 100%; box-sizing: border-box; padding: 0.65rem 1rem; border-radius: 8px; border: none; background: rgba(0,0,0,0.25); color: #fff; font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; transition: background 0.2s;" onfocus="this.style.background='rgba(0,0,0,0.18)'" onblur="this.style.background='rgba(0,0,0,0.25)'" />
+        </div>
 
         <button id="banner-submit" class="btn-cta" onclick="handleBannerSubmit(event)" style="background: #fff; color: #0e1628; white-space: nowrap; padding: 0.65rem 1.5rem; font-size: 0.95rem; border-radius: 8px; font-weight: 800; flex-shrink: 0; order: 3;">שליחה <span class="btn-arrow">◄</span></button>
 
@@ -1421,10 +1433,16 @@
             <label for="contact-message" style="display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem;">ספר לנו על העסק שלך</label>
             <textarea id="contact-message" rows="4" class="form-input" placeholder="באיזה תחום אתה פועל? אילו תהליכים תרצה לייעל?" style="resize: vertical;" maxlength="1000"></textarea>
           </div>
-          <div style="margin-bottom: 1.25rem;">
+          <div style="margin-bottom: 0.6rem;">
             <label for="contact-privacy" style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.65); cursor: pointer; direction: rtl; flex-wrap: wrap;">
               <input id="contact-privacy" type="checkbox" required style="flex-shrink:0; margin-top:2px;" />
               <span>אני מסכים למסור את פרטיי בהתאם <a href="privacy.html" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.85); text-decoration: underline;">למדיניות הפרטיות</a></span>
+            </label>
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label for="contact-newsletter" style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.65); cursor: pointer; direction: rtl; flex-wrap: wrap;">
+              <input id="contact-newsletter" type="checkbox" style="flex-shrink:0; margin-top:2px;" />
+              <span>אני מאשר/ת קבלת עדכונים ותוכן שיווקי</span>
             </label>
           </div>
           <button id="contact-submit" type="submit" class="btn-cta" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.875rem;">
@@ -1673,20 +1691,37 @@
       }
     }
 
+    function toggleBannerEmail(cb) {
+      const wrap  = document.getElementById('banner-email-wrap');
+      const input = document.getElementById('banner-email');
+      if (cb.checked) {
+        wrap.style.display = 'block';
+        input.required = true;
+        input.focus();
+      } else {
+        wrap.style.display = 'none';
+        input.required = false;
+        input.value = '';
+      }
+    }
+
     /* Banner form (blue section) */
     async function handleBannerSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('banner-submit');
-      const name     = document.getElementById('banner-name').value.trim();
-      const phone    = toE164(document.getElementById('banner-phone').value.trim());
-      const business = document.getElementById('banner-business').value.trim();
-      const privacy  = document.getElementById('banner-privacy').checked;
+      const name       = document.getElementById('banner-name').value.trim();
+      const phone      = toE164(document.getElementById('banner-phone').value.trim());
+      const business   = document.getElementById('banner-business').value.trim();
+      const privacy    = document.getElementById('banner-privacy').checked;
+      const newsletter = document.getElementById('banner-newsletter').checked;
+      const email      = newsletter ? document.getElementById('banner-email').value.trim() : '';
       if (!name) { document.getElementById('banner-name').focus(); return; }
       if (!privacy) { document.getElementById('banner-privacy').reportValidity(); return; }
+      if (newsletter && !email) { document.getElementById('banner-email').focus(); return; }
       btn.disabled = true;
       btn.style.opacity = '0.6';
       try {
-        await sendData({ form: 'banner', name, phone, business });
+        await sendData({ form: 'banner', name, phone, business, newsletter, email });
         document.getElementById('banner-name').value = '';
         document.getElementById('banner-phone').value = '';
         document.getElementById('banner-business').value = '';
@@ -1713,12 +1748,13 @@
       btn.disabled = true;
       btn.style.opacity = '0.6';
       btn.style.cursor = 'not-allowed';
-      const name    = document.getElementById('contact-name').value.trim();
-      const phone   = toE164(document.getElementById('contact-phone').value.trim());
-      const email   = document.getElementById('contact-email').value.trim();
-      const message = document.getElementById('contact-message').value.trim();
+      const name       = document.getElementById('contact-name').value.trim();
+      const phone      = toE164(document.getElementById('contact-phone').value.trim());
+      const email      = document.getElementById('contact-email').value.trim();
+      const message    = document.getElementById('contact-message').value.trim();
+      const newsletter = document.getElementById('contact-newsletter').checked;
       try {
-        await sendData({ form: 'contact', name, phone, email, message });
+        await sendData({ form: 'contact', name, phone, email, message, newsletter });
         showToast();
         e.target.reset();
       } finally {
@@ -2085,6 +2121,16 @@
           />
         </div>
 
+        <!-- Checkboxes -->
+        <label for="offer-privacy" style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.55); cursor: pointer; direction: rtl; flex-wrap: wrap;">
+          <input id="offer-privacy" name="privacy" type="checkbox" required style="flex-shrink:0; margin-top:2px;" />
+          <span>אני מסכים למסור את פרטיי בהתאם <a href="privacy.html" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.75); text-decoration: underline;">למדיניות הפרטיות</a></span>
+        </label>
+        <label for="offer-newsletter" style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.55); cursor: pointer; direction: rtl; flex-wrap: wrap;">
+          <input id="offer-newsletter" name="newsletter" type="checkbox" style="flex-shrink:0; margin-top:2px;" />
+          <span>אני מאשר/ת קבלת עדכונים ותוכן שיווקי</span>
+        </label>
+
         <!-- Submit -->
         <button
           type="submit"
@@ -2195,15 +2241,23 @@
         var btn = document.getElementById('offer-submit-btn');
         if (!form || !success) return;
 
-        var name  = (form.querySelector('[name="name"]')  || {}).value || '';
-        var email = (form.querySelector('[name="email"]') || {}).value || '';
-        var phone = (form.querySelector('[name="phone"]') || {}).value || '';
+        var name           = (form.querySelector('[name="name"]')       || {}).value || '';
+        var email          = (form.querySelector('[name="email"]')      || {}).value || '';
+        var phone          = (form.querySelector('[name="phone"]')      || {}).value || '';
+        var newsletter     = (form.querySelector('[name="newsletter"]') || {}).checked || false;
+        var emailInput     = form.querySelector('[name="email"]');
+
+        if (newsletter && !email.trim()) {
+          if (emailInput) { emailInput.focus(); emailInput.style.borderColor = 'rgba(224,23,107,0.8)'; }
+          return;
+        }
+        if (emailInput) emailInput.style.borderColor = 'rgba(255,255,255,0.10)';
 
         btn.disabled = true;
         btn.style.opacity = '0.65';
         btn.textContent = 'שולח...';
 
-        sendData({ form: 'offer', name: name.trim(), email: email.trim(), phone: toE164(phone.trim()) })
+        sendData({ form: 'offer', name: name.trim(), email: email.trim(), phone: toE164(phone.trim()), newsletter: newsletter })
           .finally(function () {
             form.style.display = 'none';
             success.style.display = 'block';
