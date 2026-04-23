@@ -2765,7 +2765,7 @@
           '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.477 2 2 6.144 2 11.25c0 2.07.717 3.98 1.916 5.51L2.5 21l4.57-1.36A10.08 10.08 0 0012 20.5c5.523 0 10-4.144 10-9.25S17.523 2 12 2z" fill="white"/></svg>' +
           '</div>' +
           '<div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:16px 16px 16px 4px;padding:0.65rem 0.9rem;font-family:Heebo,sans-serif;font-size:0.88rem;color:rgba(255,255,255,0.88);line-height:1.55;max-width:82%;direction:rtl;white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word;">' +
-          escapeHtml(String(text)) + '</div>';
+          linkifyHtml(String(text)) + '</div>';
         msgs.appendChild(div);
       }
 
@@ -2800,6 +2800,24 @@
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;')
           .replace(/"/g, '&quot;');
+      }
+
+      function linkifyHtml(str) {
+        var urlRegex = /https?:\/\/[^\s<>"']+/g;
+        var result = [];
+        var lastIndex = 0;
+        var match;
+        while ((match = urlRegex.exec(str)) !== null) {
+          result.push(escapeHtml(str.slice(lastIndex, match.index)));
+          var rawUrl = match[0];
+          var url = rawUrl.replace(/[.,;:!?)'"]+$/, '');
+          var trailing = rawUrl.slice(url.length);
+          result.push('<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer" style="color:#2196b0;text-decoration:underline;word-break:break-all;">' + escapeHtml(url) + '</a>');
+          if (trailing) result.push(escapeHtml(trailing));
+          lastIndex = match.index + rawUrl.length;
+        }
+        result.push(escapeHtml(str.slice(lastIndex)));
+        return result.join('');
       }
     })();
   </script>
