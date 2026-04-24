@@ -1,53 +1,18 @@
-/**
- * publish.mjs
- * מפרסם טיוטה מ-drafts/YYYY-MM-DD.json לתוך blog.html
- * ויוצר דף מאמר מלא ב-posts/YYYY-MM-DD.html
- *
- * Usage: node publish.mjs YYYY-MM-DD
- */
-
-import { readFile, writeFile, mkdir } from 'fs/promises';
-import { existsSync } from 'fs';
-import { join } from 'path';
-
-const dateArg = process.argv[2];
-if (!dateArg || !/^\d{4}-\d{2}-\d{2}$/.test(dateArg)) {
-  console.error('❌ שימוש: node publish.mjs YYYY-MM-DD');
-  process.exit(1);
-}
-
-const BASE_DIR   = process.cwd();
-const META_PATH  = join(BASE_DIR, 'drafts', `${dateArg}.json`);
-const BLOG_PATH  = join(BASE_DIR, 'blog.html');
-const POSTS_DIR  = join(BASE_DIR, 'posts');
-const POST_PATH  = join(POSTS_DIR, `${dateArg}.html`);
-const MARKER     = '<!-- AGENT_INSERT_HERE -->';
-
-const CATEGORIES = {
-  make:     { label: 'Make',           css: 'make' },
-  zapier:   { label: 'Zapier',         css: 'make' },
-  ai:       { label: 'AI כלים',        css: 'ai' },
-  monday:   { label: 'Monday.com',     css: 'monday' },
-  whatsapp: { label: 'WhatsApp עסקי', css: 'whatsapp' },
-  tips:     { label: 'טיפים',          css: 'tips' },
-};
-
-function buildPostHtml(post, cat, heDate) {
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${post.title} | CLIX Automations</title>
-  <meta name="description" content="${post.excerpt}" />
+  <title>לא עוד ג'ונגל של מודלי AI: איך לנהל את הכל בצורה חכמה | CLIX Automations</title>
+  <meta name="description" content="השוק מוצף במודלי AI חדשים כל הזמן. הגיע הזמן ללמוד איך לארגן אותם ולנצל אותם בצורה הכי יעילה לעסק שלך." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://clix-automations.com/posts/${dateArg}.html" />
+  <link rel="canonical" href="https://clix-automations.com/posts/2026-04-24.html" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
 
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://clix-automations.com/posts/${dateArg}.html" />
-  <meta property="og:title" content="${post.title}" />
-  <meta property="og:description" content="${post.excerpt}" />
+  <meta property="og:url" content="https://clix-automations.com/posts/2026-04-24.html" />
+  <meta property="og:title" content="לא עוד ג'ונגל של מודלי AI: איך לנהל את הכל בצורה חכמה" />
+  <meta property="og:description" content="השוק מוצף במודלי AI חדשים כל הזמן. הגיע הזמן ללמוד איך לארגן אותם ולנצל אותם בצורה הכי יעילה לעסק שלך." />
   <meta property="og:image" content="https://clix-automations.com/brand_assets/profile_pic_2_nobg.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -177,17 +142,17 @@ function buildPostHtml(post, cat, heDate) {
   <div class="post-wrap">
     <a href="../blog.html" class="back-link">◄ חזרה לבלוג</a>
 
-    <span class="post-tag ${cat.css}">${cat.label}</span>
-    <h1>${post.title}</h1>
+    <span class="post-tag ai">AI כלים</span>
+    <h1>לא עוד ג'ונגל של מודלי AI: איך לנהל את הכל בצורה חכמה</h1>
 
     <div class="post-meta">
       <span>✍️ ניסים בנגייב</span>
-      <span>📅 ${heDate}</span>
-      <span>⏱ ${post.readTime} דק' קריאה</span>
+      <span>📅 24 באפריל 2026</span>
+      <span>⏱ 6 דק' קריאה</span>
     </div>
 
     <div class="post-content">
-      ${post.content}
+      <p>אם הייתם כמוני בשבועות האחרונים, גללתם בפידים של חדשות טק, בטח נתקלתם באין סוף הודעות על מודלי AI חדשים שיוצאים. GPT-5.5 Pro, GPT-5.5, Opus 4.7, ועוד ועוד. זה מרגיש קצת כמו לנסות להבין את כל השלטונים בבית – כל אחד עם הפונקציה שלו, וקשה לדעת מה באמת עושה מה.</p><p>אז מה עושים? מתעלמים? קופצים על כל טרנד חדש? אני חושב שיש דרך אחרת, וזה מה שאנחנו עושים ב-CLIX Automations בשביל לקוחותינו.</p><h2>הבלגן הופך למערכת</h2><p>העניין הוא שלא מדובר רק ב'עוד כלי'. מדובר במה שמתחיל להיראות כמו 'תזמור' (Orchestration) של בינה מלאכותית. אנחנו לא מדברים על מודל אחד שיעשה הכל, אלא על אוסף של סוכני AI, כל אחד מומחה בתחומו, שצריכים לעבוד יחד. תחשבו על זה כמו צוות. יש לכם את מומחה השיווק, מומחה התמיכה, מומחה הניתוח – כולם צריכים לדבר אחד עם השני כדי שהעסק ירוץ חלק.</p><p>האתגר הוא שכל חברה מפתחת את המודלים שלה, וכל אחד פועל בסביבה קצת שונה. אז איך מחברים את כולם? הכתבות שמדברות על 'AI Orchestration' נותנות רמזים. זה אומר לבנות תשתית שמאפשרת למודלים שונים לתקשר, להחליף מידע, ולהפעיל אחד את השני לפי הצורך. זה לא רק להגיד ל-ChatGPT לכתוב מייל, זה להגיד לו, לקבל ממנו תשובה, להעביר אותה למודל אחר שינתח אותה, ואז לשלוח אותה ללקוח דרך מערכת ה-CRM.</p><h2>אז איך זה נראה בפועל?</h2><p>בואו ניקח דוגמה קטנה. נניח שאתם מקבלים שאלה מלקוח דרך WhatsApp Business. השאלה מורכבת – היא נוגעת למוצר ספציפי, דורשת מידע על זמינות במלאי, ויש בה גם שאלה לגבי מדיניות החזרות.</p><p><strong>האוטומציה תיראה כך:</strong></p><ol><li><strong>קבלת השאלה:</strong> WhatsApp Business מקבל את ההודעה.</li><li><strong>זיהוי כוונת הלקוח:</strong> מודל AI (למשל, GPT-5.5 Pro) מנתח את הטקסט ומבין שזו שאלה מורכבת בנוגע למוצר X.</li><li><strong>בדיקת מלאי:</strong> המערכת שולחת שאילתה למערכת ניהול המלאי שלכם (CRM או מערכת ייעודית) ומקבלת תשובה על זמינות המוצר.</li><li><strong>בדיקת מדיניות:</strong> מודל AI אחר, שאומן על מסמכי מדיניות החברה, מוצא את התשובה הרלוונטית למדיניות ההחזרות.</li><li><strong>ניסוח תשובה:</strong> מודל AI (אולי אותו אחד מהשלב השני, או מודל אחר שמתמחה בניסוח) מרכיב תשובה קוהרנטית, המשלבת את כל המידע – זמינות המוצר, פרטי מדיניות ההחזרות, ואולי אפילו הצעה למוצרים דומים אם המוצר המבוקש חסר.</li><li><strong>שליחה חזרה:</strong> התשובה נשלחת ללקוח דרך WhatsApp Business.</li></ol><p>כל התהליך הזה, שיכול לקחת נציג שירות דקות ארוכות (או אפילו יותר אם הוא צריך לבדוק במערכות שונות), יכול להתבצע תוך שניות. זה לא רק חיסכון בזמן, אלא גם הבטחת תשובה מדויקת ועקבית לכל לקוח.</p><h2>אל תפחדו מהרכבת</h2><p>החדשות הטובות הן שלא צריך להיות גאונים כדי לבנות מערכות כאלה. כלים כמו Make (לשעבר Integromat) ו-Zapier, בשילוב עם ה-APIs של מודלי ה-AI השונים, מאפשרים לנו לבנות את ה'תזמור' הזה. זה דורש הבנה של הצרכים העסקיים שלכם, וידע טכני בסיסי בחיבור בין מערכות, אבל התוצאות שוות את זה.</p><p>אם אתם מרגישים שהכמות של מודלי ה-AI החדשים עושה לכם קצת סדר בבלאגן, אני מזמין אתכם לדבר איתנו ב-CLIX Automations. בואו נבין יחד איך אפשר להפוך את הג'ונגל הזה למכונה משומנת שתעזור לעסק שלכם לצמוח.</p>
     </div>
 
     <div class="post-cta">
@@ -229,79 +194,4 @@ function buildPostHtml(post, cat, heDate) {
   }
 </script>
 </body>
-</html>`;
-}
-
-async function main() {
-  if (!existsSync(META_PATH)) {
-    console.error(`❌ לא נמצאה טיוטה: drafts/${dateArg}.json`);
-    process.exit(1);
-  }
-  if (!existsSync(BLOG_PATH)) {
-    console.error('❌ לא נמצא blog.html');
-    process.exit(1);
-  }
-
-  const post = JSON.parse(await readFile(META_PATH, 'utf8'));
-  const cat  = CATEGORIES[post.category] || CATEGORIES.tips;
-
-  const heDate = new Date(post.date).toLocaleDateString('he-IL', {
-    year: 'numeric', month: 'long', day: 'numeric',
-  });
-
-  // ── 1. Create post page ──────────────────────────────────────────────────────
-  if (!existsSync(POSTS_DIR)) await mkdir(POSTS_DIR, { recursive: true });
-
-  await writeFile(POST_PATH, buildPostHtml(post, cat, heDate), 'utf8');
-  console.log(`📄 נוצר: posts/${dateArg}.html`);
-
-  // ── 2. Insert card into blog.html ────────────────────────────────────────────
-  let html = await readFile(BLOG_PATH, 'utf8');
-
-  if (!html.includes(MARKER)) {
-    console.error(`❌ לא נמצא marker בבלוג:\n   ${MARKER}`);
-    process.exit(1);
-  }
-
-  if (html.includes(`<!-- AGENT POST ${dateArg} -->`)) {
-    console.warn(`⚠️  הכרטיס של ${dateArg} כבר קיים ב-blog.html.`);
-  } else {
-    const cardHtml = `<!-- AGENT POST ${dateArg} -->
-      <article class="blog-card reveal" data-cats="${post.category}" style="transition-delay:0.05s;">
-        <div class="blog-card-thumb-wrap">
-          <img src="https://placehold.co/640x360/0e1628/2196b0?text=${encodeURIComponent(post.title.slice(0, 28))}" alt="${post.title}" loading="lazy" />
-        </div>
-        <div class="blog-card-body">
-          <span class="blog-tag ${cat.css}">${cat.label}</span>
-          <a href="posts/${dateArg}.html" class="blog-title">
-            ${post.title}
-          </a>
-          <p class="blog-excerpt">
-            ${post.excerpt}
-          </p>
-          <div class="blog-meta">
-            <span>ניסים בנגייב</span>
-            <span class="blog-meta-dot"></span>
-            <span>${heDate}</span>
-            <span class="blog-meta-dot"></span>
-            <span>${post.readTime} דק' קריאה</span>
-          </div>
-        </div>
-      </article>
-      ${MARKER}`;
-
-    html = html.replace(MARKER, cardHtml);
-    await writeFile(BLOG_PATH, html, 'utf8');
-    console.log(`🃏 נוסף כרטיס ל-blog.html`);
-  }
-
-  console.log(`\n✅ פורסם בהצלחה!`);
-  console.log(`   כותרת: "${post.title}"`);
-  console.log(`   קטגוריה: ${cat.label} | ${heDate}`);
-  console.log(`\n👉 עשה commit ו-push כדי לעדכן את האתר.`);
-}
-
-main().catch(err => {
-  console.error('❌ שגיאה:', err.message);
-  process.exit(1);
-});
+</html>
