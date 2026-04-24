@@ -17,12 +17,13 @@ if (!dateArg || !/^\d{4}-\d{2}-\d{2}-\d+$/.test(dateArg)) {
 }
 const datePart = dateArg.slice(0, 10);
 
-const BASE_DIR   = process.cwd();
-const META_PATH  = join(BASE_DIR, 'drafts', `${dateArg}.json`);
-const BLOG_PATH  = join(BASE_DIR, 'blog.html');
-const POSTS_DIR  = join(BASE_DIR, 'posts');
-const POST_PATH  = join(POSTS_DIR, `${dateArg}.html`);
-const MARKER     = '<!-- AGENT_INSERT_HERE -->';
+const BASE_DIR    = process.cwd();
+const META_PATH   = join(BASE_DIR, 'drafts', `${dateArg}.json`);
+const BLOG_PATH   = join(BASE_DIR, 'blog.html');
+const POSTS_DIR   = join(BASE_DIR, 'posts');
+const POST_PATH   = join(POSTS_DIR, `${dateArg}.html`);
+const INDEX_PATH  = join(POSTS_DIR, 'index.json');
+const MARKER      = '<!-- AGENT_INSERT_HERE -->';
 
 const CATEGORIES = {
   make:     { label: 'Make',           css: 'make' },
@@ -309,6 +310,32 @@ async function main() {
     html = html.replace(MARKER, cardHtml);
     await writeFile(BLOG_PATH, html, 'utf8');
     console.log(`🃏 נוסף כרטיס ל-blog.html`);
+  }
+
+  // ── 3. Update posts/index.json ───────────────────────────────────────────────
+  const index = existsSync(INDEX_PATH)
+    ? JSON.parse(await readFile(INDEX_PATH, 'utf8'))
+    : [];
+
+  const alreadyInIndex = index.some(p => p.slug === dateArg);
+  if (alreadyInIndex) {
+    console.warn(`⚠️  ${dateArg} כבר קיים ב-index.json`);
+  } else {
+    index.unshift({
+      slug:         dateArg,
+      title:        post.title,
+      excerpt:      post.excerpt,
+      date:         datePart,
+      dateLabel:    heDate,
+      readTime:     `${post.readTime} דק' קריאה`,
+      tag:          post.category,
+      tagLabel:     cat.label,
+      image:        `images/blog/${dateArg}.webp`,
+      imageFallback:`images/blog/${dateArg}.jpg`,
+      url:          `posts/${dateArg}.html`,
+    });
+    await writeFile(INDEX_PATH, JSON.stringify(index, null, 2), 'utf8');
+    console.log(`📋 עודכן: posts/index.json`);
   }
 
   console.log(`\n✅ פורסם בהצלחה!`);
