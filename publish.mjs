@@ -124,7 +124,7 @@ function buildPostHtml(post, cat, heDate) {
     .post-tag.whatsapp { background: rgba(37,211,102,0.15); color: #5dde8a; border: 1px solid rgba(37,211,102,0.3); }
     .post-tag.tips     { background: rgba(255,200,0,0.12);  color: #ffd966; border: 1px solid rgba(255,200,0,0.3); }
     .post-header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
-    h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1.2rem; text-align: center; }
+    h1 { font-size: clamp(2.8rem, 6vw, 4.4rem); font-weight: 900; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.2rem; text-align: center; }
     .post-meta { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; font-size: 0.85rem; color: rgba(255,255,255,0.45); justify-content: center; }
     .post-content h2 { font-size: 1.4rem; font-weight: 800; color: #2196b0; margin: 2.4rem 0 0.7rem; }
     .post-content h3 { font-size: 1.12rem; font-weight: 700; color: #5ecfec; margin: 1.8rem 0 0.5rem; }
