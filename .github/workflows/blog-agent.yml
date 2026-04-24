@@ -5,6 +5,9 @@ on:
     - cron: '0 6 * * 3'  # כל רביעי 06:00 UTC = 09:00 שעון ישראל
   workflow_dispatch:        # הפעלה ידנית מ-GitHub
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   write-draft:
     runs-on: ubuntu-latest
