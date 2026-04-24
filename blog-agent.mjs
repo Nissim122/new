@@ -18,6 +18,12 @@ const DRAFTS_DIR = join(BASE_DIR, 'drafts');
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const TODAY = new Date().toISOString().split('T')[0];
 
+function getSlug() {
+  let n = 1;
+  while (existsSync(join(DRAFTS_DIR, `${TODAY}-${n}.json`))) n++;
+  return `${TODAY}-${n}`;
+}
+
 const GEMINI_URL =
   `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
 
@@ -182,8 +188,8 @@ function buildTopicPrompt(topic) {
 
 // ─── Draft HTML builder ───────────────────────────────────────────────────────
 
-function hebrewDate(isoDate) {
-  return new Date(isoDate).toLocaleDateString('he-IL', {
+function hebrewDate(slug) {
+  return new Date(slug.slice(0, 10)).toLocaleDateString('he-IL', {
     year: 'numeric', month: 'long', day: 'numeric',
   });
 }
@@ -345,14 +351,15 @@ async function main() {
 
   if (!existsSync(DRAFTS_DIR)) await mkdir(DRAFTS_DIR, { recursive: true });
 
-  const draftPath = join(DRAFTS_DIR, `${TODAY}.html`);
-  const metaPath  = join(DRAFTS_DIR, `${TODAY}.json`);
+  const SLUG = getSlug();
+  const draftPath = join(DRAFTS_DIR, `${SLUG}.html`);
+  const metaPath  = join(DRAFTS_DIR, `${SLUG}.json`);
 
-  await writeFile(draftPath, buildDraftHtml(post, TODAY), 'utf8');
+  await writeFile(draftPath, buildDraftHtml(post, SLUG), 'utf8');
   await writeFile(metaPath,  JSON.stringify({ ...post, date: TODAY }, null, 2), 'utf8');
 
-  console.log(`\n💾 נשמר: drafts/${TODAY}.html`);
-  console.log(`💾 נשמר: drafts/${TODAY}.json`);
+  console.log(`\n💾 נשמר: drafts/${SLUG}.html`);
+  console.log(`💾 נשמר: drafts/${SLUG}.json`);
 
   // Clear topic request after use so next week starts fresh
   if (requestedTopic) {
@@ -362,7 +369,7 @@ async function main() {
 
   // Auto-publish
   console.log('\n🚀 מפרסם לבלוג...');
-  execFileSync(process.execPath, [join(BASE_DIR, 'publish.mjs'), TODAY], {
+  execFileSync(process.execPath, [join(BASE_DIR, 'publish.mjs'), SLUG], {
     cwd: BASE_DIR,
     stdio: 'inherit',
   });

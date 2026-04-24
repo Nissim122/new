@@ -11,10 +11,11 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 
 const dateArg = process.argv[2];
-if (!dateArg || !/^\d{4}-\d{2}-\d{2}$/.test(dateArg)) {
-  console.error('❌ שימוש: node publish.mjs YYYY-MM-DD');
+if (!dateArg || !/^\d{4}-\d{2}-\d{2}-\d+$/.test(dateArg)) {
+  console.error('❌ שימוש: node publish.mjs YYYY-MM-DD-N  (למשל: 2026-04-24-1)');
   process.exit(1);
 }
+const datePart = dateArg.slice(0, 10);
 
 const BASE_DIR   = process.cwd();
 const META_PATH  = join(BASE_DIR, 'drafts', `${dateArg}.json`);
@@ -252,7 +253,7 @@ async function main() {
   const post = JSON.parse(await readFile(META_PATH, 'utf8'));
   const cat  = CATEGORIES[post.category] || CATEGORIES.tips;
 
-  const heDate = new Date(post.date).toLocaleDateString('he-IL', {
+  const heDate = new Date(datePart).toLocaleDateString('he-IL', {
     year: 'numeric', month: 'long', day: 'numeric',
   });
 
