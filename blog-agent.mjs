@@ -7,7 +7,7 @@
  * Requires: GEMINI_API_KEY environment variable
  */
 
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile, readFile, mkdir, stat } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { execFileSync } from 'child_process';
@@ -38,6 +38,22 @@ const CATEGORIES = {
   whatsapp:  { label: 'WhatsApp עסקי', css: 'whatsapp',  he: 'WhatsApp עסקי' },
   tips:      { label: 'טיפים',          css: 'tips',      he: 'טיפים' },
 };
+
+const TOPIC_FILE = join(BASE_DIR, 'next-topic.txt');
+
+// ─── Topic Request ────────────────────────────────────────────────────────────
+
+async function readTopicRequest() {
+  if (!existsSync(TOPIC_FILE)) return null;
+  try {
+    const { mtimeMs } = await stat(TOPIC_FILE);
+    if (Date.now() - mtimeMs > 7 * 24 * 60 * 60 * 1000) return null;
+    const content = (await readFile(TOPIC_FILE, 'utf8')).trim();
+    return content || null;
+  } catch {
+    return null;
+  }
+}
 
 // ─── RSS Parsing ──────────────────────────────────────────────────────────────
 
@@ -123,6 +139,36 @@ ${newsBlock}
 4. בחר קטגוריה אחת: make | zapier | ai | monday | whatsapp | tips
 5. כתוב תקציר קצר (2 משפטים) לכרטיס הבלוג.
 6. הערך מספר דקות קריאה (4–7).
+
+החזר JSON בלבד, ללא markdown fences:
+{
+  "title": "כותרת המאמר",
+  "category": "make|ai|monday|whatsapp|tips",
+  "excerpt": "תקציר 2 משפטים",
+  "readTime": 5,
+  "content": "תוכן המאמר ב-HTML פשוט — p, h2, h3, ul, li בלבד"
+}`;
+}
+
+function buildTopicPrompt(topic) {
+  return `אתה כותב תוכן מקצועי עבור בלוג של CLIX Automations — חברה ישראלית לאוטומציות עסקיות.
+הכותב הוא ניסים בנגייב, מומחה שעובד בשטח עם Make, Monday, WhatsApp Business, CRM ועוד.
+
+סגנון כתיבה:
+- אנושי, ישיר, מקצועי — לא שיווקי ולא רובוטי
+- מדבר כמו מישהו שעשה את זה בעצמו, לא כמו מי שקרא עליו
+- ללא ביטויים כמו: "בעידן הדיגיטלי", "כפי שציינתי", "לסיכום", "חשוב לציין"
+- עם דוגמאות ספציפיות ומספרים אמיתיים כשאפשר
+- עברית ישראלית טבעית, לא מתורגמת
+
+הנושא המבוקש לשבוע הזה: ${topic}
+
+המשימה:
+1. כתוב מאמר בלוג בעברית על הנושא שצוין, 500-700 מילים.
+2. מבנה: כותרת ראשית → תתי-כותרות (h2) → דוגמה מעשית אחת → פסקת סיום עם קריאה לפעולה אחת, טבעית.
+3. בחר קטגוריה אחת: make | zapier | ai | monday | whatsapp | tips
+4. כתוב תקציר קצר (2 משפטים) לכרטיס הבלוג.
+5. הערך מספר דקות קריאה (4–7).
 
 החזר JSON בלבד, ללא markdown fences:
 {
@@ -258,17 +304,25 @@ async function main() {
     process.exit(1);
   }
 
-  // 1. Fetch RSS
-  console.log(`\n📡 סורק ${RSS_FEEDS.length} מקורות חדשות...\n`);
-  const allItems = (await Promise.all(RSS_FEEDS.map(fetchRss))).flat();
-  console.log(`✅ נמצאו ${allItems.length} פריטים`);
-  allItems.slice(0, 6).forEach((item, i) =>
-    console.log(`  ${i + 1}. [${item.source}] ${item.title}`)
-  );
+  // 1. Check for user-requested topic
+  const requestedTopic = await readTopicRequest();
+  let raw;
 
-  // 2. Write with Gemini
-  console.log('\n🤖 כותב מאמר עם Gemini...');
-  const raw = await callGemini(buildPrompt(allItems));
+  if (requestedTopic) {
+    console.log(`\n📌 נושא שנבחר ידנית: "${requestedTopic}"`);
+    console.log('🤖 כותב מאמר על הנושא המבוקש...');
+    raw = await callGemini(buildTopicPrompt(requestedTopic));
+  } else {
+    // 1b. Fetch RSS for market research
+    console.log(`\n📡 סורק ${RSS_FEEDS.length} מקורות חדשות...\n`);
+    const allItems = (await Promise.all(RSS_FEEDS.map(fetchRss))).flat();
+    console.log(`✅ נמצאו ${allItems.length} פריטים`);
+    allItems.slice(0, 6).forEach((item, i) =>
+      console.log(`  ${i + 1}. [${item.source}] ${item.title}`)
+    );
+    console.log('\n🤖 כותב מאמר עם Gemini...');
+    raw = await callGemini(buildPrompt(allItems));
+  }
 
   // 3. Parse JSON
   let post;
@@ -299,6 +353,12 @@ async function main() {
 
   console.log(`\n💾 נשמר: drafts/${TODAY}.html`);
   console.log(`💾 נשמר: drafts/${TODAY}.json`);
+
+  // Clear topic request after use so next week starts fresh
+  if (requestedTopic) {
+    await writeFile(TOPIC_FILE, '', 'utf8');
+    console.log('🗑️  next-topic.txt נוקה');
+  }
 
   // Auto-publish
   console.log('\n🚀 מפרסם לבלוג...');

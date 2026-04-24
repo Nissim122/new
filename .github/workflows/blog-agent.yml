@@ -29,7 +29,7 @@ jobs:
         run: |
           git config user.name "Blog Agent"
           git config user.email "bot@clix-automations.com"
-          git add drafts/
+          git add drafts/ next-topic.txt
           git diff --staged --quiet && echo "No new draft" || (
             git commit -m "blog-draft: $(date +'%Y-%m-%d') 🤖" &&
             git push
