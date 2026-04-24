@@ -1,0 +1,41 @@
+[
+  {
+    "slug": "2026-04-24-1",
+    "title": "לא עוד ג'ונגל של מודלי AI: איך לנהל את הכל בצורה חכמה",
+    "excerpt": "השוק מוצף במודלי AI חדשים כל הזמן. הגיע הזמן ללמוד איך לארגן אותם ולנצל אותם בצורה הכי יעילה לעסק שלך.",
+    "date": "2026-04-24",
+    "dateLabel": "24 באפריל 2026",
+    "readTime": "6 דק' קריאה",
+    "tag": "ai",
+    "tagLabel": "AI כלים",
+    "image": "images/blog/2026-04-24.webp",
+    "imageFallback": "images/blog/2026-04-24.jpg",
+    "url": "posts/2026-04-24-1.html"
+  },
+  {
+    "slug": "2026-04-24",
+    "title": "CRM: הכלי שהופך עסק קטן לעסק שיודע לאן הוא הולך",
+    "excerpt": "עם CRM, כל לקוח מקבל את היחס שמגיע לו, והעסק שלך מקבל תמונה ברורה של כל המתרחש.",
+    "date": "2026-04-24",
+    "dateLabel": "24 באפריל 2026",
+    "readTime": "5 דק' קריאה",
+    "tag": "tips",
+    "tagLabel": "טיפים",
+    "image": "images/blog/2026-04-24-1.webp",
+    "imageFallback": "images/blog/2026-04-24-1.jpg",
+    "url": "posts/2026-04-24.html"
+  },
+  {
+    "slug": "make-automations",
+    "title": "5 אוטומציות ב-Make שכל עסק צריך ב-2025 — כולל תבניות מוכנות",
+    "excerpt": "מחיבור טפסי לקוחות ל-CRM ועד שליחת חשבוניות אוטומטית — אלה החמשה שהכי חוסכים זמן.",
+    "date": "2025-04-18",
+    "dateLabel": "18 באפריל 2025",
+    "readTime": "6 דק' קריאה",
+    "tag": "make",
+    "tagLabel": "Make",
+    "image": null,
+    "imageFallback": null,
+    "url": "posts/coming-soon.html"
+  }
+]
