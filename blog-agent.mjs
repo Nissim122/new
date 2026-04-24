@@ -1,7 +1,7 @@
 /**
  * blog-agent.mjs
  * סוכן בלוג שבועי — סורק חדשות אוטומציה ו-AI, בוחר נושא רלוונטי,
- * כותב מאמר בעברית אנושי ומקצועי, ושומר כטיוטה לאישור.
+ * כותב מאמר בעברית אנושי ומקצועי, ומפרסם לבלוג אוטומטית.
  *
  * Usage: node blog-agent.mjs [--dry-run]
  * Requires: GEMINI_API_KEY environment variable
@@ -10,6 +10,7 @@
 import { writeFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
+import { execFileSync } from 'child_process';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const BASE_DIR = process.cwd();
@@ -146,7 +147,7 @@ function buildCardHtml(post, date) {
   return `      <!-- AGENT POST ${date} -->
       <article class="blog-card reveal" data-cats="${post.category}" style="transition-delay:0.05s;">
         <div class="blog-card-thumb-wrap">
-          <img src="https://placehold.co/640x360/0e1628/2196b0?text=${encodeURIComponent(post.title.slice(0, 28))}" alt="${post.title}" loading="lazy" />
+          <img src="images/blog/${date}.jpg" alt="${post.title}" loading="lazy" />
         </div>
         <div class="blog-card-body">
           <span class="blog-tag ${cat.css}">${cat.label}</span>
@@ -211,6 +212,15 @@ function buildDraftHtml(post, date) {
   </div>
   <div class="content">
     ${post.content}
+  </div>
+
+  <div class="section" style="border-color: rgba(224,23,107,0.4);">
+    <div class="section-label" style="color:#e0176b;">📸 תמונה נדרשת לפני פרסום</div>
+    <p style="color:#c8d8ee;font-size:0.9rem;line-height:1.7;margin:0;">
+      צור תמונה AI שקשורה למאמר ושמור אותה בנתיב:<br/>
+      <code style="background:rgba(0,0,0,0.4);padding:0.2rem 0.6rem;border-radius:5px;font-family:monospace;color:#5ecfec;">images/blog/${date}.jpg</code><br/>
+      (גודל מומלץ: 1280×720 px)
+    </p>
   </div>
 
   <div class="section">
@@ -284,9 +294,16 @@ async function main() {
 
   console.log(`\n💾 נשמר: drafts/${TODAY}.html`);
   console.log(`💾 נשמר: drafts/${TODAY}.json`);
+
+  // Auto-publish
+  console.log('\n🚀 מפרסם לבלוג...');
+  execFileSync(process.execPath, [join(BASE_DIR, 'publish.mjs'), TODAY], {
+    cwd: BASE_DIR,
+    stdio: 'inherit',
+  });
+
   console.log(`\n📅 ${new Date().toLocaleString('he-IL')}`);
   console.log('═'.repeat(50));
-  console.log(`\n👉 כדי לפרסם: node publish.mjs ${TODAY}\n`);
 }
 
 main().catch(err => {

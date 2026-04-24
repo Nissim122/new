@@ -122,7 +122,7 @@ function buildPostHtml(post, cat, heDate) {
     .post-tag.whatsapp { background: rgba(37,211,102,0.15); color: #5dde8a; border: 1px solid rgba(37,211,102,0.3); }
     .post-tag.tips     { background: rgba(255,200,0,0.12);  color: #ffd966; border: 1px solid rgba(255,200,0,0.3); }
     .post-header { text-align: center; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
-    h1 { font-size: clamp(2.8rem, 6vw, 4.4rem); font-weight: 900; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.2rem; text-align: center; }
+    h1 { font-size: clamp(2.1rem, 4.5vw, 3.3rem); font-weight: 900; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.2rem; text-align: center; }
     .post-meta { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; font-size: 0.85rem; color: rgba(255,255,255,0.45); justify-content: center; }
     .post-content h2 { font-size: 1.4rem; font-weight: 800; color: #2196b0; margin: 2.4rem 0 0.7rem; }
     .post-content h3 { font-size: 1.12rem; font-weight: 700; color: #5ecfec; margin: 1.8rem 0 0.5rem; }
@@ -175,6 +175,10 @@ function buildPostHtml(post, cat, heDate) {
 <main>
   <div class="post-wrap">
     <a href="../blog.html" class="back-link">◄ חזרה לבלוג</a>
+
+    <div style="border-radius:16px;overflow:hidden;margin-bottom:2.5rem;aspect-ratio:16/9;background:#131c34;">
+      <img src="../images/blog/${dateArg}.jpg" alt="${post.title}" style="width:100%;height:100%;object-fit:cover;display:block;" />
+    </div>
 
     <div class="post-header">
       <span class="post-tag ${cat.css}">${cat.label}</span>
@@ -269,7 +273,7 @@ async function main() {
     const cardHtml = `<!-- AGENT POST ${dateArg} -->
       <article class="blog-card reveal" data-cats="${post.category}" style="transition-delay:0.05s;">
         <div class="blog-card-thumb-wrap">
-          <img src="https://placehold.co/640x360/0e1628/2196b0?text=${encodeURIComponent(post.title.slice(0, 28))}" alt="${post.title}" loading="lazy" />
+          <img src="images/blog/${dateArg}.jpg" alt="${post.title}" loading="lazy" />
         </div>
         <div class="blog-card-body">
           <span class="blog-tag ${cat.css}">${cat.label}</span>
