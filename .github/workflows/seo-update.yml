@@ -27,7 +27,7 @@ jobs:
         run: |
           git config user.name "SEO Bot"
           git config user.email "bot@clix-automations.com"
-          git add index.html
+          git add index.html blog.html posts/
           git diff --staged --quiet && echo "No changes" || (
             git commit -m "seo: עדכון מילות מפתח $(date +'%Y-%m-%d')" &&
             git push
