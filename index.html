@@ -3063,21 +3063,7 @@
             requestAnimationFrame(function() { backdrop.style.opacity = '1'; });
           }
           setTimeout(function () {
-            if (isBlocked()) { applyBlockedUI(); } else {
-              var inp = document.getElementById('chat-input');
-              if (inp) {
-                inp.focus({ preventScroll: true });
-                // Reset horizontal scroll immediately after focus to prevent iOS RTL shift
-                window.scrollTo(0, window.scrollY);
-                document.documentElement.scrollLeft = 0;
-                document.body.scrollLeft = 0;
-                setTimeout(function() {
-                  window.scrollTo(0, window.scrollY);
-                  document.documentElement.scrollLeft = 0;
-                  document.body.scrollLeft = 0;
-                }, 100);
-              }
-            }
+            if (isBlocked()) { applyBlockedUI(); }
             scrollChatToBottom();
           }, 350);
         } else {
@@ -3273,6 +3259,9 @@
         window.scrollTo(0, window.scrollY);
         document.documentElement.scrollLeft = 0;
         document.body.scrollLeft = 0;
+        if (vv && Math.abs(vv.offsetLeft) > 1) {
+          window.scrollBy(-vv.offsetLeft, 0);
+        }
       }
 
       if (window.visualViewport) {
@@ -3284,8 +3273,18 @@
       // resize doesn't fire reliably (older iOS Safari).
       var inp = document.getElementById('chat-input');
       if (inp) {
-        inp.addEventListener('focus', function () { setTimeout(adjustForKeyboard, 300); });
-        inp.addEventListener('blur',  function () { setTimeout(adjustForKeyboard, 100); });
+        inp.addEventListener('focus', function () {
+          // Immediately reset horizontal shift before iOS applies it
+          requestAnimationFrame(function() {
+            window.scrollTo(0, window.scrollY);
+            document.documentElement.scrollLeft = 0;
+            document.body.scrollLeft = 0;
+            var vv2 = window.visualViewport;
+            if (vv2 && Math.abs(vv2.offsetLeft) > 1) window.scrollBy(-vv2.offsetLeft, 0);
+          });
+          setTimeout(adjustForKeyboard, 300);
+        });
+        inp.addEventListener('blur', function () { setTimeout(adjustForKeyboard, 100); });
       }
     })();
 
@@ -3294,6 +3293,11 @@
       if (window.scrollX !== 0) window.scrollTo(0, window.scrollY);
       if (document.documentElement.scrollLeft !== 0) document.documentElement.scrollLeft = 0;
       if (document.body.scrollLeft !== 0) document.body.scrollLeft = 0;
+      // Counteract iOS visual viewport horizontal offset (RTL focus shift)
+      var vv = window.visualViewport;
+      if (vv && Math.abs(vv.offsetLeft) > 1) {
+        window.scrollBy(-vv.offsetLeft, 0);
+      }
     }
     window.addEventListener('scroll', _resetHScroll, { passive: true });
     if (window.visualViewport) {
