@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CLIX Automations — אוטומציה לעסקים | חיבור מערכות Make, Monday, WhatsApp, CRM</title>
+  <title>Clix Automations | פתרונות אוטומציה לעסקים</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="icon" type="image/png" sizes="192x192" href="brand_assets/profile_pic_2_nobg.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="brand_assets/profile_pic_2_nobg.png" />
 
   <!-- SEO Core -->
-  <meta name="description" content="CLIX Automations — עסקית, שלכם, העסק לעסק שלך. חיבור כלים: Make, Monday, WhatsApp, CRM ועוד. לעסק, בעסק, אישית. השאר פרטים ותקבל ייעוץ חינם." />
-  <meta name="keywords" content="עסקית, שלכם, העסק, לעסק, בעסק, אישית, תהליכי, אוטומטי, מערכות, עסקים, לקוחות, אוטומציות, תהליכים, עבודה, איך, ניהול, לכל, מערכת, תהליך, האוטומציה, קשר, ייעוץ, הלקוחות, זמן, למה" />
+  <meta name="description" content="קליקס אוטומציות (CLIX) — מומחים לאוטומציות עסקיות בישראל. חיבור מערכות Make, Monday, WhatsApp ו-CRM לעסק שלך. מה זה אוטומציה עסקית? איך זה עובד? השאר פרטים ותקבל ייעוץ חינם." />
+  <meta name="keywords" content="קליקס, קליקס אוטומציות, CLIX, CLIX Automations, אוטומציות עסקיות, אוטומציה עסקית, מה זה אוטומציה עסקית, אוטומציות ב-Make, Make.com ישראל, חיבור מערכות, Monday CRM, אוטומציית WhatsApp, אוטומציה לעסקים קטנים, ייעוץ אוטומציה, תהליכים אוטומטיים, חיסכון בזמן לעסקים, אינטגרציה בין מערכות" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://clix-automations.com/" />
 
   <!-- Open Graph (Facebook / LinkedIn) -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://clix-automations.com/" />
-  <meta property="og:title" content="CLIX Automations — אוטומציה לעסקים | Make, Monday, WhatsApp, CRM" />
-  <meta property="og:description" content="CLIX Automations — עסקית, שלכם, העסק לעסק שלך. חיבור כלים: Make, Monday, WhatsApp, CRM ועוד. לעסק, בעסק, אישית. השאר פרטים ותקבל ייעוץ חינם." />
+  <meta property="og:title" content="Clix Automations | פתרונות אוטומציה לעסקים" />
+  <meta property="og:description" content="קליקס אוטומציות (CLIX) — מומחים לאוטומציות עסקיות בישראל. חיבור מערכות Make, Monday, WhatsApp ו-CRM לעסק שלך. מה זה אוטומציה עסקית? איך זה עובד? השאר פרטים ותקבל ייעוץ חינם." />
   <meta property="og:image" content="https://clix-automations.com/brand_assets/profile_pic_2_nobg.png" />
   <meta property="og:locale" content="he_IL" />
   <meta property="og:site_name" content="CLIX Automations" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="CLIX Automations — אוטומציה לעסקים | Make, Monday, WhatsApp, CRM" />
-  <meta name="twitter:description" content="CLIX Automations — עסקית, שלכם, העסק לעסק שלך. חיבור כלים: Make, Monday, WhatsApp, CRM ועוד. לעסק, בעסק, אישית. השאר פרטים ותקבל ייעוץ חינם." />
+  <meta name="twitter:title" content="Clix Automations | פתרונות אוטומציה לעסקים" />
+  <meta name="twitter:description" content="קליקס אוטומציות (CLIX) — מומחים לאוטומציות עסקיות בישראל. חיבור מערכות Make, Monday, WhatsApp ו-CRM לעסק שלך. מה זה אוטומציה עסקית? איך זה עובד? השאר פרטים ותקבל ייעוץ חינם." />
   <meta name="twitter:image" content="https://clix-automations.com/brand_assets/profile_pic_2_nobg.png" />
   <!-- preconnect critical origins -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -58,16 +58,17 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; overflow-x: hidden; overscroll-behavior-x: none; touch-action: pan-y; max-width: 100%; }
+    html { scroll-behavior: smooth; overflow-x: clip; overscroll-behavior-x: none; touch-action: pan-y; max-width: 100%; width: 100%; }
 
     body {
       font-family: 'Heebo', sans-serif;
       background: #0e1628;
       color: #ffffff;
-      overflow-x: hidden;
+      overflow-x: clip;
       overscroll-behavior-x: none;
       touch-action: pan-y;
       max-width: 100%;
+      width: 100%;
     }
 
     /* Section dividers */
@@ -617,7 +618,7 @@
       }
 
       /* Prevent horizontal scroll from decorative elements */
-      body, html { overflow-x: hidden !important; }
+      body, html { overflow-x: clip !important; width: 100% !important; max-width: 100vw !important; }
       .hero-section { overflow: hidden !important; }
 
       /* General section padding */
@@ -2680,6 +2681,7 @@
     transform: translateY(16px) scale(0.96);
     pointer-events: none;
     transition: opacity 0.35s cubic-bezier(0.34,1.4,0.64,1), transform 0.35s cubic-bezier(0.34,1.4,0.64,1);
+    contain: layout style;
     direction: rtl;
   ">
 
@@ -2856,10 +2858,12 @@
         top: 4.5rem !important;
         bottom: 5.5rem !important;
         width: auto !important;
+        max-width: 85vw !important;
         height: auto !important;
         max-height: none !important;
-        overflow-x: hidden !important;
+        overflow: hidden !important;
         border-radius: 18px !important;
+        transform-origin: center bottom !important;
       }
       /* give the input wrapper a more visible background on mobile */
       #chat-panel > div:last-child {
@@ -3053,6 +3057,18 @@
           panel.style.pointerEvents = 'none';
           if (iconOpen) { iconOpen.style.opacity = '1'; iconOpen.style.transform = 'rotate(0deg)'; }
           if (iconClose) { iconClose.style.opacity = '0'; iconClose.style.transform = 'rotate(-90deg)'; }
+          // Dismiss keyboard immediately so viewport doesn't shift on its own
+          var inp2 = document.getElementById('chat-input');
+          if (inp2) inp2.blur();
+          // Remove any keyboard-override positioning
+          panel.style.removeProperty('bottom');
+          panel.style.removeProperty('top');
+          // Reset horizontal scroll after keyboard dismisses (iOS RTL shift fix)
+          setTimeout(function () {
+            window.scrollTo(0, window.scrollY);
+            document.documentElement.scrollLeft = 0;
+            document.body.scrollLeft = 0;
+          }, 350);
         }
       };
 
@@ -3236,10 +3252,16 @@
       }
     })();
 
-    // Prevent any horizontal scroll — reset X position on every scroll event
-    window.addEventListener('scroll', function () {
+    // Prevent any horizontal scroll
+    function _resetHScroll() {
       if (window.scrollX !== 0) window.scrollTo(0, window.scrollY);
-    }, { passive: true });
+      if (document.documentElement.scrollLeft !== 0) document.documentElement.scrollLeft = 0;
+      if (document.body.scrollLeft !== 0) document.body.scrollLeft = 0;
+    }
+    window.addEventListener('scroll', _resetHScroll, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', _resetHScroll);
+    }
   </script>
 
 </body>
