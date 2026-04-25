@@ -3194,6 +3194,32 @@
         return result.join('');
       }
     })();
+
+    // ── Mobile keyboard fix ──────────────────────────────────────────────────
+    // On iOS, position:fixed is relative to the layout viewport (doesn't shrink
+    // when the keyboard opens). This listener repositions the chat panel above
+    // the keyboard using the Visual Viewport API.
+    (function () {
+      if (!window.visualViewport) return;
+      var panel = document.getElementById('chat-panel');
+      if (!panel) return;
+
+      function onViewportChange() {
+        if (window.innerWidth > 600) return;
+        var vv = window.visualViewport;
+        var kbHeight = window.innerHeight - vv.height - vv.offsetTop;
+        if (kbHeight > 50) {
+          panel.style.bottom = (kbHeight + 8) + 'px';
+          panel.style.top    = Math.max(vv.offsetTop + 56, 56) + 'px';
+        } else {
+          panel.style.bottom = '';
+          panel.style.top    = '';
+        }
+      }
+
+      window.visualViewport.addEventListener('resize', onViewportChange);
+      window.visualViewport.addEventListener('scroll', onViewportChange);
+    })();
   </script>
 
 </body>
