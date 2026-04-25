@@ -58,13 +58,14 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; overscroll-behavior-x: none; }
 
     body {
       font-family: 'Heebo', sans-serif;
       background: #0e1628;
       color: #ffffff;
       overflow-x: hidden;
+      overscroll-behavior-x: none;
     }
 
     /* Section dividers */
@@ -2848,13 +2849,14 @@
         align-items: flex-end;
       }
       #chat-panel {
-        left: 1rem !important;
-        right: 1rem !important;
+        left: 7.5vw !important;
+        right: 7.5vw !important;
         top: 4.5rem !important;
         bottom: 5.5rem !important;
         width: auto !important;
         height: auto !important;
         max-height: none !important;
+        overflow-x: hidden !important;
         border-radius: 18px !important;
       }
       /* give the input wrapper a more visible background on mobile */
