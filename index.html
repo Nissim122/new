@@ -891,6 +891,11 @@
       width: fit-content;
     }
 
+    /* Blog grid — responsive columns */
+    #bp-cards-grid { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 1023px) { #bp-cards-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 599px)  { #bp-cards-grid { grid-template-columns: 1fr; } }
+
   </style>
 </head>
 
@@ -1365,7 +1370,7 @@
     </div><!-- /header wrapper -->
 
       <!-- גריד אחיד — 3 אחרונים (דינמי) + 1 פופולרי (שמאל ב-RTL) -->
-      <div id="bp-cards-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; padding: 0 1.5rem; margin-bottom: 2.75rem;">
+      <div id="bp-cards-grid" style="display: grid; gap: 1.5rem; padding: 0 1.5rem; margin-bottom: 2.75rem;">
 
         <!-- הפופולרי ביותר — לשינוי: עדכן data-pinned ל-slug של המאמר ואת תוכן ה-article -->
         <article class="bp-card bp-card--pinned reveal" data-pinned="2026-04-24-1" style="order: 4;">
