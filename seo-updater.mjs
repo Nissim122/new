@@ -16,7 +16,8 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const BASE_DIR = process.cwd();
 const INDEX_PATH = join(BASE_DIR, 'index.html');
 const BLOG_PATH  = join(BASE_DIR, 'blog.html');
-const POSTS_DIR  = join(BASE_DIR, 'posts');
+const POSTS_DIR   = join(BASE_DIR, 'posts');
+const SITEMAP_PATH = join(BASE_DIR, 'sitemap.xml');
 const CONFIG_PATH = join(BASE_DIR, 'seo-config.json');
 
 // ─── HTML helpers ─────────────────────────────────────────────────────────────
@@ -210,15 +211,16 @@ async function updateIndexPage(config, competitorKeywords) {
 
   if (html === originalHtml) {
     console.log('  ℹ️  אין שינויים ב-index.html');
-    return;
+    return null;
   }
 
   if (DRY_RUN) {
     console.log('  🧪 DRY RUN — index.html לא נשמר');
-  } else {
-    await writeFile(INDEX_PATH, html, 'utf8');
-    console.log('  💾 נשמר: index.html');
+    return null;
   }
+  await writeFile(INDEX_PATH, html, 'utf8');
+  console.log('  💾 נשמר: index.html');
+  return 'https://clix-automations.com/';
 }
 
 // ─── Update blog.html ─────────────────────────────────────────────────────────
@@ -268,15 +270,16 @@ async function updateBlogPage(config, competitorKeywords) {
 
   if (html === originalHtml) {
     console.log('  ℹ️  אין שינויים ב-blog.html');
-    return;
+    return null;
   }
 
   if (DRY_RUN) {
     console.log('  🧪 DRY RUN — blog.html לא נשמר');
-  } else {
-    await writeFile(BLOG_PATH, html, 'utf8');
-    console.log('  💾 נשמר: blog.html');
+    return null;
   }
+  await writeFile(BLOG_PATH, html, 'utf8');
+  console.log('  💾 נשמר: blog.html');
+  return 'https://clix-automations.com/blog.html';
 }
 
 // ─── Update posts/*.html ──────────────────────────────────────────────────────
@@ -294,6 +297,7 @@ async function updatePostPages(config, competitorKeywords) {
 
   const htmlFiles = files.filter(f => f.endsWith('.html') && f !== 'coming-soon.html');
   console.log(`\n📝 מעדכן ${htmlFiles.length} מאמרים...`);
+  const modifiedUrls = [];
 
   for (const file of htmlFiles) {
     const filePath = join(POSTS_DIR, file);
@@ -341,7 +345,35 @@ async function updatePostPages(config, competitorKeywords) {
       await writeFile(filePath, html, 'utf8');
       console.log(`  💾 נשמר: ${file}`);
       console.log(`       keywords: ${finalKeywords.slice(0, 5).join(', ')}...`);
+      modifiedUrls.push(`https://clix-automations.com/posts/${file}`);
     }
+  }
+  return modifiedUrls;
+}
+
+// ─── Sitemap lastmod updater ──────────────────────────────────────────────────
+
+async function updateSitemapLastmod(modifiedUrls) {
+  if (!existsSync(SITEMAP_PATH) || modifiedUrls.length === 0) return;
+
+  let xml = await readFile(SITEMAP_PATH, 'utf8');
+  const today = new Date().toISOString().slice(0, 10);
+  let changed = false;
+
+  for (const url of modifiedUrls) {
+    const escaped = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const pattern = new RegExp(`(<loc>${escaped}<\\/loc>\\s*<lastmod>)[^<]*(<\\/lastmod>)`, 'g');
+    const updated = xml.replace(pattern, `$1${today}$2`);
+    if (updated !== xml) { xml = updated; changed = true; }
+  }
+
+  if (!changed) return;
+
+  if (DRY_RUN) {
+    console.log(`\n  🧪 DRY RUN — sitemap.xml לא עודכן`);
+  } else {
+    await writeFile(SITEMAP_PATH, xml, 'utf8');
+    console.log(`\n🗺️  עודכן lastmod ב-sitemap.xml עבור ${modifiedUrls.length} דפים`);
   }
 }
 
@@ -375,12 +407,15 @@ async function main() {
 
   // עדכן דפים
   console.log('\n🌐 מעדכן index.html...');
-  await updateIndexPage(config, competitorKeywords);
+  const indexUrl = await updateIndexPage(config, competitorKeywords);
 
   console.log('\n📰 מעדכן blog.html...');
-  await updateBlogPage(config, competitorKeywords);
+  const blogUrl = await updateBlogPage(config, competitorKeywords);
 
-  await updatePostPages(config, competitorKeywords);
+  const postUrls = await updatePostPages(config, competitorKeywords);
+
+  const allModified = [indexUrl, blogUrl, ...postUrls].filter(Boolean);
+  await updateSitemapLastmod(allModified);
 
   console.log('\n' + '═'.repeat(50));
   console.log(`✅ סיום — ${new Date().toLocaleString('he-IL')}\n`);

@@ -401,6 +401,22 @@ async function main() {
     console.log(`📋 עודכן: posts/index.json`);
   }
 
+  // ── 4. Update sitemap.xml ──────────────────────────────────────────────────
+  const SITEMAP_PATH = join(BASE_DIR, 'sitemap.xml');
+  if (existsSync(SITEMAP_PATH)) {
+    let sitemap = await readFile(SITEMAP_PATH, 'utf8');
+    const postUrl = `https://clix-automations.com/posts/${postSlug}.html`;
+
+    if (sitemap.includes(postUrl)) {
+      console.warn(`⚠️  ${postSlug} כבר קיים ב-sitemap.xml`);
+    } else {
+      const entry = `\n  <url>\n    <loc>${postUrl}</loc>\n    <lastmod>${datePart}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+      sitemap = sitemap.replace('  <!-- דפים נוספים -->', entry + '  <!-- דפים נוספים -->');
+      await writeFile(SITEMAP_PATH, sitemap, 'utf8');
+      console.log(`🗺️  עודכן: sitemap.xml`);
+    }
+  }
+
   console.log(`\n✅ פורסם בהצלחה!`);
   console.log(`   כותרת: "${post.title}"`);
   console.log(`   קטגוריה: ${cat.label} | ${heDate}`);
