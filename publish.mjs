@@ -16,6 +16,8 @@ if (!dateArg || !/^\d{4}-\d{2}-\d{2}-\d+$/.test(dateArg)) {
   process.exit(1);
 }
 const datePart = dateArg.slice(0, 10);
+const postN     = parseInt(dateArg.slice(11), 10);
+const imageSlug = postN === 1 ? datePart : `${datePart}-${postN - 1}`;
 
 const BASE_DIR    = process.cwd();
 const META_PATH   = join(BASE_DIR, 'drafts', `${dateArg}.json`);
@@ -33,7 +35,7 @@ const CATEGORIES = {
   tips:     { label: 'טיפים',          css: 'tips' },
 };
 
-function buildPostHtml(post, cat, heDate, postSlug) {
+function buildPostHtml(post, cat, heDate, postSlug, imageSlug) {
   return `<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -53,7 +55,7 @@ function buildPostHtml(post, cat, heDate, postSlug) {
   <meta property="og:url" content="https://clix-automations.com/posts/${postSlug}.html" />
   <meta property="og:title" content="${post.title}" />
   <meta property="og:description" content="${post.excerpt}" />
-  <meta property="og:image" content="https://clix-automations.com/images/blog/${postSlug}.jpg" />
+  <meta property="og:image" content="https://clix-automations.com/images/blog/${imageSlug}.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="article:published_time" content="${datePart}T00:00:00+03:00" />
@@ -65,7 +67,7 @@ function buildPostHtml(post, cat, heDate, postSlug) {
   <meta name="twitter:site" content="@ClixAutomations" />
   <meta name="twitter:title" content="${post.title}" />
   <meta name="twitter:description" content="${post.excerpt}" />
-  <meta name="twitter:image" content="https://clix-automations.com/images/blog/${postSlug}.jpg" />
+  <meta name="twitter:image" content="https://clix-automations.com/images/blog/${imageSlug}.jpg" />
 
   <script type="application/ld+json">
   {
@@ -73,7 +75,7 @@ function buildPostHtml(post, cat, heDate, postSlug) {
     "@type": "BlogPosting",
     "headline": "${post.title.replace(/"/g, '\\"')}",
     "description": "${post.excerpt.replace(/"/g, '\\"')}",
-    "image": "https://clix-automations.com/images/blog/${postSlug}.jpg",
+    "image": "https://clix-automations.com/images/blog/${imageSlug}.jpg",
     "datePublished": "${datePart}T00:00:00+03:00",
     "dateModified": "${datePart}T00:00:00+03:00",
     "author": {
@@ -240,8 +242,9 @@ function buildPostHtml(post, cat, heDate, postSlug) {
 
     <div style="border-radius:16px;overflow:hidden;margin-bottom:2.5rem;aspect-ratio:16/9;background:#131c34;">
       <picture>
-        <source srcset="../images/blog/${dateArg}.webp" type="image/webp" />
-        <img src="../images/blog/${dateArg}.jpg" alt="${post.title}" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <source srcset="../images/blog/${imageSlug}.webp" type="image/webp" />
+        <source srcset="../images/blog/${imageSlug}.png" type="image/png" />
+        <img src="../images/blog/${imageSlug}.jpg" alt="${post.title}" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </picture>
     </div>
 
@@ -327,7 +330,7 @@ async function main() {
   const isPlaceholder = existsSync(postPath) &&
     (await readFile(postPath, 'utf8')).includes('המאמר בכתיבה');
 
-  await writeFile(postPath, buildPostHtml(post, cat, heDate, postSlug), 'utf8');
+  await writeFile(postPath, buildPostHtml(post, cat, heDate, postSlug, imageSlug), 'utf8');
   console.log(isPlaceholder
     ? `📄 דורס placeholder: posts/${postSlug}.html`
     : `📄 נוצר: posts/${postSlug}.html`);
@@ -347,8 +350,9 @@ async function main() {
       <article class="blog-card reveal" data-cats="${post.category}" style="transition-delay:0.05s;">
         <div class="blog-card-thumb-wrap">
           <picture>
-            <source srcset="images/blog/${postSlug}.webp" type="image/webp" />
-            <img src="images/blog/${postSlug}.jpg" alt="${post.title}" loading="lazy" />
+            <source srcset="images/blog/${imageSlug}.webp" type="image/webp" />
+            <source srcset="images/blog/${imageSlug}.png" type="image/png" />
+            <img src="images/blog/${imageSlug}.jpg" alt="${post.title}" loading="lazy" />
           </picture>
         </div>
         <div class="blog-card-body">
@@ -393,8 +397,8 @@ async function main() {
       readTime:     `${post.readTime} דק' קריאה`,
       tag:          post.category,
       tagLabel:     cat.label,
-      image:        `images/blog/${postSlug}.webp`,
-      imageFallback:`images/blog/${postSlug}.jpg`,
+      image:        `images/blog/${imageSlug}.webp`,
+      imageFallback:`images/blog/${imageSlug}.jpg`,
       url:          `posts/${postSlug}.html`,
     });
     await writeFile(INDEX_PATH, JSON.stringify(index, null, 2), 'utf8');
