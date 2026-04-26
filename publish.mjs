@@ -380,9 +380,9 @@ async function main() {
     ? JSON.parse(await readFile(INDEX_PATH, 'utf8'))
     : [];
 
-  const alreadyInIndex = index.some(p => p.slug === dateArg);
+  const alreadyInIndex = index.some(p => p.slug === postSlug || p.slug === dateArg);
   if (alreadyInIndex) {
-    console.warn(`⚠️  ${dateArg} כבר קיים ב-index.json`);
+    console.warn(`⚠️  ${postSlug} כבר קיים ב-index.json`);
   } else {
     index.unshift({
       slug:         postSlug,
@@ -410,10 +410,15 @@ async function main() {
     if (sitemap.includes(postUrl)) {
       console.warn(`⚠️  ${postSlug} כבר קיים ב-sitemap.xml`);
     } else {
-      const entry = `\n  <url>\n    <loc>${postUrl}</loc>\n    <lastmod>${datePart}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
-      sitemap = sitemap.replace('  <!-- דפים נוספים -->', entry + '  <!-- דפים נוספים -->');
-      await writeFile(SITEMAP_PATH, sitemap, 'utf8');
-      console.log(`🗺️  עודכן: sitemap.xml`);
+      const SITEMAP_MARKER = '  <!-- דפים נוספים -->';
+      if (!sitemap.includes(SITEMAP_MARKER)) {
+        console.warn('⚠️  מרקר sitemap.xml לא נמצא — הסיטמאפ לא עודכן');
+      } else {
+        const entry = `\n  <url>\n    <loc>${postUrl}</loc>\n    <lastmod>${datePart}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+        sitemap = sitemap.replace(SITEMAP_MARKER, entry + SITEMAP_MARKER);
+        await writeFile(SITEMAP_PATH, sitemap, 'utf8');
+        console.log(`🗺️  עודכן: sitemap.xml`);
+      }
     }
   }
 

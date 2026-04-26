@@ -1,4 +1,4 @@
-/**
+﻿/**
  * blog-agent.mjs
  * סוכן בלוג שבועי — סורק חדשות אוטומציה ו-AI, בוחר נושא רלוונטי,
  * כותב מאמר בעברית אנושי ומקצועי, ומפרסם לבלוג אוטומטית.
@@ -330,6 +330,9 @@ async function main() {
     // 1b. Fetch RSS for market research
     console.log(`\n📡 סורק ${RSS_FEEDS.length} מקורות חדשות...\n`);
     const allItems = (await Promise.all(RSS_FEEDS.map(fetchRss))).flat();
+    if (allItems.length === 0) {
+      console.warn('⚠️  כל מקורות ה-RSS נכשלו — ממשיך עם פרומפט ריק');
+    }
     console.log(`✅ נמצאו ${allItems.length} פריטים`);
     allItems.slice(0, 6).forEach((item, i) =>
       console.log(`  ${i + 1}. [${item.source}] ${item.title}`)
@@ -346,11 +349,17 @@ async function main() {
     console.error('❌ שגיאה בפענוח JSON:\n', raw.slice(0, 600));
     throw new Error('Gemini לא החזיר JSON תקין');
   }
+  const jsonStr = raw.slice(start, end + 1);
   try {
-    post = JSON.parse(raw.slice(start, end + 1));
+    post = JSON.parse(jsonStr);
   } catch {
-    console.error('❌ שגיאה בפענוח JSON:\n', raw.slice(0, 600));
-    throw new Error('Gemini לא החזיר JSON תקין');
+    // Gemini sometimes includes literal newlines inside string values — strip them and retry
+    try {
+      post = JSON.parse(jsonStr.replace(/\r?\n/g, ' '));
+    } catch {
+      console.error('❌ שגיאה בפענוח JSON:\n', raw.slice(0, 600));
+      throw new Error('Gemini לא החזיר JSON תקין');
+    }
   }
 
   console.log(`\n📝 "${post.title}"`);
