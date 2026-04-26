@@ -1,0 +1,45 @@
+# ── Bot & Scraper Protection ─────────────────────────────────────────────────
+
+RewriteEngine On
+
+# Block empty User-Agent
+RewriteCond %{HTTP_USER_AGENT} ^-?$
+RewriteRule ^ - [F,L]
+
+# Block requests with no Accept header (browsers always send one)
+RewriteCond %{HTTP_ACCEPT} ^-?$
+RewriteRule ^ - [F,L]
+
+# ── Known scrapers & automation clients ──────────────────────────────────────
+SetEnvIfNoCase User-Agent "python-requests"  block_bot
+SetEnvIfNoCase User-Agent "python-urllib"    block_bot
+SetEnvIfNoCase User-Agent "urllib"           block_bot
+SetEnvIfNoCase User-Agent "curl/"            block_bot
+SetEnvIfNoCase User-Agent "wget/"            block_bot
+SetEnvIfNoCase User-Agent "scrapy"           block_bot
+SetEnvIfNoCase User-Agent "scraperapi"       block_bot
+SetEnvIfNoCase User-Agent "BlogBot"          block_bot
+SetEnvIfNoCase User-Agent "Go-http-client"   block_bot
+SetEnvIfNoCase User-Agent "Java/"            block_bot
+SetEnvIfNoCase User-Agent "libwww-perl"      block_bot
+SetEnvIfNoCase User-Agent "Axios/"           block_bot
+SetEnvIfNoCase User-Agent "node-fetch"       block_bot
+SetEnvIfNoCase User-Agent "got "             block_bot
+SetEnvIfNoCase User-Agent "undici"           block_bot
+SetEnvIfNoCase User-Agent "feedfetcher"      block_bot
+SetEnvIfNoCase User-Agent "FeedBurner"       block_bot
+SetEnvIfNoCase User-Agent "facebookexternalhit" block_bot
+SetEnvIfNoCase User-Agent "ia_archiver"      block_bot
+SetEnvIfNoCase User-Agent "HTTrack"          block_bot
+SetEnvIfNoCase User-Agent "MJ12bot"          block_bot
+SetEnvIfNoCase User-Agent "DotBot"           block_bot
+SetEnvIfNoCase User-Agent "SemrushBot"       block_bot
+SetEnvIfNoCase User-Agent "AhrefsBot"        block_bot
+SetEnvIfNoCase User-Agent "MajesticSEO"      block_bot
+SetEnvIfNoCase User-Agent "rogerbot"         block_bot
+SetEnvIfNoCase User-Agent "SiteAuditBot"     block_bot
+SetEnvIfNoCase User-Agent "YandexBot"        block_bot
+SetEnvIfNoCase User-Agent "Baiduspider"      block_bot
+
+Order deny,allow
+Deny from env=block_bot

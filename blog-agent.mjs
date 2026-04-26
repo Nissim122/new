@@ -34,6 +34,7 @@ const RSS_FEEDS = [
   { name: 'Geektime',       url: 'https://www.geektime.co.il/feed/' },
   { name: 'The Verge AI',   url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml' },
   { name: 'TechCrunch AI',  url: 'https://techcrunch.com/category/artificial-intelligence/feed/' },
+  { name: 'Otherwise',      url: 'https://otherwise.co.il/feed/' },
 ];
 
 const CATEGORIES = {
