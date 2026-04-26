@@ -5,6 +5,9 @@ on:
     - cron: '0 8 1,15 * *'  # ה-1 וה-15 בחודש, 8:00 UTC (11:00 שעון ישראל)
   workflow_dispatch:          # הפעלה ידנית מ-GitHub
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   update-seo:
     runs-on: ubuntu-latest
