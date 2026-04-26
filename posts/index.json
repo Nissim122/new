@@ -1,5 +1,18 @@
 [
   {
+    "slug": "chatgpt-business-automation",
+    "title": "להפוך את ChatGPT למנוע צמיחה: איך אוטומציה חכמה משנה את העסק שלך",
+    "excerpt": "כולם מדברים על ChatGPT, אבל מעטים יודעים איך לרתום אותו באמת לעסק. בואו נראה איך אוטומציה פשוטה יכולה להפוך את ה-AI הזה לכלי פרודוקטיבי שעובד בשבילכם, ומייצר ערך אמיתי.",
+    "date": "2026-04-26",
+    "dateLabel": "26 באפריל 2026",
+    "readTime": "4 דק' קריאה",
+    "tag": "ai",
+    "tagLabel": "AI כלים",
+    "image": "images/blog/chatgpt-business-automation.webp",
+    "imageFallback": "images/blog/chatgpt-business-automation.jpg",
+    "url": "posts/chatgpt-business-automation.html"
+  },
+  {
     "slug": "2026-04-24-2",
     "title": "7 טעויות שעסקים עושים ב-Monday.com — ואיך נמנעים מהן",
     "excerpt": "כמו כל כלי עבודה, גם Monday.com יכול להפוך למלכודת אם לא משתמשים בו נכון. ניסים בנגייב, מומחה אוטומציות, חולק 7 טעויות נפוצות ואיך לתקן אותן.",
