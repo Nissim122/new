@@ -1428,8 +1428,9 @@
       }
 
       function cardHtml(p, order) {
+        var base = p.image ? p.image.replace(/\.[^.]+$/, '') : '';
         var thumb = p.image
-          ? '<picture><source srcset="' + esc(p.image) + '" type="image/webp"><img src="' + esc(p.imageFallback) + '" alt="' + esc(p.title) + '" loading="lazy"></picture>'
+          ? '<img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" loading="lazy" onerror="(function(t,b){var e=[\'png\',\'jpg\',\'webp\'],i=0;t.onerror=function(){i<e.length?t.src=b+\'.\'+e[i++]:t.onerror=null};t.onerror()})(this,\'' + base + '\')">'
           : '<img src="https://placehold.co/800x450/0e2240/2196b0?text=' + encodeURIComponent(p.tagLabel) + '" alt="' + esc(p.title) + '" loading="lazy">';
         return '<article class="bp-card reveal" style="order:' + order + ';">'
           + '<div class="bp-card-thumb">' + thumb + '</div>'

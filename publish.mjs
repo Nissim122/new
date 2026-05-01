@@ -35,6 +35,15 @@ const CATEGORIES = {
   tips:     { label: 'טיפים',          css: 'tips' },
 };
 
+function resolveImagePath(slug) {
+  for (const ext of ['webp', 'jpg', 'png']) {
+    if (existsSync(join(BASE_DIR, 'images', 'blog', `${slug}.${ext}`))) {
+      return `images/blog/${slug}.${ext}`;
+    }
+  }
+  return `images/blog/${slug}.webp`;
+}
+
 function buildPostHtml(post, cat, heDate, postSlug, imageSlug) {
   return `<!DOCTYPE html>
 <html lang="he" dir="rtl">
@@ -393,8 +402,8 @@ async function main() {
       readTime:     `${post.readTime} דק' קריאה`,
       tag:          post.category,
       tagLabel:     cat.label,
-      image:        `images/blog/${imageSlug}.webp`,
-      imageFallback:`images/blog/${imageSlug}.jpg`,
+      image:        resolveImagePath(imageSlug),
+      imageFallback:resolveImagePath(imageSlug),
       url:          `posts/${postSlug}.html`,
     });
     await writeFile(INDEX_PATH, JSON.stringify(index, null, 2), 'utf8');
