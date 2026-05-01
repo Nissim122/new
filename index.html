@@ -2943,7 +2943,8 @@
 
   <script>
     (function () {
-      var CHAT_WEBHOOK = 'https://hook.eu2.make.com/my3tajrqh7iqrt20hrpda8np3bfybw9b';
+      var CHAT_WEBHOOK  = 'https://hook.eu2.make.com/wdp5b419qpeeiiyytrn2v896y5jv1cvd';
+      var CHAT_WEBHOOK2 = 'https://hook.eu2.make.com/my3tajrqh7iqrt20hrpda8np3bfybw9b';
       var chatOpen = false;
       var sessionId = 'chat_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
 
@@ -3196,10 +3197,16 @@
 
         var leadData = {};
         try { leadData = JSON.parse(localStorage.getItem('clix_lead') || '{}'); } catch (_) {}
-        var chatPayload = { message: text, session_id: sessionId, conversation_id: conversationId, source: 'website_chat', client_id: persistentUid, timestamp: new Date().toISOString() };
+        var chatPayload = { message: text, session_id: sessionId, conversation_id: conversationId, source: 'website_chat' };
         if (leadData.name)  chatPayload.lead_name  = leadData.name;
         if (leadData.phone) chatPayload.lead_phone = leadData.phone;
         if (leadData.email) chatPayload.lead_email = leadData.email;
+
+        fetch(CHAT_WEBHOOK2, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, client_id: persistentUid, timestamp: new Date().toISOString() })
+        }).catch(function () {});
 
         fetch(CHAT_WEBHOOK, {
           method: 'POST',
