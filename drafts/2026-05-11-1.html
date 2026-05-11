@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>טיוטה: פרומפט אנג'ינירינג לעסקים: איך לכתוב נכון כדי לקבל יותר מ-AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { font-family: 'Heebo', sans-serif; background: #0e1628; color: #e2e8f8; direction: rtl; margin: 0; padding: 0; }
+  .wrap { max-width: 740px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+  h1 { font-size: clamp(1.8rem,4vw,2.5rem); font-weight: 900; line-height: 1.2; margin-bottom: 1.2rem; }
+  .draft-badge { display: inline-block; background: #e0176b; color: #fff; font-weight: 800; font-size: 0.78rem; letter-spacing: 0.05em; padding: 0.3rem 0.9rem; border-radius: 6px; margin-bottom: 1.2rem; }
+  .meta-bar { display: flex; flex-wrap: wrap; gap: 1rem; background: rgba(33,150,176,0.1); border: 1px solid rgba(33,150,176,0.22); border-radius: 10px; padding: 0.9rem 1.2rem; margin-bottom: 2.2rem; font-size: 0.85rem; color: #5ecfec; }
+  .content h2 { font-size: 1.35rem; font-weight: 800; color: #2196b0; margin: 2rem 0 0.6rem; }
+  .content h3 { font-size: 1.1rem; font-weight: 700; color: #5ecfec; margin: 1.5rem 0 0.5rem; }
+  .content p  { line-height: 1.8; margin-bottom: 1.1rem; color: #c8d8ee; }
+  .content ul { padding-right: 1.4rem; margin-bottom: 1.2rem; }
+  .content li { margin-bottom: 0.4rem; color: #c8d8ee; line-height: 1.7; }
+  .section { background: rgba(255,255,255,0.035); border: 1px dashed rgba(33,150,176,0.28); border-radius: 12px; padding: 1.4rem; margin-top: 2.5rem; }
+  .section-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; color: #5ecfec; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .card-preview-title { font-weight: 800; font-size: 1rem; color: #e2e8f8; margin-bottom: 0.4rem; }
+  .card-preview-excerpt { font-size: 0.88rem; color: #8a9bbd; }
+  pre { background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 1rem; font-size: 0.75rem; overflow-x: auto; white-space: pre-wrap; color: #a0c4d8; direction: ltr; text-align: left; }
+  .publish-cmd { margin-top: 2rem; background: rgba(33,150,176,0.08); border-radius: 10px; padding: 1.2rem 1.5rem; font-size: 0.88rem; color: #5ecfec; }
+  .publish-cmd code { background: rgba(0,0,0,0.35); padding: 0.2rem 0.6rem; border-radius: 5px; font-family: monospace; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="draft-badge">⚠ טיוטה — לא פורסם</div>
+  <h1>פרומפט אנג'ינירינג לעסקים: איך לכתוב נכון כדי לקבל יותר מ-AI</h1>
+  <div class="meta-bar">
+    <span>📁 AI כלים</span>
+    <span>⏱ 5 דק' קריאה</span>
+    <span>📅 11 במאי 2026</span>
+    <span>✍️ ניסים בנגייב</span>
+  </div>
+  <div class="content">
+    <p>כלי בינה מלאכותית מחוללים מהפכה באופן שבו עסקים פועלים. הם יכולים לייצר תוכן, לנתח נתונים, לענות על שאלות לקוחות ועוד הרבה. אבל כדי להפיק מהם את המיטב, אי אפשר פשוט לזרוק מילים לאוויר ולצפות לתוצאות מדויקות. כאן נכנס לתמונה ה"פרומפט אנג'ינירינג" – היכולת לנסח פקודות (פרומפטים) בצורה כזאת שהבינה המלאכותית תבין בדיוק מה אנחנו רוצים, ותספק לנו את התוצאות הרצויות. זה לא רק למפתחים; זו מיומנות קריטית לכל עסק שרוצה למנף AI ביעילות.</p>
+
+<h2>ההבדל בין פרומפט כללי לפרומפט ממוקד</h2>
+<p>תחשבו על AI כעל עובד חדש שצריך הכשרה. אם תגידו לו "תעשה משהו", הסיכוי שתקבלו את מה שרציתם נמוך. אבל אם תפרטו לו את התפקיד, המשימה, הקונטקסט והפורמט – הוא יוכל לבצע את העבודה באופן מדויק.</p>
+<p>פרומפט כללי הוא בקשה רחבה, ללא הנחיות ספציפיות. למשל: "כתוב לי פוסט". התוצאה תהיה כללית, לא רלוונטית בהכרח לעסק שלכם, וסביר להניח שתצטרכו לערוך אותה רבות.</p>
+<p>פרומפט ממוקד לעומת זאת, מספק ל-AI את כל המידע שהוא צריך כדי לייצר תוכן איכותי ומדויק. הוא מגדיר תפקיד, מטרה, קונטקסט, ואף דוגמאות או הגבלות. זה כמו לתת למנהל שיווק מנוסה בריף מפורט לקמפיין.</p>
+
+<h2>טיפים מעשיים: איך לבנות פרומפטים שמביאים תוצאות לעסק</h2>
+<p>כדי לשפר את האינטראקציה שלכם עם כלי AI כמו ChatGPT, Gemini או Claude, נסו ליישם את הטיפים הבאים:</p>
+<ul>
+<li>הגדירו תפקיד (פרסונה): תנו ל-AI דמות. "אתה מומחה שיווק...", "אתה נציג שירות לקוחות...", "אתה יועץ עסקי...". זה מכניס אותו למוד חשיבה מתאים.</li>
+<li>ציינו את המטרה: מה אתם רוצים להשיג? "מטרת הפוסט היא ליצור לידים", "מטרת התשובה היא להרגיע לקוח כועס".</li>
+<li>ספקו קונטקסט: תנו ל-AI רקע. מי קהל היעד? מה המוצר? מה הרקע שהוביל לבקשה? כמה שיותר מידע רלוונטי יעזור לו להבין את התמונה המלאה.</li>
+<li>הגדירו פורמט ומגבלות: האם אתם רוצים רשימת בולטים? פסקאות קצרות? טבלה? ציינו אורך מקסימלי, שפה, טון (מקצועי, ידידותי, רשמי).</li>
+<li>השתמשו בשפה ברורה וחד משמעית: הימנעו ממושגים עמומים. במקום "תכתוב יפה", נסחו "השתמש בשפה מקצועית ומכובדת".</li>
+<li>היו ספציפיים ככל האפשר: במקום "תספר על היתרונות", פרטו "ציין את היתרונות של חיסכון בזמן ושיפור יעילות תהליכים".</li>
+<li>חלקו משימות מורכבות: אם המשימה גדולה, חלקו אותה לשלבים קטנים יותר. בקשו מה-AI לבצע כל שלב בנפרד.</li>
+</ul>
+
+<h2>דוגמה מעשית: כתיבת פוסט ללינקדאין</h2>
+<p>נניח שעסק קטן-בינוני רוצה לפרסם פוסט על שירות חדש.</p>
+
+<p>פרומפט כללי:</p>
+<p>"כתוב פוסט ללינקדאין על השירות החדש שלנו."</p>
+<p>התוצאה (סביר להניח): פוסט גנרי, לא ממוקד, אולי אפילו משעמם.</p>
+
+<p>פרומפט ממוקד ואיכותי:</p>
+<p>"אתה מנהל שיווק בחברה ישראלית קטנה המספקת שירותי אוטומציה לעסקים. כתוב פוסט ללינקדאין שמקדם את השירות החדש שלנו – הטמעת מערכת אוטומציה לניהול לידים באמצעות Make ו-Monday.com. קהל היעד הוא בעלי עסקים קטנים ובינוניים שמתקשים לנהל לידים באופן ידני. מטרת הפוסט היא להסביר איך השירות חוסך זמן יקר ומפחית טעויות אנוש, ולעודד אותם ללמוד עוד. הטון צריך להיות מקצועי וידידותי. הפוסט צריך לכלול קריאה לפעולה קצרה בסוף – 'למידע נוסף וייעוץ ראשוני, בקרו באתר שלנו'. אורך הפוסט עד 180 מילים. כלול 3-4 האשטאגים רלוונטיים בעברית."</p>
+<p>התוצאה (סביר להניח): פוסט ממוקד, רלוונטי, עם קריאה לפעולה ברורה, שמתאים בדיוק לצרכי העסק.</p>
+
+<p>היכולת לכתוב פרומפטים ממוקדים היא מיומנות חובה לכל עסק שרוצה למנף את היתרונות של בינה מלאכותית. היא מאפשרת להפוך את כלי ה-AI מכלי גנרי לעוזר אישי ומדויק, שיכול לחסוך שעות עבודה שבועיות ולשפר משמעותית את איכות התוצרים. השקעה קטנה בלמידת איך לנסח נכון, תניב לכם תשואות גדולות.</p>
+<p>אם זה נשמע רלוונטי לעסק שלכם, נשמח לדבר.</p>
+  </div>
+
+  <div class="section" style="border-color: rgba(224,23,107,0.4);">
+    <div class="section-label" style="color:#e0176b;">📸 תמונה נדרשת לפני פרסום</div>
+    <p style="color:#c8d8ee;font-size:0.9rem;line-height:1.7;margin:0;">
+      צור תמונה AI שקשורה למאמר ושמור אותה בנתיב:<br/>
+      <code style="background:rgba(0,0,0,0.4);padding:0.2rem 0.6rem;border-radius:5px;font-family:monospace;color:#5ecfec;">images/blog/2026-05-11-1.png</code><br/>
+      (גודל מומלץ: 1280×720 px)<br/><br/>
+      לאחר העלאה, הרץ: <code style="background:rgba(0,0,0,0.4);padding:0.2rem 0.6rem;border-radius:5px;font-family:monospace;color:#5ecfec;">node optimize-images.mjs</code><br/>
+      — ידחס את התמונה ויצור גרסת WebP קלה יותר אוטומטית.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">תצוגה מקדימה — כרטיס בלוג</div>
+    <div class="card-preview-title">פרומפט אנג'ינירינג לעסקים: איך לכתוב נכון כדי לקבל יותר מ-AI</div>
+    <div class="card-preview-excerpt">כלי בינה מלאכותית הם כוח אדיר לעסקים, אבל כדי להפיק מהם את המיטב, צריך לדעת איך לדבר איתם. הכירו את הפרומפט אנג'ינירינג – המיומנות שתשנה את הדרך שבה אתם עובדים עם AI.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">HTML לכרטיס (לשימוש publish.mjs)</div>
+    <pre>      &lt;!-- AGENT POST 2026-05-11-1 --&gt;
+      &lt;article class="blog-card reveal" data-cats="ai" style="transition-delay:0.05s;"&gt;
+        &lt;div class="blog-card-thumb-wrap"&gt;
+          &lt;picture&gt;
+            &lt;source srcset="images/blog/2026-05-11-1.webp" type="image/webp" /&gt;
+            &lt;img src="images/blog/2026-05-11-1.png" alt="פרומפט אנג'ינירינג לעסקים: איך לכתוב נכון כדי לקבל יותר מ-AI" loading="lazy" /&gt;
+          &lt;/picture&gt;
+        &lt;/div&gt;
+        &lt;div class="blog-card-body"&gt;
+          &lt;span class="blog-tag ai"&gt;AI כלים&lt;/span&gt;
+          &lt;a href="posts/2026-05-11-1.html" class="blog-title"&gt;
+            פרומפט אנג'ינירינג לעסקים: איך לכתוב נכון כדי לקבל יותר מ-AI
+          &lt;/a&gt;
+          &lt;p class="blog-excerpt"&gt;
+            כלי בינה מלאכותית הם כוח אדיר לעסקים, אבל כדי להפיק מהם את המיטב, צריך לדעת איך לדבר איתם. הכירו את הפרומפט אנג'ינירינג – המיומנות שתשנה את הדרך שבה אתם עובדים עם AI.
+          &lt;/p&gt;
+          &lt;div class="blog-meta"&gt;
+            &lt;span&gt;ניסים בנגייב&lt;/span&gt;
+            &lt;span class="blog-meta-dot"&gt;&lt;/span&gt;
+            &lt;span&gt;11 במאי 2026&lt;/span&gt;
+            &lt;span class="blog-meta-dot"&gt;&lt;/span&gt;
+            &lt;span&gt;5 דק' קריאה&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/article&gt;</pre>
+  </div>
+
+  <div class="publish-cmd">
+    <strong>לפרסום:</strong> הרץ <code>node publish.mjs 2026-05-11-1</code>
+  </div>
+</div>
+</body>
+</html>
