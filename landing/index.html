@@ -272,18 +272,27 @@
       <!-- Spots counter -->
       <div class="fade-up" style="animation-delay:0.26s;margin-bottom:1.8rem;">
         <div style="display:inline-flex;flex-direction:column;align-items:center;gap:0.55rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:13px;padding:0.9rem 1.6rem;">
-          <div class="spots-bar">
-            <div class="spot taken"></div>
-            <div class="spot taken"></div>
-            <div class="spot taken"></div>
-            <div class="spot"></div>
-            <div class="spot"></div>
-          </div>
+          <div class="spots-bar" id="spots-bar"></div>
           <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);font-weight:600;">
-            נותרו <strong style="color:#fff;font-weight:800;">2 מקומות</strong> מתוך 5
+            נותרו <strong id="spots-text" style="color:#fff;font-weight:800;"></strong> מתוך 5
           </span>
         </div>
       </div>
+      <script>
+        (function() {
+          var day = new Date().getDate();
+          // Days 1-7: 4 remaining, 8-14: 3, 15-21: 2, 22+: 1 (never 0)
+          var remaining = Math.max(1, 4 - Math.floor((day - 1) / 7));
+          var taken = 5 - remaining;
+          var bar = document.getElementById('spots-bar');
+          for (var i = 0; i < 5; i++) {
+            var s = document.createElement('div');
+            s.className = 'spot' + (i < taken ? ' taken' : '');
+            bar.appendChild(s);
+          }
+          document.getElementById('spots-text').textContent = remaining + (remaining === 1 ? ' מקום' : ' מקומות');
+        })();
+      </script>
 
       <!-- CTA -->
       <div class="fade-up" style="animation-delay:0.35s;">
